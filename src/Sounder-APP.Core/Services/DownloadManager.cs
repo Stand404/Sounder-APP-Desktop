@@ -40,7 +40,7 @@ namespace Sounder_APP.Services
             : 0f;
     }
 
-    /// <summary>持久化下载进度记录（.download 文件序列化模型）</summary>
+    /// <summary>持久化下载进度记录（.download 文件序列化模型，参照 Android DownloadRecord）</summary>
     public class DownloadRecordData
     {
         public string ResourceId { get; set; } = string.Empty;
@@ -54,6 +54,30 @@ namespace Sounder_APP.Services
         public List<DownloadedAudioItemData> DownloadedAudioItems { get; set; } = new();
         public bool IconDownloaded { get; set; }
         public DateTime LastUpdateTime { get; set; }
+        /// <summary>远程音频列表 JSON（含原始 URL），暂停后继续时无需重新请求远程详情（参照 Android remoteAudioJson）</summary>
+        public string? RemoteAudioJson { get; set; }
+
+        /// <summary>从缓存记录重建 Resource 详情，暂停后继续时无需重新请求 API（参照 Android toRemoteResource()）</summary>
+        public Resource? ToResource()
+        {
+            if (string.IsNullOrEmpty(RemoteAudioJson)) return null;
+            var audioItems = JsonSerializer.Deserialize(RemoteAudioJson, SettingsJsonContext.Default.ListAudioItem);
+            if (audioItems == null || audioItems.Count == 0) return null;
+
+            return new Resource
+            {
+                Id = ResourceId,
+                Name = ResourceName,
+                DisplayName = DisplayName,
+                Description = Description,
+                Icon = Icon,
+                Size = Size,
+                PublishDate = PublishDate,
+                AudioItems = audioItems,
+                Source = ResourceSource.Local,
+                IsInstalled = true
+            };
+        }
     }
 
     public class DownloadedAudioItemData
@@ -108,6 +132,8 @@ namespace Sounder_APP.Services
         private readonly ConcurrentDictionary<string, DownloadState> _states = new();
         private readonly ConcurrentDictionary<string, CancellationTokenSource> _cancelTokens = new();
         private readonly ConcurrentDictionary<string, Action<DownloadProgressInfo>> _progressListeners = new();
+        /// <summary>启动守卫：防止同一资源重复并发下载（参照 Android DownloadManager.kt running map）</summary>
+        private readonly ConcurrentDictionary<string, bool> _runningTasks = new();
 
         /// <summary>获取资源的全局下载状态</summary>
         public DownloadState? GetState(string resourceId) =>
@@ -126,6 +152,17 @@ namespace Sounder_APP.Services
             if (!_states.TryGetValue(resourceId, out var state)) return false;
             return state.Status == DownloadStatus.Paused;
         }
+
+        /// <summary>恢复资源的内存状态为已暂停（从 .download 缓存重建，供页面刷新后按钮状态恢复）</summary>
+        public void SetStatePaused(string resourceId, float progress = 0f)
+        {
+            if (!_cancelTokens.ContainsKey(resourceId))
+                _cancelTokens[resourceId] = new CancellationTokenSource();
+            UpdateState(resourceId, DownloadStatus.Paused, progress);
+        }
+
+        /// <summary>检查 InstallResourceByIdAsync 是否正在运行（防止并发点击进入空闲分支）</summary>
+        public bool IsDownloadRunning(string resourceId) => _runningTasks.ContainsKey(resourceId);
 
         /// <summary>注册进度回调</summary>
         public void RegisterProgressListener(string resourceId, Action<DownloadProgressInfo> listener) =>
@@ -163,16 +200,28 @@ namespace Sounder_APP.Services
         // ==================== 安装流程（参照 Android installResourceById） ====================
 
         /// <summary>
-        /// 安装资源：获取详情 → 保存元数据 → 下载音频 → 下载图标 → 更新本地路径。
+        /// 安装资源：获取详情 → 保存元数据 → 下载图标 → 下载音频 → 更新本地路径。
         /// 支持通过 CancellationToken 取消/暂停。
+        /// existingResource 为可选参数，传入时跳过网络请求；
+        /// 否则优先从 .download 缓存重建详情，仅首次下载时请求远程 API。
+        /// （参照 Android installResourceById 三级来源：existingResource / toRemoteResource / network）
         /// </summary>
         /// <param name="resourceId">资源 ID</param>
         /// <param name="progress">外部进度报告（可选）</param>
+        /// <param name="existingResource">已有资源详情（可选），传入则跳过网络请求和 .download 缓存重建</param>
         /// <returns>安装是否成功</returns>
         public async Task<bool> InstallResourceByIdAsync(
             string resourceId,
-            IProgress<float>? progress = null)
+            IProgress<float>? progress = null,
+            Resource? existingResource = null)
         {
+            // 启动守卫：防止同一资源重复并发下载（参照 Android DownloadManager.kt）
+            if (!_runningTasks.TryAdd(resourceId, true))
+            {
+                Debug.WriteLine($"[DownloadManager] 资源已在下载中，忽略重复请求: id={resourceId}");
+                return false;
+            }
+
             var cts = new CancellationTokenSource();
             _cancelTokens[resourceId] = cts;
             var token = cts.Token;
@@ -181,17 +230,41 @@ namespace Sounder_APP.Services
 
             try
             {
-                // 1. 获取资源详情（参照 Android: repo.getRemoteResourceDetail）
-                Debug.WriteLine($"[DownloadManager] >>> 安装资源开始: id={resourceId}");
-                var detail = await _resourceService.GetResourceDetailAsync(resourceId);
-                if (detail == null)
+                // 1. 获取资源详情（参照 Android: existingResource ?: toRemoteResource() ?: repo.getRemoteResourceDetail）
+                Resource? detail = null;
+
+                if (existingResource != null)
                 {
-                    Debug.WriteLine($"[DownloadManager] 获取资源详情失败: id={resourceId}");
-                    UpdateState(resourceId, DownloadStatus.Failed, 0f);
-                    return false;
+                    detail = existingResource;
+                    Debug.WriteLine($"[DownloadManager] 使用传入的资源详情: {detail.DisplayName}");
+                }
+                else
+                {
+                    var cachedRecord = ReadDownloadRecord(resourceId);
+                    detail = cachedRecord?.ToResource();
+                    if (detail != null)
+                    {
+                        Debug.WriteLine($"[DownloadManager] 从 .download 缓存恢复详情: {detail.DisplayName}");
+                    }
                 }
 
-                Debug.WriteLine($"[DownloadManager] 获取详情成功: {detail.DisplayName}, 音频文件数={detail.AudioItems.Count}");
+                if (detail == null)
+                {
+                    Debug.WriteLine($"[DownloadManager] >>> 从网络获取资源详情: id={resourceId}");
+                    detail = await _resourceService.GetResourceDetailAsync(resourceId);
+                    if (detail == null)
+                    {
+                        Debug.WriteLine($"[DownloadManager] 获取资源详情失败: id={resourceId}");
+                        UpdateState(resourceId, DownloadStatus.Failed, 0f);
+                        return false;
+                    }
+
+                    Debug.WriteLine($"[DownloadManager] 获取详情成功: {detail.DisplayName}, 音频文件数={detail.AudioItems.Count}");
+                }
+
+                // 确保 .download 中包含远程音频列表 JSON（含原始 URL），暂停后继续时无需重新请求 API
+                // 首次调用会新建 .download 文件，后续调用已存在则仅补充 RemoteAudioJson
+                EnsureRemoteAudioJsonInRecord(detail);
 
                 // 2. 创建资源文件夹 + 标记为本地资源（resource.json 等音频下载完成后再保存）
                 detail.IsInstalled = true;
@@ -207,15 +280,7 @@ namespace Sounder_APP.Services
                 var totalTasks = audioCount + (hasIcon ? 1 : 0);
                 if (totalTasks == 0) totalTasks = 1; // 避免除零
 
-                // 3. 逐个下载音频文件，每完成一个就增量保存到 resource.json
-                var updatedAudioList = await DownloadAudioFilesAsync(
-                    resourceId, detail.AudioItems, audioDir, totalTasks, token, progress, detail);
-
-                token.ThrowIfCancellationRequested();
-
-                // 4. 下载图标（先于 resource.json，确保最终产物包含完整的图标路径）
-                detail.AudioItems = updatedAudioList;
-
+                // 3. 图标优先下载（小文件、速度快），参照 Android DownloadManager.kt
                 if (hasIcon)
                 {
                     token.ThrowIfCancellationRequested();
@@ -225,21 +290,32 @@ namespace Sounder_APP.Services
 
                     if (localIcon != null)
                     {
-                        detail.Icon = localIcon;
-                        // 同时保存一份到资源自身文件夹 installed/{resourceId}/icon.{ext}
-                        ResourceService.SaveIconToResourceFolder(resourceId, localIcon);
-                        Debug.WriteLine($"[DownloadManager] 图标已下载: {localIcon}");
+                        // 复制到资源自身文件夹，detail.Icon 记录自身路径 installed/{resourceId}/icon.{ext}
+                        var resourceFolderIcon = ResourceService.SaveIconToResourceFolder(resourceId, localIcon);
+                        detail.Icon = resourceFolderIcon ?? localIcon;
+                        Debug.WriteLine($"[DownloadManager] 图标已下载: {detail.Icon}");
                     }
                     else
                     {
                         Debug.WriteLine($"[DownloadManager] 图标下载失败: url={detail.Icon}");
                     }
 
-                    var iconProgress = (float)(audioCount + 1) / totalTasks;
+                    var iconProgress = 1f / totalTasks;
                     progress?.Report(iconProgress);
                     UpdateState(resourceId, DownloadStatus.Downloading, iconProgress);
                 }
-                else
+
+                token.ThrowIfCancellationRequested();
+
+                // 4. 逐个下载音频文件，每完成一个就增量保存到 .download
+                var iconOffset = hasIcon ? 1f / totalTasks : 0f;
+                var updatedAudioList = await DownloadAudioFilesAsync(
+                    resourceId, detail.AudioItems, audioDir, totalTasks, token, progress, detail, iconOffset);
+
+                token.ThrowIfCancellationRequested();
+                detail.AudioItems = updatedAudioList;
+
+                if (!hasIcon)
                 {
                     UpdateState(resourceId, DownloadStatus.Downloading, 1f);
                     progress?.Report(1f);
@@ -279,6 +355,7 @@ namespace Sounder_APP.Services
             finally
             {
                 _cancelTokens.TryRemove(resourceId, out _);
+                _runningTasks.TryRemove(resourceId, out _);
             }
         }
 
@@ -292,7 +369,8 @@ namespace Sounder_APP.Services
             int totalTasks,
             CancellationToken token,
             IProgress<float>? progress,
-            Resource detail)
+            Resource detail,
+            float baseOffset = 0f)
         {
             if (audioList.Count == 0) return new List<AudioItem>();
 
@@ -336,9 +414,9 @@ namespace Sounder_APP.Services
             }
 
             var recoveredCount = results.Count;
-            var startProgress = audioList.Count > 0
+            var startProgress = baseOffset + (audioList.Count > 0
                 ? (float)recoveredCount / totalTasks
-                : 0f;
+                : 0f);
 
             // 新处理（非恢复）的计数，用于正确计算进度
             int newlyProcessed = 0;
@@ -777,7 +855,10 @@ namespace Sounder_APP.Services
                         OrderIndex = a.OrderIndex
                     }).ToList(),
                     IconDownloaded = iconDownloaded,
-                    LastUpdateTime = DateTime.Now
+                    LastUpdateTime = DateTime.Now,
+                    RemoteAudioJson = detail.AudioItems?.Count > 0
+                        ? JsonSerializer.Serialize(detail.AudioItems, SettingsJsonContext.Default.ListAudioItem)
+                        : null
                 };
 
                 var json = JsonSerializer.Serialize(record, SettingsJsonContext.Default.DownloadRecordData);
@@ -819,6 +900,47 @@ namespace Sounder_APP.Services
             catch (Exception ex)
             {
                 Debug.WriteLine($"[DownloadManager] 删除 .download 失败(id={resourceId}): {ex.Message}");
+            }
+        }
+
+        /// <summary>确保 .download 记录中包含远程音频列表 JSON（含原始 URL），
+        /// 供暂停后继续时通过 ToResource() 重建详情，无需重新请求远程 API。
+        /// 首次获取详情后立即调用，确保在下载任何文件前已持久化。</summary>
+        private static void EnsureRemoteAudioJsonInRecord(Resource detail)
+        {
+            try
+            {
+                var record = ReadDownloadRecord(detail.Id);
+                if (record != null && !string.IsNullOrEmpty(record.RemoteAudioJson)) return;
+
+                record ??= new DownloadRecordData();
+                record.ResourceId = detail.Id;
+                record.ResourceName = detail.Name;
+                record.DisplayName = detail.DisplayName;
+                record.Description = detail.Description;
+                record.Icon = detail.Icon;
+                record.Size = detail.Size;
+                record.PublishDate = detail.PublishDate;
+                record.TotalAudioCount = detail.AudioItems?.Count ?? 0;
+                record.RemoteAudioJson = detail.AudioItems?.Count > 0
+                    ? JsonSerializer.Serialize(detail.AudioItems, SettingsJsonContext.Default.ListAudioItem)
+                    : null;
+                record.LastUpdateTime = DateTime.Now;
+
+                var dir = Path.Combine(InstallRoot, detail.Id);
+                Directory.CreateDirectory(dir);
+                var path = GetDownloadRecordPath(detail.Id);
+                var tmpPath = path + ".tmp";
+                var json = JsonSerializer.Serialize(record, SettingsJsonContext.Default.DownloadRecordData);
+                TryDeleteQuietly(tmpPath);
+                File.WriteAllText(tmpPath, json);
+                File.Move(tmpPath, path, overwrite: true);
+
+                Debug.WriteLine($"[DownloadManager] RemoteAudioJson 已缓存 (id={detail.Id}, {detail.AudioItems?.Count} 条)");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[DownloadManager] 缓存 RemoteAudioJson 失败(id={detail.Id}): {ex.Message}");
             }
         }
 

@@ -103,7 +103,7 @@ namespace Sounder_APP.ViewModels
             RestorePendingDownloadStates();
         }
 
-        /// <summary>扫描 .download 文件，恢复未完成下载的资源在列表中的状态</summary>
+        /// <summary>扫描 .download 文件，恢复未完成下载的资源在列表中的状态（参照 Android RestorePendingDownloadStates）</summary>
         private void RestorePendingDownloadStates()
         {
             var pendingIds = DownloadManager.GetPendingDownloads();
@@ -113,7 +113,12 @@ namespace Sounder_APP.ViewModels
             {
                 if (pendingIds.Contains(resource.Id) && !resource.IsInstalled)
                 {
-                    resource.IsDownloadActive = false;
+                    // 恢复 DownloadManager 的内存状态为 Paused（让按钮显示"继续"、点击走暂停分支）
+                    _downloadManager.SetStatePaused(resource.Id);
+
+                    // SetStatePaused 会触发 StateChanged → OnDownloadStateChanged 更新 resource 属性，
+                    // 此处显式设置确保 UI 绑定立即生效
+                    resource.IsDownloadActive = true;
                     resource.IsDownloadPaused = true;
                     Debug.WriteLine($"[ShopVM] 恢复未完成下载状态: {resource.DisplayName} (id={resource.Id})");
                 }
@@ -324,6 +329,13 @@ namespace Sounder_APP.ViewModels
             }
 
             // 空闲 → 开始下载
+            // 二次校验：防止上一分支 Cleanup 后 InstallResourceByIdAsync 尚未创建状态的间隙被并发点击进入此分支
+            if (_downloadManager.IsDownloadRunning(resource.Id))
+            {
+                Debug.WriteLine($"[ShopVM] InstallResourceByIdAsync 已在运行，忽略重复请求: id={resource.Id}");
+                return;
+            }
+
             resource.IsDownloadActive = true;
             resource.IsDownloadPaused = false;
             resource.DownloadProgress = 0f;

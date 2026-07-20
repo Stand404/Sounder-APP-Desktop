@@ -32,6 +32,7 @@ namespace Sounder_APP.Models
     [JsonSerializable(typeof(InstalledAudioItemData))]
     [JsonSerializable(typeof(DownloadRecordData))]
     [JsonSerializable(typeof(DownloadedAudioItemData))]
+    [JsonSerializable(typeof(List<AudioItem>))]
     [JsonSerializable(typeof(ExportManifest))]
     [JsonSourceGenerationOptions(WriteIndented = true)]
     public partial class SettingsJsonContext : JsonSerializerContext
