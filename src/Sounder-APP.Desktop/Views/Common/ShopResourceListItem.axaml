@@ -43,23 +43,24 @@
             </StackPanel>
 
             <!-- 安装按钮 / 已安装 -->
-<ibtn:CompactInstallButton Grid.Column="2"
-                                        VerticalAlignment="Center"
-                                        IsVisible="{Binding IsInstalled, Converter={StaticResource InverseBool}}"
-                                        Command="{Binding ViewModel.InstallResourceCommand, ElementName=Root}"
-                                        CommandParameter="{Binding Resource, ElementName=Root}"
-                                        InstallingResourceId="{Binding ActiveInstallingId}"
-                                        ResourceId="{Binding Id}"
-                                        InstallProgress="{Binding DownloadProgress}"
-                                        InstallStatusText="{Binding DownloadStatusText}"
-                                        IsPaused="{Binding IsDownloadPaused}"/>
+            <ibtn:CompactInstallButton Grid.Column="2"
+                VerticalAlignment="Center"
+                IsVisible="{Binding IsInstalled, Converter={StaticResource InverseBool}}"
+                Command="{Binding ViewModel.InstallResourceCommand, ElementName=Root}"
+                CommandParameter="{Binding Resource, ElementName=Root}"
+                InstallingResourceId="{Binding ActiveInstallingId}"
+                ResourceId="{Binding Id}"
+                InstallProgress="{Binding DownloadProgress}"
+                InstallStatusText="{Binding DownloadStatusText}"
+                IsPaused="{Binding IsDownloadPaused}"/>
 
             <Border Grid.Column="2" Width="76" Height="32" VerticalAlignment="Center"
                     IsVisible="{Binding IsInstalled}">
                 <PathIcon Data="{StaticResource IconCheck}"
                          Width="16" Height="16"
                          Foreground="{DynamicResource StatusInstalledText}"
-                         VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                         VerticalAlignment="Center" HorizontalAlignment="Center"
+                         IsHitTestVisible="False"/>
             </Border>
         </Grid>
     </Border>

@@ -382,7 +382,17 @@ namespace Sounder_APP.ViewModels
                 IsDetailLoading = true;
             try
             {
-                var detail = await _resourceService.GetResourceDetailAsync(resource.Id);
+                // 已安装资源从本地 resource.json 读取，无需网络请求
+                Resource? detail;
+                if (resource.IsInstalled)
+                {
+                    detail = _resourceService.GetInstalledResourceById(resource.Id);
+                }
+                else
+                {
+                    detail = await _resourceService.GetResourceDetailAsync(resource.Id);
+                }
+
                 if (detail != null && (!showSkeleton || version == _detailLoadVersion))
                 {
                     _isUpdatingDetail = true;
@@ -393,8 +403,25 @@ namespace Sounder_APP.ViewModels
                         if (old.Icon == detail.Icon && old.IconBitmap != null)
                             detail.PreserveIcon(old.IconBitmap);
                         detail.IsInstalled = old.IsInstalled;
-                        Resources[index] = detail;
-                        SelectedResource = detail;
+
+                        // 已安装资源从本地同步加载，不替换 Resources/SelectedResource，
+                        // 避免 ListBoxItem 被销毁重建导致 :pressed 动画来不及渲染（异步加载无此问题）
+                        if (!resource.IsInstalled)
+                        {
+                            Resources[index] = detail;
+                            SelectedResource = detail;
+                        }
+                        else
+                        {
+                            // 保持引用不变，仅从 detail 补全详情面板所需的本地字段
+                            old.Description = detail.Description;
+                            old.PublishDate = detail.PublishDate;
+                            old.AudioItems = detail.AudioItems;
+                            old.Size = detail.Size;
+                            if (old.Icon != detail.Icon && detail.Icon != null)
+                                old.Icon = detail.Icon;
+                            SelectedResource = old;
+                        }
                     }
                     else
                     {

@@ -58,7 +58,7 @@
                             <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="2">
                                 <Grid>
                                     <TextBlock Text="{Binding Name}" FontSize="15" FontWeight="Medium"
-                                               TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"
+                                               TextWrapping="Wrap"
                                                VerticalAlignment="Center"
                                                Foreground="{DynamicResource AccentBlue}">
                                         <TextBlock.IsVisible>
@@ -70,7 +70,7 @@
                                         </TextBlock.IsVisible>
                                     </TextBlock>
                                     <TextBlock Text="{Binding Name}" FontSize="15"
-                                               TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"
+                                               TextWrapping="Wrap"
                                                VerticalAlignment="Center"
                                                Foreground="{DynamicResource TextPrimary}">
                                         <TextBlock.IsVisible>
