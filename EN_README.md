@@ -8,13 +8,17 @@
 
 ## ✨ Features
 
+### <img src="src/Sounder-APP.Desktop/Assets/sounder.png" width="28" style="vertical-align: middle;" alt=""/> Sounder APP — Original Edition
+A native Android stress-relief app that simply plays a sound on tap. On first launch, select an audio file; each subsequent tap on the icon plays the sound directly without opening the UI.  
+Original repository: [https://github.com/Stand404/Sounder](https://github.com/Stand404/Sounder)
+
 ### <img src="src/Sounder-APP.Desktop/Assets/sounder.png" width="28" style="vertical-align: middle;" alt=""/> Sounder APP — Standalone Edition
 A collection of standalone Android apps built on the original concept. Each app has its own icon and default audio — tap and play, easy stress relief.  
 Available at: https://stand.homes/apps
 
 ### <img src="src/Sounder-APP.Desktop/Assets/ico.png" width="28" style="vertical-align: middle;" alt=""/> Sounder APP · Evolution Edition (This App)
 A fully-featured extension of the standalone concept, supporting browsing, searching, downloading, creating, editing, importing, and exporting various resource packs, as well as playing various audio resources.  
-This project is the **desktop version of the Evolution Edition**, corresponding to the [Evolution Edition Android version](https://github.com/stand404/Sounder).
+This project is the **desktop version of the Evolution Edition**, corresponding to the [Evolution Edition Android version](https://github.com/stand404/Sounder-APP-Android).
 
 ### Core Features
 - **Online Store** — Browse, search, and download audio resource packs

@@ -8,13 +8,17 @@
 
 ## ✨ 功能介绍
 
+### <img src="src/Sounder-APP.Desktop/Assets/sounder.png" width="28" style="vertical-align: middle;" alt=""/> 发声APP —— 初版
+一款点击后只会播放声音的原生 Android 解压小软件。第一次启动时选择音频文件，之后每次点击图标直接播放声音，不弹出界面。  
+初版仓库：[https://github.com/Stand404/Sounder](https://github.com/Stand404/Sounder)
+
 ### <img src="src/Sounder-APP.Desktop/Assets/sounder.png" width="28" style="vertical-align: middle;" alt=""/> 发声APP —— 独立版
 在初版基础上打造的一系列独立 Android APP，每个 APP 拥有独立的图标和默认音频，点击即播，轻松解压。  
 可以在官网获取：https://stand.homes/apps
 
 ### <img src="src/Sounder-APP.Desktop/Assets/ico.png" width="28" style="vertical-align: middle;" alt=""/> 发声APP · 造化版（本程序）
 在独立版概念基础上全面扩展的完整功能版，支持浏览、搜索、下载、创建、编辑、导入导出各种资源包，以及播放各类音频资源。  
-当前项目为 **造化版的桌面端**，与 [造化版 Android 端](https://github.com/stand404/Sounder)（支持 Android）功能对应。
+当前项目为 **造化版的桌面端**，与 [造化版 Android 端](https://github.com/stand404/Sounder-APP-Android)功能对应。
 
 ### 核心功能
 - **在线商店** — 浏览、搜索和下载音频资源包
