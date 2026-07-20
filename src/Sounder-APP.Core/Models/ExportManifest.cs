@@ -28,8 +28,8 @@ namespace Sounder_APP.Models
             [JsonPropertyName("description")]
             public string Description { get; set; } = string.Empty;
 
-            [JsonPropertyName("audioList")]
-            public List<ExportAudioMeta> AudioList { get; set; } = new();
+            [JsonPropertyName("audioItems")]
+            public List<ExportAudioMeta> AudioItems { get; set; } = new();
         }
 
         public class ExportAudioMeta

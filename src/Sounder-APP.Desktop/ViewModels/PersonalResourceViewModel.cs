@@ -277,6 +277,10 @@ namespace Sounder_APP.ViewModels
                             File.Copy(iconSrc, iconDest, overwrite: true);
                             newResource.Icon = iconDest;
                             iconSize = new FileInfo(iconDest).Length;
+
+                            // 同时复制一份到公开图标目录（installed_icons/），供编辑页等模块读取
+                            ResourceService.SaveIconForResource(newId, iconDest);
+
                             Debug.WriteLine($"[Import] 图标已导入: icon.{ext} ({iconSize} B)");
                         }
                     }
@@ -287,7 +291,7 @@ namespace Sounder_APP.ViewModels
                 }
 
                 // 6. 导入音频
-                var audioMetas = manifest.Resource.AudioList ?? new List<ExportManifest.ExportAudioMeta>();
+                var audioMetas = manifest.Resource.AudioItems ?? new List<ExportManifest.ExportAudioMeta>();
                 var audioFiles = manifest.Files?.Audios ?? new List<string?>();
                 for (int i = 0; i < audioMetas.Count; i++)
                 {
@@ -581,12 +585,12 @@ namespace Sounder_APP.ViewModels
                 var manifest = new ExportManifest
                 {
                     Version = 1,
-                    ExportDate = DateTime.Now.ToString("yyyy-MM-dd"),
+                    ExportDate = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"),
                     Resource = new ExportManifest.ExportResourceMeta
                     {
                         DisplayName = resource.DisplayName,
                         Description = resource.Description,
-                        AudioList = audioMetas
+                        AudioItems = audioMetas
                     },
                     Files = new ExportManifest.ExportFiles
                     {
