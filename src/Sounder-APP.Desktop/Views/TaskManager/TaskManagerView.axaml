@@ -99,9 +99,9 @@
                                     <!-- 任务详情（左对齐） -->
                                     <StackPanel Grid.Column="1" Spacing="3" VerticalAlignment="Center"
                                                 HorizontalAlignment="Left">
-                                        <!-- 首行：名称 + 模式 + 实例数 -->
+                                        <!-- 首行：简称(shortName) + 模式 + 实例数 -->
                                         <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Left">
-                                            <TextBlock Text="{Binding DisplayName}" FontSize="14"
+                                            <TextBlock Text="{Binding ShortName}" FontSize="14"
                                                        FontWeight="SemiBold"
                                                        Foreground="{DynamicResource TextPrimary}"
                                                        VerticalAlignment="Center"
@@ -121,8 +121,8 @@
                                                 </TextBlock>
                                             </Border>
                                         </StackPanel>
-                                        <!-- 简称 -->
-                                        <TextBlock Text="{Binding ShortName}" FontSize="11"
+                                        <!-- 完整名称(displayName) -->
+                                        <TextBlock Text="{Binding DisplayName}" FontSize="11"
                                                        Foreground="{DynamicResource TextSecondary}"/>
                                         <!-- 当前音频 -->
                                         <TextBlock Text="{Binding CurrentAudioName}" FontSize="12"
@@ -131,15 +131,30 @@
                                                    TextTrimming="CharacterEllipsis"/>
                                     </StackPanel>
 
-                                    <!-- 停止按钮（圆形，仅图标） -->
-                                    <Button Grid.Column="2" Classes="btn danger sm"
+                                    <!-- 停止按钮（圆形 outline，无 hover 效果） -->
+                                    <Button Grid.Column="2"
                                             Width="36" Height="36" CornerRadius="18"
                                             Padding="0" VerticalAlignment="Center"
                                             Cursor="Hand"
+                                            Background="Transparent"
+                                            BorderThickness="1"
+                                            BorderBrush="{DynamicResource ErrorRed}"
+                                            Foreground="{DynamicResource ErrorRed}"
                                             Command="{Binding $parent[UserControl].DataContext.StopTaskCommand}"
                                             CommandParameter="{Binding .}">
+                                        <Button.Styles>
+                                            <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="BorderBrush" Value="{DynamicResource ErrorRed}"/>
+                                                <Setter Property="BorderThickness" Value="1"/>
+                                            </Style>
+                                            <Style Selector="Button:pressed">
+                                                <Setter Property="Opacity" Value="0.7"/>
+                                            </Style>
+                                        </Button.Styles>
                                         <PathIcon Data="{StaticResource IconStop}"
-                                                  Width="16" Height="16"/>
+                                                  Width="10" Height="10"
+                                                  Foreground="{DynamicResource ErrorRed}"/>
                                     </Button>
                                 </Grid>
                             </Border>
