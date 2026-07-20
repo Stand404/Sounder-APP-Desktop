@@ -1,0 +1,67 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="340" d:DesignHeight="72"
+             x:Class="Sounder_APP.Views.Common.PersonalResourceListItem"
+             x:Name="Root"
+             x:CompileBindings="False">
+
+    <Border CornerRadius="12" Padding="12,10" BorderThickness="0"
+            Background="Transparent">
+        <Grid ColumnDefinitions="56,*" ColumnSpacing="12">
+            <!-- 资源图标（首字母 + 图片，带加载失败状态） -->
+            <Border Grid.Column="0" Width="56" Height="56" CornerRadius="12"
+                    Background="{DynamicResource AccentPurple}" ClipToBounds="True"
+                    VerticalAlignment="Center">
+                <Grid>
+                    <PathIcon Data="{StaticResource IconSpinner}" Width="22" Height="22"
+                              Foreground="{DynamicResource TextTertiary}" Opacity="0.5"
+                              HorizontalAlignment="Center" VerticalAlignment="Center"
+                              Classes="spinner"
+                              IsVisible="{Binding Resource.IconLoadFailed, ElementName=Root, Converter={StaticResource InverseBool}}"/>
+                    <PathIcon Data="{StaticResource IconBroken}" Width="22" Height="22"
+                              Foreground="{DynamicResource AccentBlue}" Opacity="0.8"
+                              HorizontalAlignment="Center" VerticalAlignment="Center"
+                              IsVisible="{Binding Resource.IconLoadFailed, ElementName=Root}"/>
+                    <Image Source="{Binding Resource.IconBitmap, ElementName=Root}"
+                           Stretch="UniformToFill"
+                           IsVisible="{Binding Resource.IconBitmap, ElementName=Root, Converter={StaticResource IsNotNull}}"/>
+                </Grid>
+            </Border>
+
+            <!-- 资源信息 -->
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="3">
+                <TextBlock Text="{Binding Resource.DisplayName, ElementName=Root}" FontWeight="SemiBold" FontSize="14"
+                           Foreground="{DynamicResource TextPrimary}" TextTrimming="CharacterEllipsis"/>
+                <TextBlock Text="{Binding Resource.Description, ElementName=Root}" FontSize="12"
+                           Foreground="{DynamicResource TextSecondary}" TextTrimming="CharacterEllipsis" MaxLines="2"/>
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <TextBlock Text="{Binding Resource.SizeFormatted, ElementName=Root}" FontSize="11" Foreground="{DynamicResource TextTertiary}"/>
+                    <TextBlock Text="{Binding Resource.AudioCountListDisplay, ElementName=Root}" FontSize="11" Foreground="{DynamicResource TextTertiary}"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Border>
+
+    <UserControl.Styles>
+        <Style Selector="PathIcon.spinner">
+            <Setter Property="RenderTransformOrigin" Value="50%,50%"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <RotateTransform Angle="0"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Animations>
+                <Animation Duration="0:0:0.8" IterationCount="Infinite">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="RotateTransform.Angle" Value="0"/>
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="RotateTransform.Angle" Value="360"/>
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+    </UserControl.Styles>
+</UserControl>

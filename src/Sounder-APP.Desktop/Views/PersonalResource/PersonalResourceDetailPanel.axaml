@@ -1,0 +1,122 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Sounder_APP.ViewModels"
+             xmlns:views="using:Sounder_APP.Views"
+             xmlns:i18n="clr-namespace:Sounder_APP.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="710" d:DesignHeight="750"
+             x:Class="Sounder_APP.Views.PersonalResourceDetailPanel"
+             x:Name="Root"
+             x:DataType="vm:PersonalResourceViewModel"
+             Background="{DynamicResource Lv1Bg}">
+
+    <Design.DataContext>
+        <vm:PersonalResourceViewModel/>
+    </Design.DataContext>
+
+    <Grid>
+        <!-- 详情骨架屏 -->
+        <ScrollViewer Background="{DynamicResource Lv1Bg}"
+                      IsVisible="{Binding IsLoading}">
+            <StackPanel Spacing="0">
+                <Border Padding="24,20" Background="{DynamicResource Lv2Bg}">
+                    <Grid ColumnDefinitions="70,*" ColumnSpacing="16">
+                        <Border Grid.Column="0" Width="70" Height="70" CornerRadius="16"
+                                Background="{DynamicResource Lv3Bg}"/>
+                        <StackPanel Grid.Column="1" Spacing="8" VerticalAlignment="Center">
+                            <Border Height="18" Width="160" CornerRadius="4" Background="{DynamicResource Lv3Bg}"/>
+                            <Border Height="13" Width="240" CornerRadius="4" Background="{DynamicResource Lv3Bg}"/>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Border CornerRadius="12" Width="72" Height="22" Background="{DynamicResource Lv3Bg}"/>
+                                <Border CornerRadius="12" Width="90" Height="22" Background="{DynamicResource Lv3Bg}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border Padding="24,20">
+                    <StackPanel Spacing="0">
+                        <Border Height="16" Width="80" CornerRadius="4" Background="{DynamicResource Lv2Bg}" Margin="0,0,0,16"/>
+                        <Border Height="15" Width="140" CornerRadius="4" Background="{DynamicResource Lv2Bg}" Margin="12,10"/>
+                        <Border Height="0.5" Background="{DynamicResource Lv2Border}" Margin="4,0"/>
+                        <Border Height="15" Width="120" CornerRadius="4" Background="{DynamicResource Lv2Bg}" Margin="12,10"/>
+                        <Border Height="0.5" Background="{DynamicResource Lv2Border}" Margin="4,0"/>
+                        <Border Height="15" Width="100" CornerRadius="4" Background="{DynamicResource Lv2Bg}" Margin="12,10"/>
+                        <Border Height="0.5" Background="{DynamicResource Lv2Border}" Margin="4,0"/>
+                        <Border Height="15" Width="160" CornerRadius="4" Background="{DynamicResource Lv2Bg}" Margin="12,10"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- 详情内容 -->
+        <Grid IsVisible="{Binding ShowDetailPanel}">
+            <views:DetailContent ViewModel="{Binding}"
+                                 Background="{DynamicResource Lv1Bg}"/>
+        </Grid>
+
+        <!-- 操作按钮（固定在右下角） -->
+        <Border CornerRadius="10" Padding="12,10"
+                Background="{DynamicResource Lv2Bg}"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                Margin="0,0,16,16"
+                IsVisible="{Binding SelectedResource, Converter={StaticResource IsNotNull}}">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <Button Classes="btn primary sm"
+                        Command="{Binding AddToDesktopCommand}"
+                        CommandParameter="{Binding SelectedResource}">
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <PathIcon Data="{StaticResource IconDesktop}" Width="12" Height="12"
+                                  VerticalAlignment="Center"/>
+                        <TextBlock Text="{i18n:Translate add_to_desktop}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Classes="btn primary sm"
+                        Command="{Binding OpenResourceFolderCommand}"
+                        CommandParameter="{Binding SelectedResource}">
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <PathIcon Data="{StaticResource IconFolder}" Width="12" Height="12"
+                                  VerticalAlignment="Center"/>
+                        <TextBlock Text="{i18n:Translate folder}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Classes="btn primary sm"
+                        Command="{Binding EditResourceCommand}"
+                        CommandParameter="{Binding SelectedResource}">
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <PathIcon Data="{StaticResource IconEdit}" Width="12" Height="12"
+                                  VerticalAlignment="Center"/>
+                        <TextBlock Text="{i18n:Translate edit}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Classes="btn primary sm"
+                        Command="{Binding CloneResourceCommand}"
+                        CommandParameter="{Binding SelectedResource}">
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <PathIcon Data="{StaticResource IconClone}" Width="12" Height="12"
+                                  VerticalAlignment="Center"/>
+                        <TextBlock Text="{i18n:Translate clone}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Classes="btn primary sm"
+                        Command="{Binding ExportResourceCommand}"
+                        CommandParameter="{Binding SelectedResource}">
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <PathIcon Data="{StaticResource IconExport}" Width="12" Height="12"
+                                  VerticalAlignment="Center"/>
+                        <TextBlock Text="{i18n:Translate export}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Classes="btn danger sm"
+                        Command="{Binding DeleteResourceCommand}"
+                        CommandParameter="{Binding SelectedResource}">
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <PathIcon Data="{StaticResource IconDelete}" Width="12" Height="12"
+                                  VerticalAlignment="Center"/>
+                        <TextBlock Text="{i18n:Translate delete}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

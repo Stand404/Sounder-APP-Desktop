@@ -1,0 +1,21 @@
+#!/bin/sh
+# postrm script for sounder-app
+# 卸载后清理安装目录（包括自解压的原生库等运行时产生的文件）
+
+set -e
+
+APP_DIR="/usr/lib/sounder-app"
+
+case "$1" in
+    remove|purge)
+        # 删除整个安装目录（dpkg 移除已注册的文件后，仅剩运行时自解压的 .so 等文件）
+        if [ -d "$APP_DIR" ]; then
+            rm -rf "$APP_DIR"
+        fi
+        ;;
+    upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+        # 升级或异常情况下不处理
+        ;;
+esac
+
+exit 0

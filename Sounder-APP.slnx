@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src\Sounder-APP.Core\Sounder-APP.Core.csproj" />
+  <Project Path="src\Sounder-APP.Desktop\Sounder-APP.Desktop.csproj" />
+</Solution>

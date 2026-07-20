@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Sounder_APP.ViewModels"
+             xmlns:views="using:Sounder_APP.Views"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="710" d:DesignHeight="750"
+             x:Class="Sounder_APP.Views.ShopDetailPanel"
+             x:Name="Root"
+             x:DataType="vm:ShopViewModel"
+             Background="{DynamicResource Lv1Bg}">
+
+    <Design.DataContext>
+        <vm:ShopViewModel/>
+    </Design.DataContext>
+
+    <Grid>
+        <!-- 详情骨架屏（仅在切换资源时显示，初始列表加载时不显示） -->
+        <views:DetailSkeleton Background="{DynamicResource Lv1Bg}"
+                              IsVisible="{Binding IsDetailLoading}"/>
+
+        <!-- 详情内容 -->
+        <views:DetailContent ViewModel="{Binding}"
+                              Background="{DynamicResource Lv1Bg}"
+                              IsVisible="{Binding ShowDetailPanel}"/>
+    </Grid>
+</UserControl>

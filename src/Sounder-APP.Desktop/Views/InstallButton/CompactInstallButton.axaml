@@ -1,0 +1,102 @@
+<local:BaseInstallButton xmlns="https://github.com/avaloniaui"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                         xmlns:local="clr-namespace:Sounder_APP.Views.InstallButton"
+                         xmlns:i18n="clr-namespace:Sounder_APP.Converters"
+                         x:Class="Sounder_APP.Views.InstallButton.CompactInstallButton"
+                         x:Name="Root"
+                         x:CompileBindings="False"
+                         Width="76" Height="32">
+
+    <Button Classes="install-hover"
+            BorderThickness="0"
+            Cursor="Hand"
+            FontWeight="Medium"
+            Background="{DynamicResource AccentBlue}"
+            Foreground="White"
+            Padding="0"
+            CornerRadius="16"
+            FontSize="11"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Command="{Binding Command, ElementName=Root}"
+            CommandParameter="{Binding CommandParameter, ElementName=Root}">
+
+        <Grid>
+            <!-- 空闲状态：显示"安装" -->
+            <TextBlock Text="{i18n:Translate install}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock.IsVisible>
+                    <MultiBinding Converter="{StaticResource StringNotEqualMulti}">
+                        <Binding Path="InstallingResourceId" ElementName="Root"/>
+                        <Binding Path="ResourceId" ElementName="Root"/>
+                    </MultiBinding>
+                </TextBlock.IsVisible>
+            </TextBlock>
+
+            <!-- 活跃状态容器（下载中 / 已暂停） -->
+            <Border CornerRadius="16" ClipToBounds="True"
+                    Background="{DynamicResource AccentBlueHover}">
+                <Border.IsVisible>
+                    <MultiBinding Converter="{StaticResource StringEqualMulti}">
+                        <Binding Path="InstallingResourceId" ElementName="Root"/>
+                        <Binding Path="ResourceId" ElementName="Root"/>
+                    </MultiBinding>
+                </Border.IsVisible>
+                <Grid>
+                    <!-- 已暂停 → 显示"继续" -->
+                    <TextBlock Text="{i18n:Translate resume}" FontSize="11" FontWeight="Medium"
+                               Foreground="White"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               IsVisible="{Binding IsPaused, ElementName=Root}"/>
+
+                    <!-- 下载中 → 进度条 + 百分比 -->
+                    <Grid IsVisible="{Binding IsPaused, ElementName=Root, Converter={StaticResource InverseBool}}">
+                        <!-- 进度填充层 -->
+                        <Rectangle Fill="#40FFFFFF"
+                                   IsHitTestVisible="False">
+                            <Rectangle.RenderTransform>
+                                <ScaleTransform ScaleX="{Binding InstallProgress, ElementName=Root}">
+                                    <ScaleTransform.Transitions>
+                                        <Transitions>
+                                            <DoubleTransition Property="ScaleX" Duration="0:0:0.3" Easing="SineEaseOut"/>
+                                        </Transitions>
+                                    </ScaleTransform.Transitions>
+                                </ScaleTransform>
+                            </Rectangle.RenderTransform>
+                            <Rectangle.RenderTransformOrigin>0, 0.5</Rectangle.RenderTransformOrigin>
+                        </Rectangle>
+
+                        <!-- 百分比 -->
+                        <TextBlock Text="{Binding InstallProgress, ElementName=Root, Converter={StaticResource FloatToPercent}}"
+                                   FontSize="10" Foreground="White"
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Button>
+
+    <UserControl.Styles>
+        <Style Selector="Button.install-hover">
+            <Setter Property="Transitions">
+                <Setter.Value>
+                    <Transitions>
+                        <DoubleTransition Property="Opacity" Duration="0:0:0.2" Easing="SineEaseOut"/>
+                        <BrushTransition Property="Background" Duration="0:0:0.2" Easing="SineEaseOut"/>
+                    </Transitions>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style Selector="Button.install-hover:pointerover">
+            <Setter Property="Background" Value="{DynamicResource AccentBlueHover}"/>
+        </Style>
+        <Style Selector="Button.install-hover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource AccentBlue}"/>
+        </Style>
+        <Style Selector="Button.install-hover:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource AccentBlueHover}"/>
+        </Style>
+        <Style Selector="Button.install-hover:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource AccentBlueHover}"/>
+        </Style>
+    </UserControl.Styles>
+</local:BaseInstallButton>

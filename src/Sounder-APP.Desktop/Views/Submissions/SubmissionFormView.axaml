@@ -1,0 +1,282 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Sounder_APP.ViewModels"
+             xmlns:i18n="clr-namespace:Sounder_APP.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="440" d:DesignHeight="700"
+             x:Class="Sounder_APP.Views.Submissions.SubmissionFormView"
+             x:DataType="vm:SubmissionFormViewModel">
+
+    <Design.DataContext>
+        <vm:SubmissionFormViewModel/>
+    </Design.DataContext>
+
+    <ScrollViewer>
+        <StackPanel Spacing="10" Margin="16,12,16,24">
+
+            <!-- 顶部提示 -->
+            <Border Padding="12" CornerRadius="10"
+                    Background="{DynamicResource TipBg}">
+                <DockPanel>
+                    <PathIcon DockPanel.Dock="Left" Data="{StaticResource IconInfo}" Width="14" Height="14"
+                              Foreground="{DynamicResource AccentBlue}" VerticalAlignment="Top" Margin="0,1,8,0"/>
+                    <TextBlock Text="{i18n:Translate submission_tip}" FontSize="12"
+                               Foreground="{DynamicResource AccentBlue}" TextWrapping="Wrap"/>
+                </DockPanel>
+            </Border>
+
+            <!-- ===== 资源包全称 ===== -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="{i18n:Translate form_resource_name}" FontSize="12" FontWeight="SemiBold"
+                           Foreground="{DynamicResource LabelText}"/>
+                <TextBox Text="{Binding ResourceName}"
+                         PlaceholderText="{i18n:Translate form_resource_name_ph}"
+                         FontSize="13" Foreground="{DynamicResource TextPrimary}"
+                         Classes="input-flat" Padding="10,8"
+                         MaxLength="10"/>
+                <TextBlock Text="{Binding ResourceNameError}" FontSize="11"
+                           Foreground="{DynamicResource ErrorRed}"
+                           IsVisible="{Binding ResourceNameError, Converter={StaticResource IsNotNull}}"/>
+                <TextBlock Text="{Binding ResourceName.Length}" FontSize="11"
+                           Foreground="{DynamicResource TextTertiary}" HorizontalAlignment="Right"/>
+            </StackPanel>
+
+            <!-- ===== APP简称 ===== -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="{i18n:Translate form_app_name}" FontSize="12" FontWeight="SemiBold"
+                           Foreground="{DynamicResource LabelText}"/>
+                <TextBox Text="{Binding AppName}"
+                         PlaceholderText="{i18n:Translate form_app_name_ph}"
+                         FontSize="13" Foreground="{DynamicResource TextPrimary}"
+                         Classes="input-flat" Padding="10,8"
+                         MaxLength="10"/>
+                <TextBlock Text="{Binding AppNameError}" FontSize="11"
+                           Foreground="{DynamicResource ErrorRed}"
+                           IsVisible="{Binding AppNameError, Converter={StaticResource IsNotNull}}"/>
+                <TextBlock Text="{Binding AppName.Length}" FontSize="11"
+                           Foreground="{DynamicResource TextTertiary}" HorizontalAlignment="Right"/>
+            </StackPanel>
+
+            <!-- ===== 简述 ===== -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="{i18n:Translate form_brief}" FontSize="12" FontWeight="SemiBold"
+                           Foreground="{DynamicResource LabelText}"/>
+                <TextBox Text="{Binding Brief}"
+                         PlaceholderText="{i18n:Translate form_brief_ph}"
+                         FontSize="13" Foreground="{DynamicResource TextPrimary}"
+                         Classes="input-flat" Padding="10,8"
+                         MaxLength="50"/>
+                <TextBlock Text="{Binding BriefError}" FontSize="11"
+                           Foreground="{DynamicResource ErrorRed}"
+                           IsVisible="{Binding BriefError, Converter={StaticResource IsNotNull}}"/>
+                <TextBlock Text="{Binding Brief.Length}" FontSize="11"
+                           Foreground="{DynamicResource TextTertiary}" HorizontalAlignment="Right"/>
+            </StackPanel>
+
+            <!-- ===== 平台 ===== -->
+            <StackPanel Spacing="6">
+                <TextBlock Text="{i18n:Translate form_platform}" FontSize="12" FontWeight="SemiBold"
+                           Foreground="{DynamicResource LabelText}"/>
+                <WrapPanel>
+                    <Button Content="哔哩" Margin="0,0,8,8"
+                            Command="{Binding SelectPlatformCommand}"
+                            CommandParameter="哔哩" Cursor="Hand"
+                            Classes="btn" Padding="12,6" FontSize="13"
+                            Background="{DynamicResource Lv3Bg}"
+                            Foreground="{DynamicResource TextSecondary}"/>
+                    <Button Content="抖音" Margin="0,0,8,8"
+                            Command="{Binding SelectPlatformCommand}"
+                            CommandParameter="抖音" Cursor="Hand"
+                            Classes="btn" Padding="12,6" FontSize="13"
+                            Background="{DynamicResource Lv3Bg}"
+                            Foreground="{DynamicResource TextSecondary}"/>
+                    <Button Content="快手" Margin="0,0,8,8"
+                            Command="{Binding SelectPlatformCommand}"
+                            CommandParameter="快手" Cursor="Hand"
+                            Classes="btn" Padding="12,6" FontSize="13"
+                            Background="{DynamicResource Lv3Bg}"
+                            Foreground="{DynamicResource TextSecondary}"/>
+                    <Button Content="粉丝群" Margin="0,0,8,8"
+                            Command="{Binding SelectPlatformCommand}"
+                            CommandParameter="粉丝群" Cursor="Hand"
+                            Classes="btn" Padding="12,6" FontSize="13"
+                            Background="{DynamicResource Lv3Bg}"
+                            Foreground="{DynamicResource TextSecondary}"/>
+                </WrapPanel>
+                <!-- 当前选中平台 -->
+                <Border CornerRadius="6" Padding="8,4"
+                        Background="{DynamicResource AccentBlue}" HorizontalAlignment="Left"
+                        IsVisible="{Binding Platform, Converter={StaticResource IsNotNull}}">
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <PathIcon Data="{StaticResource IconCheck}" Width="12" Height="12" Foreground="White"/>
+                        <TextBlock Foreground="White" FontSize="12" FontWeight="SemiBold">
+                            <Run Text="{i18n:Translate selected_colon}"/>
+                            <Run Text="{Binding Platform}"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+                <TextBlock Text="{Binding PlatformError}" FontSize="11"
+                           Foreground="{DynamicResource ErrorRed}"
+                           IsVisible="{Binding PlatformError, Converter={StaticResource IsNotNull}}"/>
+            </StackPanel>
+
+            <!-- ===== 平台账号 ===== -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="{i18n:Translate form_platform_id}" FontSize="12" FontWeight="SemiBold"
+                           Foreground="{DynamicResource LabelText}"/>
+                <TextBox Text="{Binding PlatformId}"
+                         PlaceholderText="{i18n:Translate form_platform_id_ph}"
+                         FontSize="13" Foreground="{DynamicResource TextPrimary}"
+                         Classes="input-flat" Padding="10,8"
+                         MaxLength="100"/>
+            </StackPanel>
+
+            <!-- ===== 昵称 ===== -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="{i18n:Translate form_nickname}" FontSize="12" FontWeight="SemiBold"
+                           Foreground="{DynamicResource LabelText}"/>
+                <TextBox Text="{Binding Nickname}"
+                         PlaceholderText="{i18n:Translate form_nickname_ph}"
+                         FontSize="13" Foreground="{DynamicResource TextPrimary}"
+                         Classes="input-flat" Padding="10,8"
+                         MaxLength="50"/>
+                <TextBlock Text="{Binding NicknameError}" FontSize="11"
+                           Foreground="{DynamicResource ErrorRed}"
+                           IsVisible="{Binding NicknameError, Converter={StaticResource IsNotNull}}"/>
+            </StackPanel>
+
+            <!-- ===== 分隔线 ===== -->
+            <Border Height="1" Background="{DynamicResource Lv2Border}" Margin="0,4"/>
+
+            <TextBlock Text="{i18n:Translate form_source_info}" FontSize="14" FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextPrimary}"/>
+
+            <!-- ===== 图片来源 ===== -->
+            <StackPanel Spacing="6">
+                <TextBlock Text="{i18n:Translate form_image_source}" FontSize="12" FontWeight="SemiBold"
+                           Foreground="{DynamicResource LabelText}"/>
+                <WrapPanel>
+                    <Button Content="游戏截图" Margin="0,0,8,8"
+                            Command="{Binding SelectImageSourceCommand}"
+                            CommandParameter="游戏截图" Cursor="Hand"
+                            Classes="btn" Padding="12,6" FontSize="13"
+                            Background="{DynamicResource Lv3Bg}"
+                            Foreground="{DynamicResource TextSecondary}"/>
+                    <Button Content="动漫截图" Margin="0,0,8,8"
+                            Command="{Binding SelectImageSourceCommand}"
+                            CommandParameter="动漫截图" Cursor="Hand"
+                            Classes="btn" Padding="12,6" FontSize="13"
+                            Background="{DynamicResource Lv3Bg}"
+                            Foreground="{DynamicResource TextSecondary}"/>
+                    <Button Content="互联网" Margin="0,0,8,8"
+                            Command="{Binding SelectImageSourceCommand}"
+                            CommandParameter="互联网" Cursor="Hand"
+                            Classes="btn" Padding="12,6" FontSize="13"
+                            Background="{DynamicResource Lv3Bg}"
+                            Foreground="{DynamicResource TextSecondary}"/>
+                    <Button Content="视频截图" Margin="0,0,8,8"
+                            Command="{Binding SelectImageSourceCommand}"
+                            CommandParameter="视频截图" Cursor="Hand"
+                            Classes="btn" Padding="12,6" FontSize="13"
+                            Background="{DynamicResource Lv3Bg}"
+                            Foreground="{DynamicResource TextSecondary}"/>
+                </WrapPanel>
+                <!-- 当前选中图片来源 -->
+                <Border CornerRadius="6" Padding="8,4"
+                        Background="{DynamicResource AccentBlue}" HorizontalAlignment="Left"
+                        IsVisible="{Binding ImageSource, Converter={StaticResource IsNotNull}}">
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <PathIcon Data="{StaticResource IconCheck}" Width="12" Height="12" Foreground="White"/>
+                        <TextBlock Foreground="White" FontSize="12" FontWeight="SemiBold">
+                            <Run Text="{i18n:Translate selected_colon}"/>
+                            <Run Text="{Binding ImageSource}"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+                <TextBlock Text="{Binding ImageSourceError}" FontSize="11"
+                           Foreground="{DynamicResource ErrorRed}"
+                           IsVisible="{Binding ImageSourceError, Converter={StaticResource IsNotNull}}"/>
+            </StackPanel>
+
+            <!-- 图片来源链接（条件显示） -->
+            <StackPanel Spacing="4" IsVisible="{Binding ShowImageSourceLink}">
+                <TextBlock Text="{i18n:Translate form_image_source_link}" FontSize="12" FontWeight="SemiBold"
+                           Foreground="{DynamicResource LabelText}"/>
+                <TextBox Text="{Binding ImageSourceLink}"
+                         PlaceholderText="{i18n:Translate form_image_source_link_ph}"
+                         FontSize="13" Foreground="{DynamicResource TextPrimary}"
+                         Classes="input-flat" Padding="10,8"
+                         MaxLength="500"/>
+            </StackPanel>
+
+            <!-- ===== 声音来源 ===== -->
+            <StackPanel Spacing="6">
+                <TextBlock Text="{i18n:Translate form_voice_source}" FontSize="12" FontWeight="SemiBold"
+                           Foreground="{DynamicResource LabelText}"/>
+                <WrapPanel>
+                    <Button Content="游戏录制" Margin="0,0,8,8"
+                            Command="{Binding SelectVoiceSourceCommand}"
+                            CommandParameter="游戏录制" Cursor="Hand"
+                            Classes="btn" Padding="12,6" FontSize="13"
+                            Background="{DynamicResource Lv3Bg}"
+                            Foreground="{DynamicResource TextSecondary}"/>
+                    <Button Content="视频链接" Margin="0,0,8,8"
+                            Command="{Binding SelectVoiceSourceCommand}"
+                            CommandParameter="视频链接" Cursor="Hand"
+                            Classes="btn" Padding="12,6" FontSize="13"
+                            Background="{DynamicResource Lv3Bg}"
+                            Foreground="{DynamicResource TextSecondary}"/>
+                    <Button Content="互联网" Margin="0,0,8,8"
+                            Command="{Binding SelectVoiceSourceCommand}"
+                            CommandParameter="互联网" Cursor="Hand"
+                            Classes="btn" Padding="12,6" FontSize="13"
+                            Background="{DynamicResource Lv3Bg}"
+                            Foreground="{DynamicResource TextSecondary}"/>
+                </WrapPanel>
+                <!-- 当前选中声音来源 -->
+                <Border CornerRadius="6" Padding="8,4"
+                        Background="{DynamicResource AccentBlue}" HorizontalAlignment="Left"
+                        IsVisible="{Binding VoiceSource, Converter={StaticResource IsNotNull}}">
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <PathIcon Data="{StaticResource IconCheck}" Width="12" Height="12" Foreground="White"/>
+                        <TextBlock Foreground="White" FontSize="12" FontWeight="SemiBold">
+                            <Run Text="{i18n:Translate selected_colon}"/>
+                            <Run Text="{Binding VoiceSource}"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+                <TextBlock Text="{Binding VoiceSourceError}" FontSize="11"
+                           Foreground="{DynamicResource ErrorRed}"
+                           IsVisible="{Binding VoiceSourceError, Converter={StaticResource IsNotNull}}"/>
+            </StackPanel>
+
+            <!-- 声音来源链接（条件显示） -->
+            <StackPanel Spacing="4" IsVisible="{Binding ShowVoiceSourceLink}">
+                <TextBlock Text="{i18n:Translate form_voice_source_link}" FontSize="12" FontWeight="SemiBold"
+                           Foreground="{DynamicResource LabelText}"/>
+                <TextBox Text="{Binding VoiceSourceLink}"
+                         PlaceholderText="{i18n:Translate form_voice_source_link_ph}"
+                         FontSize="13" Foreground="{DynamicResource TextPrimary}"
+                         Classes="input-flat" Padding="10,8"
+                         MaxLength="500"/>
+            </StackPanel>
+
+            <!-- ===== 备注 ===== -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="{i18n:Translate form_note}" FontSize="12" FontWeight="SemiBold"
+                           Foreground="{DynamicResource LabelText}"/>
+                <TextBox Text="{Binding FileLink}"
+                         PlaceholderText="{i18n:Translate form_note_ph}"
+                         FontSize="13" Foreground="{DynamicResource TextPrimary}"
+                         Classes="input-flat" Padding="10,8"
+                         MaxLength="500"/>
+                <TextBlock Text="{i18n:Translate form_note_hint}" FontSize="11"
+                           Foreground="{DynamicResource TextTertiary}" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <Rectangle Height="20" Fill="Transparent"/>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

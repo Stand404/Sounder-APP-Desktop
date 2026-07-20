@@ -1,0 +1,25 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Sounder_APP.Views.ResourceDetailLayout">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="340"/>
+            <ColumnDefinition Width="1"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- 左侧：资源列表 -->
+        <ContentControl x:Name="LeftContainer" Grid.Column="0"/>
+
+        <!-- 微弱分隔线 -->
+        <Border Grid.Column="1"
+                Background="{DynamicResource Lv2Border}"
+                Opacity="0.7"
+                VerticalAlignment="Stretch"/>
+
+        <!-- 右侧：详情面板 -->
+        <ContentControl x:Name="RightContainer" Grid.Column="2"/>
+
+    </Grid>
+</UserControl>

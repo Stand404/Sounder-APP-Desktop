@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="using:Sounder_APP.Views"
+             xmlns:i18n="clr-namespace:Sounder_APP.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="340" d:DesignHeight="60"
+             x:Class="Sounder_APP.Views.SearchBar"
+             x:Name="Root"
+             x:CompileBindings="False">
+
+    <Border Padding="8">
+        <TextBox Text="{Binding ViewModel.SearchQuery, RelativeSource={RelativeSource AncestorType=views:SearchBar}}"
+                 PlaceholderText="{i18n:Translate search_hint}"
+                 Classes="input-bordered lg"
+                 FontSize="14"
+                 Foreground="{DynamicResource TextPrimary}"
+                 KeyDown="OnSearchTextBoxKeyDown">
+            <TextBox.InnerRightContent>
+                <Button Click="OnSearchButtonClick"
+                        Background="Transparent" BorderThickness="0"
+                        Padding="6" Cursor="Hand" Margin="0,0,4,0">
+                    <PathIcon Data="{StaticResource IconSearch}" Width="18" Height="18"
+                              Foreground="{DynamicResource TextSecondary}"/>
+                </Button>
+            </TextBox.InnerRightContent>
+        </TextBox>
+    </Border>
+</UserControl>

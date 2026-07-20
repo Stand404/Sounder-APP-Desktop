@@ -1,0 +1,133 @@
+<Styles xmlns="https://github.com/avaloniaui"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ===== 全局按钮样式系统 ===== -->
+    <!-- 基础按钮 -->
+    <Style Selector="Button.btn">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="CornerRadius" Value="4"/>
+    </Style>
+
+    <!-- ===== Primary 填充按钮 ===== -->
+    <Style Selector="Button.btn.primary">
+        <Setter Property="Background" Value="{DynamicResource AccentBlue}"/>
+        <Setter Property="Foreground" Value="{DynamicResource BtnFgSoft}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    <Style Selector="Button.btn.primary:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource AccentBlueHover}"/>
+    </Style>
+    <Style Selector="Button.btn.primary:pressed /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource AccentBluePressed}"/>
+    </Style>
+    <Style Selector="Button.btn.primary:pointerover">
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    <Style Selector="Button.btn.primary:pressed">
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    <Style Selector="Button.btn.primary TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource BtnFgSoft}"/>
+    </Style>
+    <Style Selector="Button.btn.primary:pointerover TextBlock">
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    <Style Selector="Button.btn.primary:pressed TextBlock">
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    <Style Selector="Button.btn.primary PathIcon">
+        <Setter Property="Foreground" Value="{DynamicResource BtnFgSoft}"/>
+    </Style>
+    <Style Selector="Button.btn.primary:pointerover PathIcon">
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    <Style Selector="Button.btn.primary:pressed PathIcon">
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+
+    <!-- ===== Danger 填充按钮 ===== -->
+    <Style Selector="Button.btn.danger">
+        <Setter Property="Background" Value="{DynamicResource ErrorRed}"/>
+        <Setter Property="Foreground" Value="{DynamicResource BtnFgSoft}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    <Style Selector="Button.btn.danger:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource ErrorRedHover}"/>
+    </Style>
+    <Style Selector="Button.btn.danger:pressed /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource ErrorRedPressed}"/>
+    </Style>
+    <Style Selector="Button.btn.danger:pointerover">
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    <Style Selector="Button.btn.danger:pressed">
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    <Style Selector="Button.btn.danger TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource BtnFgSoft}"/>
+    </Style>
+    <Style Selector="Button.btn.danger:pointerover TextBlock">
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    <Style Selector="Button.btn.danger:pressed TextBlock">
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    <Style Selector="Button.btn.danger PathIcon">
+        <Setter Property="Foreground" Value="{DynamicResource BtnFgSoft}"/>
+    </Style>
+    <Style Selector="Button.btn.danger:pointerover PathIcon">
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    <Style Selector="Button.btn.danger:pressed PathIcon">
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+
+    <!-- ===== Secondary 填充按钮（用于取消等次要操作） ===== -->
+    <Style Selector="Button.btn.secondary">
+        <Setter Property="Background" Value="{DynamicResource Lv2Bg}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondary}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    <Style Selector="Button.btn.secondary:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource Lv2Hover}"/>
+    </Style>
+    <Style Selector="Button.btn.secondary:pointerover">
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
+    </Style>
+    <Style Selector="Button.btn.secondary:pressed">
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
+    </Style>
+    <Style Selector="Button.btn.secondary TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondary}"/>
+    </Style>
+    <Style Selector="Button.btn.secondary:pointerover TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
+    </Style>
+    <Style Selector="Button.btn.secondary:pressed TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
+    </Style>
+    <Style Selector="Button.btn.secondary PathIcon">
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondary}"/>
+    </Style>
+    <Style Selector="Button.btn.secondary:pointerover PathIcon">
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
+    </Style>
+    <Style Selector="Button.btn.secondary:pressed PathIcon">
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
+    </Style>
+
+    <!-- ===== 按钮尺寸变体 ===== -->
+    <Style Selector="Button.btn.sm">
+        <Setter Property="Padding" Value="8,4"/>
+        <Setter Property="FontSize" Value="12"/>
+    </Style>
+    <Style Selector="Button.btn.md">
+        <Setter Property="Padding" Value="10,5"/>
+        <Setter Property="FontSize" Value="13"/>
+    </Style>
+    <Style Selector="Button.btn.lg">
+        <Setter Property="Padding" Value="14,6"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+
+</Styles>

@@ -1,0 +1,872 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="settings_title" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="language_setting" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="language_system" xml:space="preserve">
+    <value>Системный</value>
+  </data>
+  <data name="theme_mode" xml:space="preserve">
+    <value>Режим темы</value>
+  </data>
+  <data name="auto_theme" xml:space="preserve">
+    <value>Авто</value>
+  </data>
+  <data name="light" xml:space="preserve">
+    <value>Светлая</value>
+  </data>
+  <data name="dark" xml:space="preserve">
+    <value>Тёмная</value>
+  </data>
+  <data name="cache_cleanup" xml:space="preserve">
+    <value>Очистка кэша</value>
+  </data>
+  <data name="enter_official_site" xml:space="preserve">
+    <value>Перейти на сайт</value>
+  </data>
+  <data name="get_fan_group" xml:space="preserve">
+    <value>Группа фанатов</value>
+  </data>
+  <data name="author_name" xml:space="preserve">
+    <value>Автор</value>
+  </data>
+  <data name="about_title" xml:space="preserve">
+    <value>О приложении</value>
+  </data>
+  <data name="app_name_display" xml:space="preserve">
+    <value>Sounder</value>
+  </data>
+  <data name="app_description" xml:space="preserve">
+    <value>Общее название для отдельных приложений, только Android.</value>
+  </data>
+  <data name="app_name_zaohua" xml:space="preserve">
+    <value>Sounder APP · Эволюция</value>
+  </data>
+  <data name="badge_multi_platform" xml:space="preserve">
+    <value>Мультиплатформа</value>
+  </data>
+  <data name="app_full_description" xml:space="preserve">
+    <value>Просматривайте, ищите, скачивайте, создавайте, редактируйте, импортируйте и экспортируйте различные пакеты ресурсов, а также воспроизводите разные аудиоресурсы. Поддерживает Windows, macOS, Linux, Android, iOS.</value>
+  </data>
+  <data name="independent_package" xml:space="preserve">
+    <value>Пакет отдельных приложений</value>
+  </data>
+  <data name="independent_desc" xml:space="preserve">
+    <value>Сборник всех отдельных приложений, удобно для массовой загрузки</value>
+  </data>
+  <data name="audio_files" xml:space="preserve">
+    <value>Аудиофайлы</value>
+  </data>
+  <data name="audio_files_desc" xml:space="preserve">
+    <value>Все аудиофайлы, используемые ресурсами, взяты из интернета</value>
+  </data>
+  <data name="privacy_notice" xml:space="preserve">
+    <value>Это приложение не собирает никакую вашу личную информацию. Все личные данные хранятся только локально на вашем устройстве и не загружаются на какие-либо серверы.</value>
+  </data>
+  <data name="feedback_notice" xml:space="preserve">
+    <value>Если столкнёшься с проблемами или багами, можешь написать автору через официальный сайт, Douyin, Bilibili или группу фанатов, мяу♪</value>
+  </data>
+  <data name="clear_cache_confirm_title" xml:space="preserve">
+    <value>Очистить кэш</value>
+  </data>
+  <data name="clear_cache_confirm_msg" xml:space="preserve">
+    <value>Точно хочешь очистить весь кэш (изображения и аудио предпросмотра)? Отменить это уже не получится♪</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="confirm" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="show_window" xml:space="preserve">
+    <value>Показать окно</value>
+  </data>
+  <data name="exit" xml:space="preserve">
+    <value>Выход</value>
+  </data>
+  <data name="dirty_confirm_title" xml:space="preserve">
+    <value>Несохраненные изменения</value>
+  </data>
+  <data name="dirty_exit_message" xml:space="preserve">
+    <value>Текущие изменения не сохранены. При выходе все изменения будут потеряны.</value>
+  </data>
+  <data name="dirty_save_exit" xml:space="preserve">
+    <value>Сохранить и выйти</value>
+  </data>
+  <data name="dirty_confirm_exit" xml:space="preserve">
+    <value>Подтвердить выход</value>
+  </data>
+  <data name="dirty_switch_message" xml:space="preserve">
+    <value>Текущие изменения не сохранены. При переключении все изменения будут потеряны.</value>
+  </data>
+  <data name="dirty_save_switch" xml:space="preserve">
+    <value>Сохранить и переключить</value>
+  </data>
+  <data name="dirty_confirm_switch" xml:space="preserve">
+    <value>Подтвердить переключение</value>
+  </data>
+  <data name="dirty_delete_title" xml:space="preserve">
+    <value>Удалить ресурс</value>
+  </data>
+  <data name="dirty_delete_message" xml:space="preserve">
+    <value>Вы уверены, что хотите удалить &quot;{0}&quot;?
+Это действие нельзя отменить.</value>
+  </data>
+  <data name="dirty_confirm_delete" xml:space="preserve">
+    <value>Подтвердить удаление</value>
+  </data>
+  <data name="dirty_confirm_btn" xml:space="preserve">
+    <value>Подтвердить</value>
+  </data>
+  <data name="tooltip_title" xml:space="preserve">
+    <value>Sounder APP</value>
+  </data>
+  <data name="tab_personal" xml:space="preserve">
+    <value>Мои ресурсы</value>
+  </data>
+  <data name="tab_shop" xml:space="preserve">
+    <value>Магазин</value>
+  </data>
+  <data name="tab_submissions" xml:space="preserve">
+    <value>Публикации</value>
+  </data>
+  <data name="tab_task_manager" xml:space="preserve">
+    <value>Диспетчер задач</value>
+  </data>
+  <data name="tab_settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="loading" xml:space="preserve">
+    <value>Загрузка...</value>
+  </data>
+  <data name="load_more" xml:space="preserve">
+    <value>Загрузить ещё</value>
+  </data>
+  <data name="no_more_data" xml:space="preserve">
+    <value>— Это всё —</value>
+  </data>
+  <data name="search_audio_hint" xml:space="preserve">
+    <value>Поиск аудио…</value>
+  </data>
+  <data name="search_hint" xml:space="preserve">
+    <value>Поиск ресурсов…</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Поиск</value>
+  </data>
+  <data name="install" xml:space="preserve">
+    <value>Установить</value>
+  </data>
+  <data name="installed" xml:space="preserve">
+    <value>Установлено</value>
+  </data>
+  <data name="retry" xml:space="preserve">
+    <value>Повторить</value>
+  </data>
+  <data name="shop_empty" xml:space="preserve">
+    <value>Полочка магазина пока пустая</value>
+  </data>
+  <data name="no_resources_yet" xml:space="preserve">
+    <value>Здесь ничего нет</value>
+  </data>
+  <data name="go_shop_to_install" xml:space="preserve">
+    <value>Идём в магазин и заберём ресурсы домой, мяу♪</value>
+  </data>
+  <data name="view_detail" xml:space="preserve">
+    <value>Подробнее</value>
+  </data>
+  <data name="edit_resource" xml:space="preserve">
+    <value>Редактировать ресурс</value>
+  </data>
+  <data name="clone_resource" xml:space="preserve">
+    <value>Клонировать ресурс</value>
+  </data>
+  <data name="export_package" xml:space="preserve">
+    <value>Экспорт пакета</value>
+  </data>
+  <data name="add_to_desktop" xml:space="preserve">
+    <value>Добавить на рабочий стол</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="confirm_delete_title" xml:space="preserve">
+    <value>Подтверждение удаления</value>
+  </data>
+  <data name="confirm_delete_message" xml:space="preserve">
+    <value>Точно хочешь удалить этот ресурс? Назад дороги нет, мяу~</value>
+  </data>
+  <data name="add_resource_desc" xml:space="preserve">
+    <value>Добавить ресурс</value>
+  </data>
+  <data name="searching" xml:space="preserve">
+    <value>Поиск...</value>
+  </data>
+  <data name="no_personal_resources" xml:space="preserve">
+    <value>Нет личных ресурсов</value>
+  </data>
+  <data name="resource_count_fmt" xml:space="preserve">
+    <value>Всего {0} ресурсов</value>
+  </data>
+  <data name="load_failed" xml:space="preserve">
+    <value>Ошибка загрузки</value>
+  </data>
+  <data name="load_error_fmt" xml:space="preserve">
+    <value>Ошибка загрузки: {0}</value>
+  </data>
+  <data name="found_resource_count_fmt" xml:space="preserve">
+    <value>Найдено {0} ресурсов</value>
+  </data>
+  <data name="no_match_resource" xml:space="preserve">
+    <value>Не найдено подходящих ресурсов</value>
+  </data>
+  <data name="import_title" xml:space="preserve">
+    <value>Выберите пакет ресурсов (.zip)</value>
+  </data>
+  <data name="zip_file_type" xml:space="preserve">
+    <value>ZIP Архив</value>
+  </data>
+  <data name="invalid_package_no_manifest" xml:space="preserve">
+    <value>Недействительный пакет: отсутствует manifest.json</value>
+  </data>
+  <data name="invalid_package_incomplete_manifest" xml:space="preserve">
+    <value>Недействительный пакет: неполные данные manifest</value>
+  </data>
+  <data name="export_title" xml:space="preserve">
+    <value>Экспорт ресурса</value>
+  </data>
+  <data name="default_resource_name" xml:space="preserve">
+    <value>Новый ресурс</value>
+  </data>
+  <data name="default_resource_desc" xml:space="preserve">
+    <value>Интересный пакет ресурсов</value>
+  </data>
+  <data name="clone_suffix" xml:space="preserve">
+    <value> (Копия)</value>
+  </data>
+  <data name="added_to_desktop" xml:space="preserve">
+    <value>Добавлен на рабочий стол</value>
+  </data>
+  <data name="shortcut_created_fmt" xml:space="preserve">
+    <value>Ярлык для &quot;{0}&quot; создан</value>
+  </data>
+  <data name="no_match" xml:space="preserve">
+    <value>Не нашлось такого ресурса</value>
+  </data>
+  <data name="go_to_shop" xml:space="preserve">
+    <value>Перейти в магазин</value>
+  </data>
+  <data name="create_new_resource" xml:space="preserve">
+    <value>Создать новый ресурс</value>
+  </data>
+  <data name="import_package" xml:space="preserve">
+    <value>Импорт пакета</value>
+  </data>
+  <data name="back" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="online_preview" xml:space="preserve">
+    <value>Предпросмотр</value>
+  </data>
+  <data name="select_audio" xml:space="preserve">
+    <value>Выбрать аудио</value>
+  </data>
+  <data name="no_audio_in_package" xml:space="preserve">
+    <value>В этом пакете тихо-тихо, аудио нет</value>
+  </data>
+  <data name="normal_mode" xml:space="preserve">
+    <value>Обычный</value>
+  </data>
+  <data name="interrupt_mode" xml:space="preserve">
+    <value>Прерывание</value>
+  </data>
+  <data name="play_mode_label" xml:space="preserve">
+    <value>Режим воспроизведения</value>
+  </data>
+  <data name="overlay_desc" xml:space="preserve">
+    <value>Звуки воспроизводятся не мешая друг другу</value>
+  </data>
+  <data name="replace_desc" xml:space="preserve">
+    <value>Новое воспроизведение прерывает предыдущее</value>
+  </data>
+  <data name="loop_desc" xml:space="preserve">
+    <value>Играет всегда и никогда не останавливается</value>
+  </data>
+  <data name="overlay_mode" xml:space="preserve">
+    <value>Наложение</value>
+  </data>
+  <data name="replace_mode" xml:space="preserve">
+    <value>Замена</value>
+  </data>
+  <data name="loop_mode" xml:space="preserve">
+    <value>Повтор</value>
+  </data>
+  <data name="loop_type_label" xml:space="preserve">
+    <value>Тип повтора</value>
+  </data>
+  <data name="loop_type_desc" xml:space="preserve">
+    <value>Повтор трека / Воспроизведение списка по очереди</value>
+  </data>
+  <data name="loop_single" xml:space="preserve">
+    <value>Один</value>
+  </data>
+  <data name="loop_list" xml:space="preserve">
+    <value>Список</value>
+  </data>
+  <data name="play_mode_single_loop" xml:space="preserve">
+    <value>Один повтор</value>
+  </data>
+  <data name="play_mode_list_loop" xml:space="preserve">
+    <value>Повтор списка</value>
+  </data>
+  <data name="play_order_label" xml:space="preserve">
+    <value>Порядок воспроизведения</value>
+  </data>
+  <data name="order_desc" xml:space="preserve">
+    <value>Эта настройка применяется к кликам по ярлыку на рабочем столе</value>
+  </data>
+  <data name="order_play" xml:space="preserve">
+    <value>По порядку</value>
+  </data>
+  <data name="random_play" xml:space="preserve">
+    <value>Случайно</value>
+  </data>
+  <data name="stop_playback" xml:space="preserve">
+    <value>Остановить</value>
+  </data>
+  <data name="more_actions" xml:space="preserve">
+    <value>Другие действия</value>
+  </data>
+  <data name="resource_not_found" xml:space="preserve">
+    <value>Не нашлось этого ресурса</value>
+  </data>
+  <data name="task_manager" xml:space="preserve">
+    <value>Диспетчер задач</value>
+  </data>
+  <data name="no_tasks" xml:space="preserve">
+    <value>Активных задач нет</value>
+  </data>
+  <data name="stop_all" xml:space="preserve">
+    <value>Остановить всё</value>
+  </data>
+  <data name="status_in_progress" xml:space="preserve">
+    <value>В процессе</value>
+  </data>
+  <data name="status_pending" xml:space="preserve">
+    <value>В ожидании</value>
+  </data>
+  <data name="status_completed" xml:space="preserve">
+    <value>Завершено</value>
+  </data>
+  <data name="no_submissions" xml:space="preserve">
+    <value>Пока никто не прислал публикаций</value>
+  </data>
+  <data name="submissions_header_title" xml:space="preserve">
+    <value>Публикации и планы</value>
+  </data>
+  <data name="submissions_header_desc" xml:space="preserve">
+    <value>Публикуйте в Sounder APP и следите за статусом выхода</value>
+  </data>
+  <data name="submissions_new_btn" xml:space="preserve">
+    <value>Опубликовать</value>
+  </data>
+  <data name="submission_search_placeholder" xml:space="preserve">
+    <value>Поиск публикаций…</value>
+  </data>
+  <data name="submission_no_schedule" xml:space="preserve">
+    <value>Без даты</value>
+  </data>
+  <data name="submission_link_copied" xml:space="preserve">
+    <value>Ссылка скопирована</value>
+  </data>
+  <data name="resumable" xml:space="preserve">
+    <value>Можно продолжить</value>
+  </data>
+  <data name="search_history" xml:space="preserve">
+    <value>История поиска</value>
+  </data>
+  <data name="clear_text" xml:space="preserve">
+    <value>Очистить</value>
+  </data>
+  <data name="copy_link" xml:space="preserve">
+    <value>Копировать ссылку</value>
+  </data>
+  <data name="unnamed_resource" xml:space="preserve">
+    <value>Безымянный ресурс</value>
+  </data>
+  <data name="search_task_hint" xml:space="preserve">
+    <value>Поиск задач…</value>
+  </data>
+  <data name="task_management_desc" xml:space="preserve">
+    <value>Задачи воспроизведения, ткнутые с рабочего стола, послушно показываются тут, мяу~</value>
+  </data>
+  <data name="no_matching_tasks" xml:space="preserve">
+    <value>Нет такой задачи</value>
+  </data>
+  <data name="try_different_keywords" xml:space="preserve">
+    <value>Попробуйте другое кошачье слово, мяу~</value>
+  </data>
+  <data name="deleted_files" xml:space="preserve">
+    <value>Удалил {0} файлов, освободил {1}♪</value>
+  </data>
+  <data name="cloned_as" xml:space="preserve">
+    <value>Клонировал как「{0}」♪</value>
+  </data>
+  <data name="import_success" xml:space="preserve">
+    <value>Импорт удался, отлично♪</value>
+  </data>
+  <data name="created" xml:space="preserve">
+    <value>Создал「{0}」♪</value>
+  </data>
+  <data name="new_resource_name" xml:space="preserve">
+    <value>Новый пакет ресурсов</value>
+  </data>
+  <data name="new_resource_desc" xml:space="preserve">
+    <value>Интересный пакет ресурсов</value>
+  </data>
+  <data name="date_today" xml:space="preserve">
+    <value>Сегодня</value>
+  </data>
+  <data name="date_yesterday" xml:space="preserve">
+    <value>Вчера</value>
+  </data>
+  <data name="date_tomorrow" xml:space="preserve">
+    <value>Завтра</value>
+  </data>
+  <data name="idle_empty_hint" xml:space="preserve">
+    <value>Выберите ресурс слева</value>
+  </data>
+  <data name="stop" xml:space="preserve">
+    <value>Стоп</value>
+  </data>
+  <data name="brief_label" xml:space="preserve">
+    <value>Кратко</value>
+  </data>
+  <data name="image_source_label" xml:space="preserve">
+    <value>Источник изображений</value>
+  </data>
+  <data name="voice_source_label" xml:space="preserve">
+    <value>Источник звука</value>
+  </data>
+  <data name="image_source_link_label" xml:space="preserve">
+    <value>Ссылка на источник изображений</value>
+  </data>
+  <data name="voice_source_link_label" xml:space="preserve">
+    <value>Ссылка на источник звука</value>
+  </data>
+  <data name="notes_label" xml:space="preserve">
+    <value>Примечания</value>
+  </data>
+  <data name="platform_account_label" xml:space="preserve">
+    <value>Аккаунт платформы</value>
+  </data>
+  <data name="submission_form_tip" xml:space="preserve">
+    <value>Сначала посмотри форматы других и заполни всё как надо, мяу~ Свяжись со Stand через официальный сайт, если что-то неясно♪</value>
+  </data>
+  <data name="resource_full_name" xml:space="preserve">
+    <value>Полное название ресурса *</value>
+  </data>
+  <data name="resource_full_name_placeholder" xml:space="preserve">
+    <value>Например: ГугуГага, Сяотао Гейму</value>
+  </data>
+  <data name="app_short_name" xml:space="preserve">
+    <value>Краткое название APP *</value>
+  </data>
+  <data name="app_short_name_placeholder" xml:space="preserve">
+    <value>Не более 5 симв., напр.: ГугуГага, Гейму</value>
+  </data>
+  <data name="brief_required" xml:space="preserve">
+    <value>Кратко *</value>
+  </data>
+  <data name="brief_placeholder" xml:space="preserve">
+    <value>Одна фраза, лучше всего описывающая этот голос</value>
+  </data>
+  <data name="platform_required" xml:space="preserve">
+    <value>Платформа *</value>
+  </data>
+  <data name="platform_selected" xml:space="preserve">
+    <value>Выбрано: </value>
+  </data>
+  <data name="platform_account_optional" xml:space="preserve">
+    <value>Аккаунт платформы (необязательно)</value>
+  </data>
+  <data name="platform_account_placeholder" xml:space="preserve">
+    <value>Для связи; если не указать, мы не сможем связаться с вами</value>
+  </data>
+  <data name="nickname_required" xml:space="preserve">
+    <value>Псевдоним *</value>
+  </data>
+  <data name="nickname_placeholder" xml:space="preserve">
+    <value>Как к вам обращаться?</value>
+  </data>
+  <data name="source_info" xml:space="preserve">
+    <value>Информация об источнике</value>
+  </data>
+  <data name="image_source_required" xml:space="preserve">
+    <value>Источник изображений *</value>
+  </data>
+  <data name="image_source_link_placeholder" xml:space="preserve">
+    <value>Укажите ссылку на источник (если скриншот свой — оставьте пустым)</value>
+  </data>
+  <data name="voice_source_required" xml:space="preserve">
+    <value>Источник звука *</value>
+  </data>
+  <data name="voice_source_link_placeholder" xml:space="preserve">
+    <value>Укажите ссылку на источник (если запись своя — оставьте пустым)</value>
+  </data>
+  <data name="submit" xml:space="preserve">
+    <value>Отправить</value>
+  </data>
+  <data name="copy_success" xml:space="preserve">
+    <value>Ссылка скопирована</value>
+  </data>
+  <data name="bilibili" xml:space="preserve">
+    <value>Bilibili</value>
+  </data>
+  <data name="douyin" xml:space="preserve">
+    <value>Douyin</value>
+  </data>
+  <data name="kuaishou" xml:space="preserve">
+    <value>Kuaishou</value>
+  </data>
+  <data name="fan_group" xml:space="preserve">
+    <value>Группа фанатов</value>
+  </data>
+  <data name="game_screenshot" xml:space="preserve">
+    <value>Скриншот игры</value>
+  </data>
+  <data name="anime_screenshot" xml:space="preserve">
+    <value>Скриншот аниме</value>
+  </data>
+  <data name="internet" xml:space="preserve">
+    <value>Интернет</value>
+  </data>
+  <data name="video_screenshot" xml:space="preserve">
+    <value>Скриншот видео</value>
+  </data>
+  <data name="game_recording" xml:space="preserve">
+    <value>Запись игры</value>
+  </data>
+  <data name="video_link" xml:space="preserve">
+    <value>Ссылка на видео</value>
+  </data>
+  <data name="no_data" xml:space="preserve">
+    <value>Нет данных</value>
+  </data>
+  <data name="form_voice_source_link_ph" xml:space="preserve">
+    <value>Ссылка на источник (не нужно, если своё)</value>
+  </data>
+  <data name="form_source_info" xml:space="preserve">
+    <value>Информация об источнике</value>
+  </data>
+  <data name="single_loop_desc" xml:space="preserve">
+    <value>Один трек → повтор текущего аудио</value>
+  </data>
+  <data name="form_note" xml:space="preserve">
+    <value>Примечание</value>
+  </data>
+  <data name="form_brief_ph" xml:space="preserve">
+    <value>Одна фраза, лучше всего описывающая звук</value>
+  </data>
+  <data name="card_voice_source" xml:space="preserve">
+    <value>Источник звука</value>
+  </data>
+  <data name="list_loop_desc" xml:space="preserve">
+    <value>Список → после всех заново с начала</value>
+  </data>
+  <data name="instance_unit" xml:space="preserve">
+    <value> экз.</value>
+  </data>
+  <data name="card_voice_source_link" xml:space="preserve">
+    <value>Ссылка на источник звука</value>
+  </data>
+  <data name="install_resource" xml:space="preserve">
+    <value>Установить ресурс</value>
+  </data>
+  <data name="select_all" xml:space="preserve">
+    <value>Выбрать все</value>
+  </data>
+  <data name="clone" xml:space="preserve">
+    <value>Клонировать</value>
+  </data>
+  <data name="form_brief" xml:space="preserve">
+    <value>Краткое описание *</value>
+  </data>
+  <data name="form_resource_name" xml:space="preserve">
+    <value>Полное имя пакета *</value>
+  </data>
+  <data name="import" xml:space="preserve">
+    <value>Импорт</value>
+  </data>
+  <data name="choose" xml:space="preserve">
+    <value>Выбрать</value>
+  </data>
+  <data name="form_resource_name_ph" xml:space="preserve">
+    <value>напр. Гугу Гага, Сяотао</value>
+  </data>
+  <data name="leave_edit" xml:space="preserve">
+    <value>Выйти из редактирования</value>
+  </data>
+  <data name="form_image_source_link_ph" xml:space="preserve">
+    <value>Ссылка на источник (не нужно, если своё)</value>
+  </data>
+  <data name="form_platform" xml:space="preserve">
+    <value>Платформа *</value>
+  </data>
+  <data name="card_image_source" xml:space="preserve">
+    <value>Источник изображения</value>
+  </data>
+  <data name="random_desc" xml:space="preserve">
+    <value>Случайно → каждый клик играет случайный трек</value>
+  </data>
+  <data name="task_instance_count" xml:space="preserve">
+    <value>{0} экземпляров</value>
+  </data>
+  <data name="resume_download" xml:space="preserve">
+    <value>Продолжить загрузку</value>
+  </data>
+  <data name="form_app_name_ph" xml:space="preserve">
+    <value>До 5 символов, напр. Гугу Гага</value>
+  </data>
+  <data name="card_brief_label" xml:space="preserve">
+    <value>Краткое описание</value>
+  </data>
+  <data name="language_ja" xml:space="preserve">
+    <value>日本語</value>
+  </data>
+  <data name="task_count" xml:space="preserve">
+    <value>{0} активных задач воспроизведения</value>
+  </data>
+  <data name="resource_desc_ph" xml:space="preserve">
+    <value>Введите описание ресурса</value>
+  </data>
+  <data name="add" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="pick_icon_in_app" xml:space="preserve">
+    <value>Выберите иконку внутри приложения</value>
+  </data>
+  <data name="form_note_ph" xml:space="preserve">
+    <value>Требования к использованию или ссылка на готовые материалы</value>
+  </data>
+  <data name="form_note_hint" xml:space="preserve">
+    <value>Требования к использованию аудио/изображений или ссылка на материалы</value>
+  </data>
+  <data name="no_match_task" xml:space="preserve">
+    <value>Нет подходящих задач</value>
+  </data>
+  <data name="task_in_progress_fmt" xml:space="preserve">
+    <value>В процессе: {0} задач</value>
+  </data>
+  <data name="found_tasks_fmt" xml:space="preserve">
+    <value>Найдено {0} задач</value>
+  </data>
+  <data name="short_name_ph" xml:space="preserve">
+    <value>Краткое имя (внутренний ID)</value>
+  </data>
+  <data name="selected_colon" xml:space="preserve">
+    <value>Выбрано: </value>
+  </data>
+  <data name="resource_not_found_clone" xml:space="preserve">
+    <value>Этот ресурс не найден, клонировать не получится</value>
+  </data>
+  <data name="audio_list" xml:space="preserve">
+    <value>Список аудио</value>
+  </data>
+  <data name="language_en" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="detail_select_hint" xml:space="preserve">
+    <value>Выберите ресурс слева</value>
+  </data>
+  <data name="change_icon" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="resume" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="language_zh" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="form_nickname" xml:space="preserve">
+    <value>Никнейм *</value>
+  </data>
+  <data name="resource_name_ph" xml:space="preserve">
+    <value>Имя ресурса</value>
+  </data>
+  <data name="form_voice_source_link" xml:space="preserve">
+    <value>Ссылка на источник звука</value>
+  </data>
+  <data name="card_note" xml:space="preserve">
+    <value>Примечание</value>
+  </data>
+  <data name="submission_tip" xml:space="preserve">
+    <value>Перед публикацией можно ориентироваться на форматы других авторов, чтобы информация была полной и точной. По вопросам пишите Stand через официальный сайт.</value>
+  </data>
+  <data name="drag_sort_hint" xml:space="preserve">
+    <value>Тащите за ручку для сортировки, имена аудио редактируются</value>
+  </data>
+  <data name="import_failed" xml:space="preserve">
+    <value>Импорт не удался: {0}</value>
+  </data>
+  <data name="folder" xml:space="preserve">
+    <value>Папка</value>
+  </data>
+  <data name="no_submission_data" xml:space="preserve">
+    <value>Данных о публикациях нет</value>
+  </data>
+  <data name="resource_not_found_export" xml:space="preserve">
+    <value>Этот ресурс не найден, экспортировать не получится</value>
+  </data>
+  <data name="select_icon" xml:space="preserve">
+    <value>Выбрать иконку</value>
+  </data>
+  <data name="form_image_source" xml:space="preserve">
+    <value>Источник изображения *</value>
+  </data>
+  <data name="language_ru" xml:space="preserve">
+    <value>Русский</value>
+  </data>
+  <data name="export_failed" xml:space="preserve">
+    <value>Экспорт не удался, попробуй ещё разок?</value>
+  </data>
+  <data name="form_image_source_link" xml:space="preserve">
+    <value>Ссылка на источник изображения</value>
+  </data>
+  <data name="now_playing" xml:space="preserve">
+    <value>Сейчас играет: {0}</value>
+  </data>
+  <data name="audio_name_ph" xml:space="preserve">
+    <value>Введите имя аудио</value>
+  </data>
+  <data name="create" xml:space="preserve">
+    <value>Создать</value>
+  </data>
+  <data name="no_audio_hint" xml:space="preserve">
+    <value>Аудио пока нет, нажмите кнопку выше</value>
+  </data>
+  <data name="card_image_source_link" xml:space="preserve">
+    <value>Ссылка на источник изображения</value>
+  </data>
+  <data name="go_shop_install" xml:space="preserve">
+    <value>Идите в магазин, чтобы установить ресурсы</value>
+  </data>
+  <data name="badge_android" xml:space="preserve">
+    <value>Android</value>
+  </data>
+  <data name="form_app_name" xml:space="preserve">
+    <value>Краткое имя APP *</value>
+  </data>
+  <data name="task_desc_hint" xml:space="preserve">
+    <value>Задачи воспроизведения с ярлыков рабочего стола отображаются здесь</value>
+  </data>
+  <data name="no_active_tasks" xml:space="preserve">
+    <value>Нет активных задач</value>
+  </data>
+  <data name="unknown_error" xml:space="preserve">
+    <value>Возникла неизвестная маленькая проблемка</value>
+  </data>
+  <data name="form_platform_id" xml:space="preserve">
+    <value>ID платформы (необязательно)</value>
+  </data>
+  <data name="no_personal_resource" xml:space="preserve">
+    <value>Личных ресурсов пока нет</value>
+  </data>
+  <data name="shop_no_resources" xml:space="preserve">
+    <value>В магазине пока нет ресурсов</value>
+  </data>
+  <data name="form_platform_id_ph" xml:space="preserve">
+    <value>Для связи при проблемах; пусто — связаться нельзя</value>
+  </data>
+  <data name="language_zh_tw" xml:space="preserve">
+    <value>繁體中文</value>
+  </data>
+  <data name="card_platform_id" xml:space="preserve">
+    <value>ID платформы</value>
+  </data>
+  <data name="form_voice_source" xml:space="preserve">
+    <value>Источник звука *</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>Редактировать</value>
+  </data>
+  <data name="form_nickname_ph" xml:space="preserve">
+    <value>Как к вам обращаться?</value>
+  </data>
+  <data name="export" xml:space="preserve">
+    <value>Экспорт</value>
+  </data>
+  <data name="loading_shop" xml:space="preserve">
+    <value>Загрузка ресурсов...</value>
+  </data>
+  <data name="search_error_fmt" xml:space="preserve">
+    <value>Ошибка поиска: {0}</value>
+  </data>
+  <data name="play_failed" xml:space="preserve">
+    <value>Ошибка воспроизведения аудио</value>
+  </data>
+  <data name="error" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+</root>

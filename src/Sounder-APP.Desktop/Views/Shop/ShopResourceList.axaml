@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Sounder_APP.ViewModels"
+             xmlns:views="using:Sounder_APP.Views"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="340" d:DesignHeight="750"
+             x:Class="Sounder_APP.Views.ShopResourceList"
+             x:Name="Root"
+             x:DataType="vm:ShopViewModel"
+             Background="{DynamicResource Lv2Bg}">
+
+    <Design.DataContext>
+        <vm:ShopViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto,*">
+        <views:SearchBar Grid.Row="0" ViewModel="{Binding}"/>
+
+        <!-- 骨架屏（加载中） -->
+        <views:ResourceListSkeleton Grid.Row="1"
+                                     IsVisible="{Binding IsLoading}"/>
+
+        <!-- 列表内容（加载完成） -->
+        <views:ResourceListContent Grid.Row="1"
+                                    ViewModel="{Binding}"
+                                    IsVisible="{Binding IsLoading, Converter={StaticResource InverseBool}}"/>
+    </Grid>
+</UserControl>

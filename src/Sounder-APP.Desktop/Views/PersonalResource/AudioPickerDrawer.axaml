@@ -1,0 +1,73 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Sounder_APP.ViewModels"
+             xmlns:common="using:Sounder_APP.Views.Common"
+             xmlns:models="using:Sounder_APP.Models"
+             xmlns:i18n="clr-namespace:Sounder_APP.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Sounder_APP.Views.AudioPickerDrawer"
+             x:DataType="vm:PersonalResourceEditViewModel">
+
+    <common:Drawer IsOpen="{Binding IsAudioPickerVisible}"
+                   Title="{i18n:Translate select_audio}"
+                   DrawerWidth="380"
+                   ConfirmText="{Binding ConfirmAudioText}"
+                   CancelText="{i18n:Translate cancel}"
+                   FooterHint="{Binding PickerStatusText}"
+                   Confirmed="OnConfirmed"
+                   Cancelled="OnCancelled"
+                   Closed="OnCancelled">
+        <common:Drawer.DrawerContent>
+            <Grid RowDefinitions="Auto,Auto,Auto,*">
+                <!-- 从文件选择 -->
+                <common:FilePickerButton Grid.Row="0"
+                                        Command="{Binding AddAudioFromFileCommand}"/>
+                <!-- 搜索框 -->
+                <TextBox Grid.Row="2" Margin="14,0,14,10" Padding="10,8"
+                         Text="{Binding PickerSearchText}"
+                         PlaceholderText="{i18n:Translate search_audio_hint}"
+                         Classes="input-bordered"
+                         FontSize="13" Foreground="{DynamicResource TextPrimary}"/>
+                <!-- 音频列表 -->
+                <ListBox Grid.Row="3" Margin="4,0"
+                         ItemsSource="{Binding PickerAudioItems}"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         SelectionMode="Single"
+                         SelectionChanged="OnAudioListSelectionChanged">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="models:PickerAudioItem">
+                            <Border Background="Transparent"
+                                    Cursor="Hand">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="4">
+                                    <CheckBox Grid.Column="0"
+                                              IsChecked="{Binding IsSelected}"
+                                              VerticalAlignment="Center"
+                                              IsHitTestVisible="False"
+                                              Cursor="Hand"
+                                              Classes="theme-checkbox">
+                                    </CheckBox>
+                                    <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="1">
+                                        <TextBlock Text="{Binding SourceName}" FontSize="11"
+                                                   Foreground="{DynamicResource TextTertiary}"/>
+                                        <TextBlock Text="{Binding Name}" FontSize="13"
+                                                   Foreground="{DynamicResource TextPrimary}"
+                                                   TextTrimming="CharacterEllipsis"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </common:Drawer.DrawerContent>
+    </common:Drawer>
+
+</UserControl>

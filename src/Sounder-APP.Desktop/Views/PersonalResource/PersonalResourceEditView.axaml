@@ -1,0 +1,227 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Sounder_APP.ViewModels"
+             xmlns:views="using:Sounder_APP.Views"
+             xmlns:common="using:Sounder_APP.Views.Common"
+             xmlns:models="using:Sounder_APP.Models"
+             xmlns:sortable="clr-namespace:Sortable.Avalonia;assembly=Sortable.Avalonia"
+             xmlns:i18n="clr-namespace:Sounder_APP.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="710" d:DesignHeight="750"
+             x:Class="Sounder_APP.Views.PersonalResourceEditView"
+             x:DataType="vm:PersonalResourceEditViewModel"
+             Background="{DynamicResource Lv1Bg}">
+
+    <Design.DataContext>
+        <vm:PersonalResourceEditViewModel/>
+    </Design.DataContext>
+
+    <!-- 将 Grid + 抽屉覆盖层用同一父容器包裹 -->
+    <Panel>
+        <Grid RowDefinitions="*">
+            <!-- ===== 可滚动内容区域 ===== -->
+            <ScrollViewer Grid.Row="0" Background="{DynamicResource Lv1Bg}">
+                <StackPanel Spacing="0" Margin="0">
+                    <!-- ===== 基本信息区块 ===== -->
+                    <Border Padding="20,20" Background="{DynamicResource Lv2Bg}" Margin="0,0,0,1">
+                        <StackPanel Spacing="0">
+                            <!-- 图标 + 名称/描述 -->
+                            <Grid ColumnDefinitions="80,*" ColumnSpacing="16">
+                                <!-- Column 0：离开编辑按钮 + 图标 -->
+                                <StackPanel Grid.Column="0" Spacing="12">
+                                    <Button Classes="btn secondary sm"
+                                            Command="{Binding LeaveEditCommand}"
+                                            HorizontalAlignment="Center"
+                                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" Spacing="2">
+                                            <TextBlock Text="←" FontSize="14" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{i18n:Translate leave_edit}" FontSize="12" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+
+                                    <!-- 图标（点击打开右侧抽屉选择） -->
+                                    <Border Width="80" Height="80" CornerRadius="12"
+                                            Background="{DynamicResource Lv3Bg}" ClipToBounds="True"
+                                            Cursor="Hand"
+                                            Tapped="OnIconTapped">
+                                        <Grid>
+                                            <Border Background="{DynamicResource Lv3Bg}" CornerRadius="12"
+                                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                            <Image Source="{Binding EditIconBitmap}"
+                                                   Stretch="UniformToFill"
+                                                   IsVisible="{Binding EditIconBitmap, Converter={StaticResource IsNotNull}}"/>
+                                            <TextBlock Text="{Binding EditDisplayName}"
+                                                       FontSize="26" FontWeight="Bold"
+                                                       Foreground="{DynamicResource TextTertiary}"
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                       IsVisible="{Binding EditIconBitmap, Converter={StaticResource IsNull}}"/>
+                                            <Border Background="#66000000"
+                                                    VerticalAlignment="Bottom"
+                                                    Height="24"
+                                                    IsVisible="{Binding EditIconBitmap, Converter={StaticResource IsNotNull}}">
+                                                <TextBlock Text="{i18n:Translate change_icon}" FontSize="11"
+                                                           Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </StackPanel>
+
+                                <!-- 编辑字段 -->
+                                <StackPanel Grid.Column="1" Spacing="10" VerticalAlignment="Top">
+                                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                                        <TextBox Grid.Column="0" Text="{Binding EditDisplayName}"
+                                                 PlaceholderText="{i18n:Translate resource_name_ph}"
+                                                 FontSize="14" Foreground="{DynamicResource TextPrimary}"
+                                                 Classes="input-flat" Padding="10,8"/>
+                                        <TextBox Grid.Column="1" Text="{Binding EditName}"
+                                                 PlaceholderText="{i18n:Translate short_name_ph}"
+                                                 FontSize="13" Foreground="{DynamicResource TextSecondary}"
+                                                 Classes="input-flat" Padding="10,8"/>
+                                    </Grid>
+                                    <TextBox Text="{Binding EditDescription}"
+                                             PlaceholderText="{i18n:Translate resource_desc_ph}"
+                                             FontSize="13" Foreground="{DynamicResource TextSecondary}"
+                                             Classes="input-flat" Padding="10,8"
+                                             MaxLength="200" AcceptsReturn="True"
+                                             TextWrapping="Wrap" Height="60"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 音频列表编辑区块 -->
+                    <Border Padding="20,20">
+                        <StackPanel Spacing="0">
+                            <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto" ColumnSpacing="8" Margin="0,0,0,12">
+                                <TextBlock Grid.Column="0" FontSize="15" FontWeight="SemiBold"
+                                           Foreground="{DynamicResource TextPrimary}" VerticalAlignment="Center">
+                                    <Run Text="{i18n:Translate audio_list}"/>
+                                    <Run Text=" ("/>
+                                    <Run Text="{Binding EditAudioItems.Count}"/>
+                                    <Run Text=")"/>
+                                </TextBlock>
+                                <Button Grid.Column="2" Classes="btn sm"
+                                        Command="{Binding ToggleSelectAllAudioCommand}"
+                                        Background="Transparent" BorderThickness="0"
+                                        VerticalAlignment="Center">
+                                    <Button.Styles>
+                                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                        </Style>
+                                        <Style Selector="Button:pointerover TextBlock">
+                                            <Setter Property="Foreground" Value="{DynamicResource AccentBlue}"/>
+                                        </Style>
+                                    </Button.Styles>
+                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <CheckBox IsChecked="{Binding IsAudioAllSelected}"
+                                                  VerticalAlignment="Center"
+                                                  Classes="theme-checkbox"
+                                                  IsHitTestVisible="False"/>
+                                        <TextBlock Text="{i18n:Translate select_all}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Grid.Column="3" Classes="btn danger" MinWidth="70"
+                                        Command="{Binding DeleteSelectedAudiosCommand}"
+                                        IsEnabled="{Binding CanDelete}" VerticalAlignment="Center"
+                                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" Spacing="2"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <PathIcon Data="{StaticResource IconDelete}" Width="12" Height="12"
+                                                  VerticalAlignment="Center"/>
+                                        <TextBlock Text="{i18n:Translate delete}" VerticalAlignment="Center"/>
+                                        <TextBlock VerticalAlignment="Center">
+                                            <Run Text="("/>
+                                            <Run Text="{Binding SelectedAudioCount}"/>
+                                            <Run Text=")"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <Button Grid.Column="4" Classes="btn primary" MinWidth="70"
+                                        VerticalAlignment="Center"
+                                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                        Tapped="OnAddAudioTapped">
+                                    <StackPanel Orientation="Horizontal" Spacing="2"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <PathIcon Data="{StaticResource IconCreate}" Width="12" Height="12"
+                                                  VerticalAlignment="Center"/>
+                                        <TextBlock Text="{i18n:Translate add}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+
+                            <StackPanel Spacing="8" HorizontalAlignment="Center"
+                                        IsVisible="{Binding HasNoAudioItems}" Margin="0,30,0,30">
+                                <PathIcon Data="{StaticResource IconFolder}" Width="36" Height="36"
+                                          Foreground="{DynamicResource TextTertiary}"
+                                          HorizontalAlignment="Center"/>
+                                <TextBlock Text="{i18n:Translate no_audio_hint}" FontSize="13"
+                                           Foreground="{DynamicResource TextTertiary}" HorizontalAlignment="Center"/>
+                            </StackPanel>
+
+                            <ItemsControl ItemsSource="{Binding EditAudioItems}" IsVisible="{Binding HasAudioItems}"
+                                          sortable:Sortable.Sortable="True"
+                                          sortable:Sortable.UpdateCommand="{Binding MoveAudioCommand}"
+                                          sortable:Sortable.AnimationDuration="0:0:0.200">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="models:EditAudioItem">
+                                        <Border Margin="0,0,0,2"
+                                                sortable:Sortable.IsSortable="True">
+                                            <Grid ColumnDefinitions="28,28,*,Auto,36">
+                                                <Border Grid.Column="0" Cursor="SizeAll"
+                                                        Padding="6,10" Background="Transparent"
+                                                        ToolTip.Tip="{i18n:Translate drag_sort_hint}"
+                                                        sortable:Sortable.IsDragHandle="True">
+                                                    <PathIcon Data="{StaticResource IconDragHandle}" Width="16" Height="16"
+                                                              Foreground="{DynamicResource TextTertiary}"
+                                                              VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                </Border>
+                                                <CheckBox Grid.Column="1" IsChecked="{Binding IsSelected}"
+                                                          VerticalAlignment="Center" Cursor="Hand"
+                                                          Classes="theme-checkbox"/>
+                                                <TextBox Grid.Column="2" Text="{Binding Name}" PlaceholderText="{i18n:Translate audio_name_ph}" Margin="0,0,8,0"
+                                                         FontSize="13" Foreground="{DynamicResource TextPrimary}" Classes="input-flat"
+                                                         VerticalAlignment="Center" Padding="8" MinHeight="0"/>
+                                                <TextBlock Grid.Column="3" Text="{Binding DurationFormatted}"
+                                                           FontSize="12" Foreground="{DynamicResource TextTertiary}"
+                                                           VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                                <Button Grid.Column="4" Width="24" Height="24" Padding="0"
+                                                        Background="Transparent" BorderThickness="0" Cursor="Hand"
+                                                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                                        Tapped="OnAudioPlayTapped">
+                                                    <Panel>
+                                                        <PathIcon IsVisible="{Binding IsPlaying, Converter={StaticResource InverseBool}}"
+                                                                  Data="{StaticResource IconPlay}" Width="14" Height="14"
+                                                                  Foreground="{DynamicResource TextSecondary}"/>
+                                                        <PathIcon IsVisible="{Binding IsPlaying}"
+                                                                  Data="{StaticResource IconPause}" Width="14" Height="14"
+                                                                  Foreground="{DynamicResource AccentBlue}"/>
+                                                    </Panel>
+                                                </Button>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <TextBlock Text="{i18n:Translate drag_sort_hint}"
+                                       FontSize="12" Foreground="{DynamicResource TextTertiary}"
+                                       HorizontalAlignment="Center" Margin="0,8,0,0"
+                                       IsVisible="{Binding HasMultipleAudioItems}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Rectangle Height="80" Fill="Transparent"/>
+                </StackPanel>
+            </ScrollViewer>
+
+        </Grid>
+
+        <!-- ===== 图标选择抽屉 ===== -->
+        <views:IconPickerDrawer/>
+
+        <!-- ===== 音频选择抽屉 ===== -->
+        <views:AudioPickerDrawer/>
+
+    </Panel>
+</UserControl>

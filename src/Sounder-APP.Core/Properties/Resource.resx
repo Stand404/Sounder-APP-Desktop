@@ -1,0 +1,872 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="settings_title" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="language_setting" xml:space="preserve">
+    <value>语言设置</value>
+  </data>
+  <data name="language_system" xml:space="preserve">
+    <value>跟随系统</value>
+  </data>
+  <data name="language_zh" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="language_zh_tw" xml:space="preserve">
+    <value>繁體中文</value>
+  </data>
+  <data name="language_en" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="language_ja" xml:space="preserve">
+    <value>日本語</value>
+  </data>
+  <data name="language_ru" xml:space="preserve">
+    <value>Русский</value>
+  </data>
+  <data name="theme_mode" xml:space="preserve">
+    <value>主题模式</value>
+  </data>
+  <data name="auto_theme" xml:space="preserve">
+    <value>自动</value>
+  </data>
+  <data name="light" xml:space="preserve">
+    <value>浅色</value>
+  </data>
+  <data name="dark" xml:space="preserve">
+    <value>深色</value>
+  </data>
+  <data name="cache_cleanup" xml:space="preserve">
+    <value>缓存清理</value>
+  </data>
+  <data name="enter_official_site" xml:space="preserve">
+    <value>进入官网</value>
+  </data>
+  <data name="get_fan_group" xml:space="preserve">
+    <value>获取粉丝群</value>
+  </data>
+  <data name="author_name" xml:space="preserve">
+    <value>作者</value>
+  </data>
+  <data name="about_title" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="app_name_display" xml:space="preserve">
+    <value>发声APP</value>
+  </data>
+  <data name="badge_android" xml:space="preserve">
+    <value>Android</value>
+  </data>
+  <data name="app_description" xml:space="preserve">
+    <value>一类独立APP的统称，只支持Android系统。</value>
+  </data>
+  <data name="app_name_zaohua" xml:space="preserve">
+    <value>发声APP · 造化版</value>
+  </data>
+  <data name="badge_multi_platform" xml:space="preserve">
+    <value>多平台支持</value>
+  </data>
+  <data name="app_full_description" xml:space="preserve">
+    <value>可以浏览、搜索、下载、创建、编辑、导入导出各种资源包，以及播放各类音频资源，同时支持 Windows、macOS、Linux、Android、iOS。</value>
+  </data>
+  <data name="independent_package" xml:space="preserve">
+    <value>独立APP整合包获取</value>
+  </data>
+  <data name="independent_desc" xml:space="preserve">
+    <value>所有独立APP的合集，适合批量下载的需要</value>
+  </data>
+  <data name="audio_files" xml:space="preserve">
+    <value>纯音频文件获取</value>
+  </data>
+  <data name="audio_files_desc" xml:space="preserve">
+    <value>所有资源用到的音频文件，来源于互联网</value>
+  </data>
+  <data name="privacy_notice" xml:space="preserve">
+    <value>本应用不会收集您的任何个人信息。所有个人数据仅存储在您的设备本地，不会上传至任何服务器。</value>
+  </data>
+  <data name="feedback_notice" xml:space="preserve">
+    <value>如果遇到问题或 bug，可以通过官网、抖音、B站、粉丝群等渠道联系作者反馈。</value>
+  </data>
+  <data name="clear_cache_confirm_title" xml:space="preserve">
+    <value>清理缓存</value>
+  </data>
+  <data name="clear_cache_confirm_msg" xml:space="preserve">
+    <value>确定要清理所有缓存（图片与试听音频）吗？这个可没法反悔哦♪</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="confirm" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="show_window" xml:space="preserve">
+    <value>显示窗口</value>
+  </data>
+  <data name="exit" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="dirty_confirm_title" xml:space="preserve">
+    <value>未保存的修改</value>
+  </data>
+  <data name="dirty_exit_message" xml:space="preserve">
+    <value>当前编辑内容尚未保存，退出将丢失所有修改。</value>
+  </data>
+  <data name="dirty_save_exit" xml:space="preserve">
+    <value>保存并退出</value>
+  </data>
+  <data name="dirty_confirm_exit" xml:space="preserve">
+    <value>确认退出</value>
+  </data>
+  <data name="dirty_switch_message" xml:space="preserve">
+    <value>当前编辑内容尚未保存，切换资源将丢失所有修改。</value>
+  </data>
+  <data name="dirty_save_switch" xml:space="preserve">
+    <value>保存并切换</value>
+  </data>
+  <data name="dirty_confirm_switch" xml:space="preserve">
+    <value>确认切换</value>
+  </data>
+  <data name="dirty_delete_title" xml:space="preserve">
+    <value>删除资源</value>
+  </data>
+  <data name="dirty_delete_message" xml:space="preserve">
+    <value>确定要删除「{0}」吗？
+此操作不可恢复。</value>
+  </data>
+  <data name="dirty_confirm_delete" xml:space="preserve">
+    <value>确认删除</value>
+  </data>
+  <data name="dirty_confirm_btn" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="tooltip_title" xml:space="preserve">
+    <value>发声APP</value>
+  </data>
+  <data name="tab_personal" xml:space="preserve">
+    <value>我的资源</value>
+  </data>
+  <data name="tab_shop" xml:space="preserve">
+    <value>商店</value>
+  </data>
+  <data name="tab_submissions" xml:space="preserve">
+    <value>投稿</value>
+  </data>
+  <data name="tab_task_manager" xml:space="preserve">
+    <value>任务管理</value>
+  </data>
+  <data name="tab_settings" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="loading" xml:space="preserve">
+    <value>加载中...</value>
+  </data>
+  <data name="load_more" xml:space="preserve">
+    <value>加载更多</value>
+  </data>
+  <data name="no_more_data" xml:space="preserve">
+    <value>— 到底了 —</value>
+  </data>
+  <data name="search_audio_hint" xml:space="preserve">
+    <value>搜索音频名称…</value>
+  </data>
+  <data name="search_hint" xml:space="preserve">
+    <value>搜索资源...</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="install" xml:space="preserve">
+    <value>安装</value>
+  </data>
+  <data name="installed" xml:space="preserve">
+    <value>已安装</value>
+  </data>
+  <data name="retry" xml:space="preserve">
+    <value>重试</value>
+  </data>
+  <data name="shop_empty" xml:space="preserve">
+    <value>商店的小货架还空空的呢</value>
+  </data>
+  <data name="no_resources_yet" xml:space="preserve">
+    <value>这里还空空的</value>
+  </data>
+  <data name="go_shop_to_install" xml:space="preserve">
+    <value>去商店里把资源领回家吧喵♪</value>
+  </data>
+  <data name="view_detail" xml:space="preserve">
+    <value>查看详情</value>
+  </data>
+  <data name="edit_resource" xml:space="preserve">
+    <value>编辑资源</value>
+  </data>
+  <data name="clone_resource" xml:space="preserve">
+    <value>克隆资源</value>
+  </data>
+  <data name="export_package" xml:space="preserve">
+    <value>导出资源包</value>
+  </data>
+  <data name="add_to_desktop" xml:space="preserve">
+    <value>添加到桌面</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="confirm_delete_title" xml:space="preserve">
+    <value>确认删除</value>
+  </data>
+  <data name="confirm_delete_message" xml:space="preserve">
+    <value>确定要删掉这个资源嘛？删了可就回不来啦~</value>
+  </data>
+  <data name="add_resource_desc" xml:space="preserve">
+    <value>添加资源</value>
+  </data>
+  <data name="searching" xml:space="preserve">
+    <value>正在搜索...</value>
+  </data>
+  <data name="no_personal_resources" xml:space="preserve">
+    <value>暂无个人资源</value>
+  </data>
+  <data name="resource_count_fmt" xml:space="preserve">
+    <value>共 {0} 个资源</value>
+  </data>
+  <data name="load_failed" xml:space="preserve">
+    <value>加载失败</value>
+  </data>
+  <data name="load_error_fmt" xml:space="preserve">
+    <value>加载失败: {0}</value>
+  </data>
+  <data name="found_resource_count_fmt" xml:space="preserve">
+    <value>找到 {0} 个资源</value>
+  </data>
+  <data name="no_match_resource" xml:space="preserve">
+    <value>未找到匹配资源</value>
+  </data>
+  <data name="import_title" xml:space="preserve">
+    <value>选择要导入的资源包（.zip）</value>
+  </data>
+  <data name="zip_file_type" xml:space="preserve">
+    <value>ZIP 压缩包</value>
+  </data>
+  <data name="invalid_package_no_manifest" xml:space="preserve">
+    <value>无效的资源包：缺少 manifest.json</value>
+  </data>
+  <data name="invalid_package_incomplete_manifest" xml:space="preserve">
+    <value>无效的资源包：manifest 数据不完整</value>
+  </data>
+  <data name="export_title" xml:space="preserve">
+    <value>导出资源包</value>
+  </data>
+  <data name="default_resource_name" xml:space="preserve">
+    <value>新建资源包</value>
+  </data>
+  <data name="default_resource_desc" xml:space="preserve">
+    <value>一个有趣的资源包</value>
+  </data>
+  <data name="clone_suffix" xml:space="preserve">
+    <value> (副本)</value>
+  </data>
+  <data name="added_to_desktop" xml:space="preserve">
+    <value>已添加到桌面</value>
+  </data>
+  <data name="shortcut_created_fmt" xml:space="preserve">
+    <value>「{0}」的快捷方式已创建</value>
+  </data>
+  <data name="no_match" xml:space="preserve">
+    <value>没有找到想要的资源呢</value>
+  </data>
+  <data name="go_to_shop" xml:space="preserve">
+    <value>前往商店</value>
+  </data>
+  <data name="create_new_resource" xml:space="preserve">
+    <value>创建新资源</value>
+  </data>
+  <data name="import_package" xml:space="preserve">
+    <value>导入资源包</value>
+  </data>
+  <data name="back" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="online_preview" xml:space="preserve">
+    <value>在线试听</value>
+  </data>
+  <data name="select_audio" xml:space="preserve">
+    <value>选择音频</value>
+  </data>
+  <data name="no_audio_in_package" xml:space="preserve">
+    <value>这个资源包里还静悄悄的，没有声音呢</value>
+  </data>
+  <data name="normal_mode" xml:space="preserve">
+    <value>正常</value>
+  </data>
+  <data name="interrupt_mode" xml:space="preserve">
+    <value>打断</value>
+  </data>
+  <data name="play_mode_label" xml:space="preserve">
+    <value>播放模式</value>
+  </data>
+  <data name="overlay_desc" xml:space="preserve">
+    <value>声音播放互不干扰</value>
+  </data>
+  <data name="replace_desc" xml:space="preserve">
+    <value>新播放会打断前一个</value>
+  </data>
+  <data name="loop_desc" xml:space="preserve">
+    <value>一直播放永不停止</value>
+  </data>
+  <data name="overlay_mode" xml:space="preserve">
+    <value>叠加</value>
+  </data>
+  <data name="replace_mode" xml:space="preserve">
+    <value>替换</value>
+  </data>
+  <data name="loop_mode" xml:space="preserve">
+    <value>循环</value>
+  </data>
+  <data name="loop_type_label" xml:space="preserve">
+    <value>循环类型</value>
+  </data>
+  <data name="loop_type_desc" xml:space="preserve">
+    <value>单曲反复播放 / 列表轮流播放</value>
+  </data>
+  <data name="loop_single" xml:space="preserve">
+    <value>单曲</value>
+  </data>
+  <data name="loop_list" xml:space="preserve">
+    <value>列表</value>
+  </data>
+  <data name="play_mode_single_loop" xml:space="preserve">
+    <value>单曲循环</value>
+  </data>
+  <data name="play_mode_list_loop" xml:space="preserve">
+    <value>列表循环</value>
+  </data>
+  <data name="play_order_label" xml:space="preserve">
+    <value>播放顺序</value>
+  </data>
+  <data name="order_desc" xml:space="preserve">
+    <value>此设置用于桌面快捷方式点击</value>
+  </data>
+  <data name="order_play" xml:space="preserve">
+    <value>顺序</value>
+  </data>
+  <data name="random_play" xml:space="preserve">
+    <value>随机</value>
+  </data>
+  <data name="stop_playback" xml:space="preserve">
+    <value>停止播放</value>
+  </data>
+  <data name="more_actions" xml:space="preserve">
+    <value>更多操作</value>
+  </data>
+  <data name="resource_not_found" xml:space="preserve">
+    <value>没找到这个资源呢</value>
+  </data>
+  <data name="task_manager" xml:space="preserve">
+    <value>任务管理</value>
+  </data>
+  <data name="no_tasks" xml:space="preserve">
+    <value>没有在播的任务哦</value>
+  </data>
+  <data name="stop_all" xml:space="preserve">
+    <value>停止全部</value>
+  </data>
+  <data name="status_in_progress" xml:space="preserve">
+    <value>进行中</value>
+  </data>
+  <data name="status_pending" xml:space="preserve">
+    <value>待排表</value>
+  </data>
+  <data name="status_completed" xml:space="preserve">
+    <value>已完成</value>
+  </data>
+  <data name="no_submissions" xml:space="preserve">
+    <value>还没有用户来投稿呢</value>
+  </data>
+  <data name="submissions_header_title" xml:space="preserve">
+    <value>投稿与计划</value>
+  </data>
+  <data name="submissions_header_desc" xml:space="preserve">
+    <value>投稿发声APP，跟踪上架进度</value>
+  </data>
+  <data name="submissions_new_btn" xml:space="preserve">
+    <value>我要投稿</value>
+  </data>
+  <data name="submission_search_placeholder" xml:space="preserve">
+    <value>搜索投稿...</value>
+  </data>
+  <data name="submission_no_schedule" xml:space="preserve">
+    <value>未排期</value>
+  </data>
+  <data name="submission_link_copied" xml:space="preserve">
+    <value>已复制链接</value>
+  </data>
+  <data name="resumable" xml:space="preserve">
+    <value>可继续</value>
+  </data>
+  <data name="search_history" xml:space="preserve">
+    <value>搜索历史</value>
+  </data>
+  <data name="clear_text" xml:space="preserve">
+    <value>清空</value>
+  </data>
+  <data name="copy_link" xml:space="preserve">
+    <value>复制链接</value>
+  </data>
+  <data name="unnamed_resource" xml:space="preserve">
+    <value>未命名资源</value>
+  </data>
+  <data name="search_task_hint" xml:space="preserve">
+    <value>搜索任务...</value>
+  </data>
+  <data name="task_management_desc" xml:space="preserve">
+    <value>从桌面戳一下的播放任务，都会乖乖列在这里喵~</value>
+  </data>
+  <data name="no_matching_tasks" xml:space="preserve">
+    <value>没有想找的任务呢</value>
+  </data>
+  <data name="try_different_keywords" xml:space="preserve">
+    <value>换个喵喵词再找找看好不好呀~</value>
+  </data>
+  <data name="task_instance_count" xml:space="preserve">
+    <value>{0} 实例</value>
+  </data>
+  <data name="now_playing" xml:space="preserve">
+    <value>正在播放: {0}</value>
+  </data>
+  <data name="task_count" xml:space="preserve">
+    <value>{0} 个进行中的播放任务</value>
+  </data>
+  <data name="instance_unit" xml:space="preserve">
+    <value> 实例</value>
+  </data>
+  <data name="no_active_tasks" xml:space="preserve">
+    <value>暂无进行中的任务</value>
+  </data>
+  <data name="task_desc_hint" xml:space="preserve">
+    <value>桌面快捷方式触发的播放任务会显示在这里</value>
+  </data>
+  <data name="no_match_task" xml:space="preserve">
+    <value>未找到匹配任务</value>
+  </data>
+  <data name="task_in_progress_fmt" xml:space="preserve">
+    <value>进行中: {0} 个任务</value>
+  </data>
+  <data name="found_tasks_fmt" xml:space="preserve">
+    <value>找到 {0} 个任务</value>
+  </data>
+  <data name="deleted_files" xml:space="preserve">
+    <value>已经删掉 {0} 个文件，腾出 {1} 啦♪</value>
+  </data>
+  <data name="resource_not_found_clone" xml:space="preserve">
+    <value>这个资源找不到，没法克隆它呢</value>
+  </data>
+  <data name="cloned_as" xml:space="preserve">
+    <value>已经克隆出「{0}」啦♪</value>
+  </data>
+  <data name="resource_not_found_export" xml:space="preserve">
+    <value>这个资源找不到，没法导出它呢</value>
+  </data>
+  <data name="export_failed" xml:space="preserve">
+    <value>导出没有成功呢，再试试看好不好</value>
+  </data>
+  <data name="import_success" xml:space="preserve">
+    <value>导入成功啦，真棒♪</value>
+  </data>
+  <data name="import_failed" xml:space="preserve">
+    <value>导入没有成功呢：{0}</value>
+  </data>
+  <data name="unknown_error" xml:space="preserve">
+    <value>出现了一个未知的小问题</value>
+  </data>
+  <data name="created" xml:space="preserve">
+    <value>已经创建好「{0}」啦♪</value>
+  </data>
+  <data name="new_resource_name" xml:space="preserve">
+    <value>新建资源包</value>
+  </data>
+  <data name="new_resource_desc" xml:space="preserve">
+    <value>一个有趣的资源包</value>
+  </data>
+  <data name="date_today" xml:space="preserve">
+    <value>今天</value>
+  </data>
+  <data name="date_yesterday" xml:space="preserve">
+    <value>昨天</value>
+  </data>
+  <data name="date_tomorrow" xml:space="preserve">
+    <value>明天</value>
+  </data>
+  <data name="idle_empty_hint" xml:space="preserve">
+    <value>请在左侧选择一个资源</value>
+  </data>
+  <data name="stop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="brief_label" xml:space="preserve">
+    <value>简述</value>
+  </data>
+  <data name="image_source_label" xml:space="preserve">
+    <value>图片来源</value>
+  </data>
+  <data name="voice_source_label" xml:space="preserve">
+    <value>声音来源</value>
+  </data>
+  <data name="image_source_link_label" xml:space="preserve">
+    <value>图片来源链接</value>
+  </data>
+  <data name="voice_source_link_label" xml:space="preserve">
+    <value>声音来源链接</value>
+  </data>
+  <data name="notes_label" xml:space="preserve">
+    <value>备注</value>
+  </data>
+  <data name="platform_account_label" xml:space="preserve">
+    <value>平台账号</value>
+  </data>
+  <data name="submission_form_tip" xml:space="preserve">
+    <value>投稿前可以参考其他人的投稿格式，确保信息完整准确。如有疑问可通过官网渠道联系Stand。</value>
+  </data>
+  <data name="resource_full_name" xml:space="preserve">
+    <value>资源包全称 *</value>
+  </data>
+  <data name="resource_full_name_placeholder" xml:space="preserve">
+    <value>例如：咕咕嘎嘎、小桃给木</value>
+  </data>
+  <data name="app_short_name" xml:space="preserve">
+    <value>APP简称 *</value>
+  </data>
+  <data name="app_short_name_placeholder" xml:space="preserve">
+    <value>不超过5字，例如：咕咕嘎嘎、给木</value>
+  </data>
+  <data name="brief_required" xml:space="preserve">
+    <value>简述 *</value>
+  </data>
+  <data name="brief_placeholder" xml:space="preserve">
+    <value>最能代表该声音的一句话</value>
+  </data>
+  <data name="platform_required" xml:space="preserve">
+    <value>平台 *</value>
+  </data>
+  <data name="platform_selected" xml:space="preserve">
+    <value>已选择：</value>
+  </data>
+  <data name="platform_account_optional" xml:space="preserve">
+    <value>平台账号（可选）</value>
+  </data>
+  <data name="platform_account_placeholder" xml:space="preserve">
+    <value>有问题方便联系，不填则无法联系到您</value>
+  </data>
+  <data name="nickname_required" xml:space="preserve">
+    <value>昵称 *</value>
+  </data>
+  <data name="nickname_placeholder" xml:space="preserve">
+    <value>我们怎么称呼您</value>
+  </data>
+  <data name="source_info" xml:space="preserve">
+    <value>来源信息</value>
+  </data>
+  <data name="image_source_required" xml:space="preserve">
+    <value>图片来源 *</value>
+  </data>
+  <data name="image_source_link_placeholder" xml:space="preserve">
+    <value>提供图片出处链接（自己截取无需填）</value>
+  </data>
+  <data name="voice_source_required" xml:space="preserve">
+    <value>声音来源 *</value>
+  </data>
+  <data name="voice_source_link_placeholder" xml:space="preserve">
+    <value>提供声音出处链接（自己录制无需填）</value>
+  </data>
+  <data name="submit" xml:space="preserve">
+    <value>提交</value>
+  </data>
+  <data name="copy_success" xml:space="preserve">
+    <value>已复制链接</value>
+  </data>
+  <data name="bilibili" xml:space="preserve">
+    <value>哔哩</value>
+  </data>
+  <data name="douyin" xml:space="preserve">
+    <value>抖音</value>
+  </data>
+  <data name="kuaishou" xml:space="preserve">
+    <value>快手</value>
+  </data>
+  <data name="fan_group" xml:space="preserve">
+    <value>粉丝群</value>
+  </data>
+  <data name="game_screenshot" xml:space="preserve">
+    <value>游戏截图</value>
+  </data>
+  <data name="anime_screenshot" xml:space="preserve">
+    <value>动漫截图</value>
+  </data>
+  <data name="internet" xml:space="preserve">
+    <value>互联网</value>
+  </data>
+  <data name="video_screenshot" xml:space="preserve">
+    <value>视频截图</value>
+  </data>
+  <data name="game_recording" xml:space="preserve">
+    <value>游戏录制</value>
+  </data>
+  <data name="video_link" xml:space="preserve">
+    <value>视频链接</value>
+  </data>
+  <data name="no_data" xml:space="preserve">
+    <value>暂无数据</value>
+  </data>
+  <data name="form_voice_source_link_ph" xml:space="preserve">
+    <value>提供声音出处链接（自己录制无需填）</value>
+  </data>
+  <data name="form_source_info" xml:space="preserve">
+    <value>来源信息</value>
+  </data>
+  <data name="single_loop_desc" xml:space="preserve">
+    <value>单曲循环 → 重复播放当前音频</value>
+  </data>
+  <data name="form_note" xml:space="preserve">
+    <value>备注</value>
+  </data>
+  <data name="form_brief_ph" xml:space="preserve">
+    <value>最能代表该声音的一句话</value>
+  </data>
+  <data name="card_voice_source" xml:space="preserve">
+    <value>声音来源</value>
+  </data>
+  <data name="list_loop_desc" xml:space="preserve">
+    <value>列表循环 → 播放全部后自动从头开始</value>
+  </data>
+  <data name="card_voice_source_link" xml:space="preserve">
+    <value>声音来源链接</value>
+  </data>
+  <data name="install_resource" xml:space="preserve">
+    <value>安装资源</value>
+  </data>
+  <data name="select_all" xml:space="preserve">
+    <value>全选</value>
+  </data>
+  <data name="clone" xml:space="preserve">
+    <value>克隆</value>
+  </data>
+  <data name="form_brief" xml:space="preserve">
+    <value>简述 *</value>
+  </data>
+  <data name="form_resource_name" xml:space="preserve">
+    <value>资源包全称 *</value>
+  </data>
+  <data name="import" xml:space="preserve">
+    <value>导入</value>
+  </data>
+  <data name="choose" xml:space="preserve">
+    <value>选择</value>
+  </data>
+  <data name="form_resource_name_ph" xml:space="preserve">
+    <value>例如：咕咕嘎嘎、小桃给木</value>
+  </data>
+  <data name="leave_edit" xml:space="preserve">
+    <value>离开编辑</value>
+  </data>
+  <data name="form_image_source_link_ph" xml:space="preserve">
+    <value>提供图片出处链接（自己截取无需填）</value>
+  </data>
+  <data name="form_platform" xml:space="preserve">
+    <value>平台 *</value>
+  </data>
+  <data name="card_image_source" xml:space="preserve">
+    <value>图片来源</value>
+  </data>
+  <data name="random_desc" xml:space="preserve">
+    <value>随机 → 每次点击桌面快捷方式随机选一首播放</value>
+  </data>
+  <data name="resume_download" xml:space="preserve">
+    <value>继续下载</value>
+  </data>
+  <data name="form_app_name_ph" xml:space="preserve">
+    <value>不超过5字，例如：咕咕嘎嘎、给木</value>
+  </data>
+  <data name="card_brief_label" xml:space="preserve">
+    <value>简述</value>
+  </data>
+  <data name="resource_desc_ph" xml:space="preserve">
+    <value>输入资源描述</value>
+  </data>
+  <data name="add" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="pick_icon_in_app" xml:space="preserve">
+    <value>从应用内选择图标</value>
+  </data>
+  <data name="form_note_ph" xml:space="preserve">
+    <value>填写使用要求或提供已做好的素材网盘链接</value>
+  </data>
+  <data name="form_note_hint" xml:space="preserve">
+    <value>声音图片使用的要求或者需要使用已经做好的素材网盘链接</value>
+  </data>
+  <data name="short_name_ph" xml:space="preserve">
+    <value>简称（用于内部标识）</value>
+  </data>
+  <data name="selected_colon" xml:space="preserve">
+    <value>已选择：</value>
+  </data>
+  <data name="audio_list" xml:space="preserve">
+    <value>音频列表</value>
+  </data>
+  <data name="detail_select_hint" xml:space="preserve">
+    <value>请在左侧选择一个资源</value>
+  </data>
+  <data name="change_icon" xml:space="preserve">
+    <value>更换</value>
+  </data>
+  <data name="resume" xml:space="preserve">
+    <value>继续</value>
+  </data>
+  <data name="form_nickname" xml:space="preserve">
+    <value>昵称 *</value>
+  </data>
+  <data name="resource_name_ph" xml:space="preserve">
+    <value>资源名称</value>
+  </data>
+  <data name="form_voice_source_link" xml:space="preserve">
+    <value>声音来源链接</value>
+  </data>
+  <data name="card_note" xml:space="preserve">
+    <value>备注</value>
+  </data>
+  <data name="submission_tip" xml:space="preserve">
+    <value>投稿前可以参考其他人的投稿格式，确保信息完整准确。如有疑问可通过官网渠道联系Stand。</value>
+  </data>
+  <data name="drag_sort_hint" xml:space="preserve">
+    <value>拖动手柄可排序，每个音频名称可编辑</value>
+  </data>
+  <data name="folder" xml:space="preserve">
+    <value>文件夹</value>
+  </data>
+  <data name="no_submission_data" xml:space="preserve">
+    <value>暂无投稿数据</value>
+  </data>
+  <data name="select_icon" xml:space="preserve">
+    <value>选择图标</value>
+  </data>
+  <data name="form_image_source" xml:space="preserve">
+    <value>图片来源 *</value>
+  </data>
+  <data name="form_image_source_link" xml:space="preserve">
+    <value>图片来源链接</value>
+  </data>
+  <data name="audio_name_ph" xml:space="preserve">
+    <value>输入音频名称</value>
+  </data>
+  <data name="create" xml:space="preserve">
+    <value>创建</value>
+  </data>
+  <data name="no_audio_hint" xml:space="preserve">
+    <value>暂无音频，点击上方按钮添加</value>
+  </data>
+  <data name="card_image_source_link" xml:space="preserve">
+    <value>图片来源链接</value>
+  </data>
+  <data name="go_shop_install" xml:space="preserve">
+    <value>前往商店安装资源</value>
+  </data>
+  <data name="form_app_name" xml:space="preserve">
+    <value>APP简称 *</value>
+  </data>
+  <data name="form_platform_id" xml:space="preserve">
+    <value>平台账号（可选）</value>
+  </data>
+  <data name="no_personal_resource" xml:space="preserve">
+    <value>还没有个人资源</value>
+  </data>
+  <data name="shop_no_resources" xml:space="preserve">
+    <value>商店暂无资源</value>
+  </data>
+  <data name="form_platform_id_ph" xml:space="preserve">
+    <value>有问题方便联系，不填则无法联系到您</value>
+  </data>
+  <data name="card_platform_id" xml:space="preserve">
+    <value>平台账号</value>
+  </data>
+  <data name="form_voice_source" xml:space="preserve">
+    <value>声音来源 *</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="form_nickname_ph" xml:space="preserve">
+    <value>我们怎么称呼您</value>
+  </data>
+  <data name="export" xml:space="preserve">
+    <value>导出</value>
+  </data>
+  <data name="loading_shop" xml:space="preserve">
+    <value>正在加载资源...</value>
+  </data>
+  <data name="search_error_fmt" xml:space="preserve">
+    <value>搜索失败: {0}</value>
+  </data>
+  <data name="play_failed" xml:space="preserve">
+    <value>音频播放失败</value>
+  </data>
+  <data name="error" xml:space="preserve">
+    <value>错误</value>
+  </data>
+</root>

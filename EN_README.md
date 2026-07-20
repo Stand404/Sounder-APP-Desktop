@@ -1,0 +1,208 @@
+## English | [中文](README.md)
+
+<div align="center">
+  <img src="src/Sounder-APP.Desktop/Assets/ico.png" width="64" alt="Sounder App Icon"/>
+  <h1>Sounder APP · Evolution Edition (Desktop)</h1>
+  <p>A cross-platform desktop application built with Avalonia UI</p>
+</div>
+
+## ✨ Features
+
+### <img src="src/Sounder-APP.Desktop/Assets/sounder.png" width="28" style="vertical-align: middle;" alt=""/> Sounder APP — Standalone Edition
+A collection of standalone Android apps built on the original concept. Each app has its own icon and default audio — tap and play, easy stress relief.  
+Available at: https://stand.homes/apps
+
+### <img src="src/Sounder-APP.Desktop/Assets/ico.png" width="28" style="vertical-align: middle;" alt=""/> Sounder APP · Evolution Edition (This App)
+A fully-featured extension of the standalone concept, supporting browsing, searching, downloading, creating, editing, importing, and exporting various resource packs, as well as playing various audio resources.  
+This project is the **desktop version of the Evolution Edition**, corresponding to the [Evolution Edition Android version](https://github.com/stand404/Sounder).
+
+### Core Features
+- **Online Store** — Browse, search, and download audio resource packs
+- **Audio Resource Management** — Browse, play, and manage local audio files
+- **Edit & Create** — Create and edit custom resource packs
+- **Multi-Mode Playback** — Overlay, replace, and loop playback
+- **Task Management** — Desktop playback task list display and control
+- **Shortcuts** — One-click desktop shortcut creation, double-click to play
+- **Submission Section** — Submit and browse submissions
+- **Multi-Language Support** — Simplified Chinese, Traditional Chinese, English, 日本語, Русский, switch instantly
+
+---
+
+## 🖥️ System Requirements
+
+| Platform | Requirements |
+|------|------|
+| **Windows** | Windows 10+ (x64) |
+| **Linux** (x64) | Desktop environment (X11/Wayland); requires `alsa-utils` (provides `aplay`) |
+| **macOS** | macOS 11+ (x64 / arm64) |
+| **Runtime** | .NET 10 Runtime (framework-dependent) or none (self-contained) |
+
+---
+
+## 📦 Download & Installation
+
+### Getting the Installer
+
+Download the latest installer for your platform from: **https://stand.homes/apps/e95a1dab-2f24-4557-ba9d-98e82861705d**
+
+Available formats:
+- **Windows** — Installer (.exe)
+- **Linux** — `.deb` package (Debian/Ubuntu-based) or portable version (tar.gz)
+- **macOS** — Portable version (.tar.gz)
+
+### Windows Installation
+
+**Installer**: Double-click and follow the setup wizard. The `sounder://` protocol will be registered automatically.
+
+### Linux Installation
+
+> Only tested on **Debian x64**. Please verify on other distributions or architectures yourself.
+
+#### Install alsa-utils (Audio Output Dependency)
+
+```bash
+# Debian/Ubuntu
+sudo apt install alsa-utils
+
+# Fedora
+sudo dnf install alsa-utils
+
+# Arch
+sudo pacman -S alsa-utils
+```
+
+#### .deb Package Installation
+
+```bash
+sudo dpkg -i sounder-app_*.deb
+sudo apt install -f    # Install dependencies
+```
+
+After installation, find "Sounder APP" in your application menu, or run `Sounder-APP` in the terminal.
+
+#### Uninstall
+
+```bash
+sudo apt remove sounder-app
+```
+
+Or
+
+```bash
+sudo dpkg -r sounder-app
+```
+
+The `sounder://` protocol registration and menu entries will be automatically cleaned up on uninstall.
+
+#### Portable Version
+
+> The portable version uses a directory-based layout. Native libraries are in the same directory as the executable for better compatibility.
+
+```bash
+# Extract
+tar -xzf sounder-app-*.tar.gz
+cd sounder-app-*
+# Run (recommended)
+./run.sh
+# Or run directly
+./Sounder-APP
+```
+
+### macOS Installation
+
+**Portable version**: Extract `.tar.gz` and run in terminal:
+
+```bash
+tar -xzf sounder-app-*-osx-x64.tar.gz
+cd sounder-app-*-osx-x64
+chmod +x Sounder-APP
+./Sounder-APP
+```
+
+Or double-click the `Sounder-APP` executable.
+
+---
+
+## 🔧 Building from Source
+
+### Prerequisites
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+
+### Build & Run (Development)
+
+```bash
+dotnet restore src/Sounder-APP.Desktop/Sounder-APP.Desktop.csproj
+dotnet build   src/Sounder-APP.Desktop/Sounder-APP.Desktop.csproj
+dotnet run     src/Sounder-APP.Desktop/Sounder-APP.Desktop.csproj
+```
+
+### Release Build (Single-file)
+
+Choose the appropriate build script for your platform:
+
+**Windows**
+```bat
+Windows_Build.bat                  # Default: win-x64
+Windows_Build.bat win-arm64        # Specify platform
+```
+Output goes to `publish/` directory. Then build the installer with Inno Setup:
+```
+ISCC.exe Windows_Installer.iss
+```
+
+**Linux**
+```bash
+chmod +x Linux_Build.sh
+./Linux_Build.sh                            # Default: linux-x64
+./Linux_Build.sh --deb                      # Build + .deb package
+./Linux_Build.sh --portable                 # Build + tar.gz portable
+./Linux_Build.sh --deb --portable           # Build + both packages
+./Linux_Build.sh linux-arm64 --deb          # Specify arm64
+./Linux_Build.sh --all --deb --portable     # All architectures + both packages
+```
+
+**macOS**
+```bash
+chmod +x Mac_Build.sh
+./Mac_Build.sh                     # Default: osx-x64
+./Mac_Build.sh osx-arm64           # Apple Silicon
+```
+
+---
+
+## 📁 Project Structure
+
+```
+Sounder-APP-Desktop/
+├── src/
+│   ├── Sounder-APP.Core/          # Core library (models, service interfaces, etc.)
+│   └── Sounder-APP.Desktop/       # Desktop application main project
+│       ├── Assets/                # Icons, images
+│       ├── Services/
+│       │   ├── IAudioBackend.cs   # Platform backend interface (5)
+│       │   ├── BackendFactory.cs  # OS-based backend selection
+│       │   ├── Windows/           # Windows backend implementation
+│       │   ├── Linux/             # Linux backend implementation
+│       │   └── Mac/               # macOS backend implementation
+│       ├── Views/                 # UI views
+│       ├── ViewModels/            # View models
+│       ├── Program.cs
+│       └── Sounder-APP.Desktop.csproj
+├── build/
+│   └── linux/                     # Linux packaging resources
+│       ├── debian/                #   DEB control files
+│       └── sounder-app.desktop    #   Desktop menu entry
+├── Windows_Build.bat              # Windows build script
+├── Windows_Installer.iss          # Windows installer script (Inno Setup)
+├── Linux_Build.sh                 # Linux build script (supports --deb and --portable)
+├── Mac_Build.sh                   # macOS build script
+├── Sounder-APP.slnx               # Solution file
+├── LICENSE
+└── README.md
+```
+
+---
+
+## 📄 License
+
+MIT © Stand404

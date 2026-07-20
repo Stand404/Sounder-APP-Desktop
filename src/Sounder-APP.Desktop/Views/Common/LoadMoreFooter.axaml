@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:common="using:Sounder_APP.Views.Common"
+             xmlns:i18n="clr-namespace:Sounder_APP.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="340"
+             x:Class="Sounder_APP.Views.Common.LoadMoreFooter"
+             x:Name="Root">
+
+    <Border Padding="12,4,12,12" Background="Transparent">
+        <StackPanel HorizontalAlignment="Center" Spacing="0">
+            <!-- 加载中 -->
+            <StackPanel IsVisible="{Binding IsLoading, ElementName=Root}"
+                        Orientation="Horizontal" Spacing="6"
+                        HorizontalAlignment="Center">
+                <common:Spinner Size="16" VerticalAlignment="Center"/>
+                <TextBlock Text="{i18n:Translate loading}" FontSize="13"
+                           Foreground="{DynamicResource TextSecondary}"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <!-- 加载更多 / 到底了 -->
+            <StackPanel IsVisible="{Binding IsLoading, ElementName=Root, Converter={StaticResource InverseBool}}"
+                        HorizontalAlignment="Center">
+                <Button IsVisible="{Binding HasMore, ElementName=Root}"
+                        Command="{Binding LoadMoreCommand, ElementName=Root}"
+                        CornerRadius="16" Padding="24,8"
+                        Background="{DynamicResource Lv3Bg}"
+                        Foreground="{DynamicResource TextPrimary}"
+                        FontSize="13" Cursor="Hand"
+                        HorizontalAlignment="Center"
+                        BorderThickness="0">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <PathIcon Data="{StaticResource IconMore}" Width="16" Height="16"
+                                  Foreground="{DynamicResource TextPrimary}"
+                                  VerticalAlignment="Center"/>
+                        <TextBlock Text="{i18n:Translate load_more}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <TextBlock IsVisible="{Binding HasMore, ElementName=Root, Converter={StaticResource InverseBool}}"
+                           Text="{i18n:Translate no_more_data}" FontSize="12"
+                           Foreground="{DynamicResource TextTertiary}"
+                           HorizontalAlignment="Center"
+                           Margin="0,6,0,0"/>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</UserControl>

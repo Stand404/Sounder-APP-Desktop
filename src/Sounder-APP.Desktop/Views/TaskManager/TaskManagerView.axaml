@@ -1,0 +1,155 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Sounder_APP.ViewModels"
+             xmlns:svc="using:Sounder_APP.Services"
+        xmlns:views="using:Sounder_APP.Views"
+        xmlns:i18n="clr-namespace:Sounder_APP.Converters"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="710" d:DesignHeight="750"
+             x:Class="Sounder_APP.Views.TaskManagerView"
+             x:DataType="vm:TaskManagerViewModel"
+             Background="{DynamicResource Lv1Bg}">
+
+    <Design.DataContext>
+        <vm:TaskManagerViewModel/>
+    </Design.DataContext>
+
+    <ScrollViewer Background="{DynamicResource Lv1Bg}">
+        <StackPanel Margin="40,32" Spacing="0" MaxWidth="820">
+
+            <!-- ===== 页面标题 ===== -->
+            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,20">
+                <StackPanel Grid.Column="0" Spacing="4">
+                    <TextBlock Text="{i18n:Translate task_manager}" FontSize="24" FontWeight="Bold"
+                               Foreground="{DynamicResource TextPrimary}"/>
+                    <TextBlock Text="{Binding StatusText}" FontSize="13"
+                               Foreground="{DynamicResource TextSecondary}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                    <views:SearchBar ViewModel="{Binding}" Width="220"/>
+                    <Button Classes="btn danger"
+                            Padding="16,8"
+                            Command="{Binding StopAllTasksCommand}"
+                            IsVisible="{Binding HasTasks}"
+                            Cursor="Hand" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <PathIcon Data="{StaticResource IconStop}" Width="14" Height="14"
+                                      Foreground="{DynamicResource BtnFgSoft}" VerticalAlignment="Center"/>
+                            <TextBlock Text="{i18n:Translate stop_all}" FontSize="13" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource BtnFgSoft}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <!-- ===== 空列表状态（时钟图标） ===== -->
+            <StackPanel Spacing="12" HorizontalAlignment="Center"
+                        Margin="0,60,0,0"
+                        IsVisible="{Binding IsEmptyList}">
+                <PathIcon Data="{StaticResource IconSchedule}" Width="48" Height="48"
+                          Foreground="{DynamicResource TextTertiary}" Opacity="0.4"
+                          HorizontalAlignment="Center"/>
+                <TextBlock Text="{i18n:Translate no_active_tasks}" FontSize="14"
+                           Foreground="{DynamicResource TextTertiary}"
+                           HorizontalAlignment="Center"/>
+                <TextBlock Text="{i18n:Translate task_desc_hint}"
+                           FontSize="12"
+                           Foreground="{DynamicResource TextTertiary}" Opacity="0.7"
+                           HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            <!-- ===== 搜索无匹配状态（空盒子图标） ===== -->
+            <StackPanel Spacing="12" HorizontalAlignment="Center"
+                        Margin="0,60,0,0"
+                        IsVisible="{Binding HasNoMatch}">
+                <PathIcon Data="{StaticResource IconBox}" Width="48" Height="48"
+                          Foreground="{DynamicResource TextTertiary}" Opacity="0.4"
+                          HorizontalAlignment="Center"/>
+                <TextBlock Text="{i18n:Translate no_match_task}" FontSize="14"
+                           Foreground="{DynamicResource TextTertiary}"
+                           HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            <!-- ===== 任务列表 ===== -->
+            <StackPanel Spacing="8" IsVisible="{Binding HasTasks}">
+                <ItemsControl ItemsSource="{Binding ActiveTasks}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="svc:PlaybackTaskInfo" x:CompileBindings="False">
+                            <Border Padding="16,14" CornerRadius="12" Margin="0,0,0,8"
+                                    Background="{DynamicResource Lv2Bg}">
+                                <Grid ColumnDefinitions="52,*,Auto" ColumnSpacing="14">
+                                    <!-- 资源图标 -->
+                                    <Border Grid.Column="0" Width="52" Height="52"
+                                            CornerRadius="12" ClipToBounds="True"
+                                            Background="{DynamicResource AccentPurple}"
+                                            VerticalAlignment="Center">
+                                        <Grid>
+                                            <TextBlock Text="{Binding DisplayName[0]}"
+                                                       FontSize="22" FontWeight="Bold"
+                                                       Foreground="{DynamicResource TextPrimary}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       IsVisible="{Binding IconBitmap, Converter={StaticResource IsNull}}"/>
+                                            <Image Source="{Binding IconBitmap}"
+                                                   Stretch="UniformToFill"/>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- 任务详情（左对齐） -->
+                                    <StackPanel Grid.Column="1" Spacing="3" VerticalAlignment="Center"
+                                                HorizontalAlignment="Left">
+                                        <!-- 首行：名称 + 模式 + 实例数 -->
+                                        <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Left">
+                                            <TextBlock Text="{Binding DisplayName}" FontSize="14"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="{DynamicResource TextPrimary}"
+                                                       VerticalAlignment="Center"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                            <Border CornerRadius="6" Padding="5,2"
+                                                    Background="{DynamicResource AccentBlue}">
+                                                <TextBlock Text="{Binding PlayModeText}" FontSize="10"
+                                                           Foreground="White" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <Border CornerRadius="6" Padding="5,2"
+                                                    Background="{DynamicResource AccentBlue}"
+                                                    IsVisible="{Binding IsActive}">
+                                                <TextBlock FontSize="10" Foreground="White"
+                                                           VerticalAlignment="Center">
+                                                    <Run Text="{Binding ActivePlayerCount}"/>
+                                                    <Run Text="{i18n:Translate instance_unit}"/>
+                                                </TextBlock>
+                                            </Border>
+                                        </StackPanel>
+                                        <!-- 简称 -->
+                                        <TextBlock Text="{Binding ShortName}" FontSize="11"
+                                                       Foreground="{DynamicResource TextSecondary}"/>
+                                        <!-- 当前音频 -->
+                                        <TextBlock Text="{Binding CurrentAudioName}" FontSize="12"
+                                                   Foreground="{DynamicResource TextTertiary}"
+                                                   HorizontalAlignment="Left"
+                                                   TextTrimming="CharacterEllipsis"/>
+                                    </StackPanel>
+
+                                    <!-- 停止按钮（圆形，仅图标） -->
+                                    <Button Grid.Column="2" Classes="btn danger sm"
+                                            Width="36" Height="36" CornerRadius="18"
+                                            Padding="0" VerticalAlignment="Center"
+                                            Cursor="Hand"
+                                            Command="{Binding $parent[UserControl].DataContext.StopTaskCommand}"
+                                            CommandParameter="{Binding .}">
+                                        <PathIcon Data="{StaticResource IconStop}"
+                                                  Width="16" Height="16"/>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <Rectangle Height="40" Fill="Transparent"/>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,276 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:models="using:Sounder_APP.Models"
+             xmlns:views="using:Sounder_APP.Views"
+             xmlns:common="clr-namespace:Sounder_APP.Views.Common"
+             xmlns:ibtn="clr-namespace:Sounder_APP.Views.InstallButton"
+             xmlns:i18n="clr-namespace:Sounder_APP.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="710" d:DesignHeight="750"
+             x:Class="Sounder_APP.Views.DetailContent"
+             x:Name="Root"
+             x:CompileBindings="False">
+
+    <Design.DataContext>
+        <views:ShopDetailPanel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="*">
+        <!-- ===== 可滚动内容区域 ===== -->
+        <ScrollViewer Background="{DynamicResource Lv1Bg}">
+            <Grid>
+                <!-- 无选中资源（下层，SelectedResource 为 null 时透出） -->
+                <StackPanel Spacing="12"
+                            VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,80,0,0">
+                    <PathIcon Data="{StaticResource IconSearch}" Width="48" Height="48"
+                               Foreground="{DynamicResource TextTertiary}" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{i18n:Translate detail_select_hint}" FontSize="15"
+                               Foreground="{DynamicResource TextSecondary}" HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- 有选中资源（上层，覆盖下层） -->
+                <StackPanel Spacing="0" Background="{DynamicResource Lv1Bg}"
+                            IsVisible="{Binding #Root.ViewModel.SelectedResource, Converter={StaticResource IsNotNull}}"
+                            DataContext="{Binding SelectedResource}">
+
+                    <!-- ===== DetailHeader（匹配 Android DetailHeader.kt） ===== -->
+                    <Border Padding="16,20" Background="{DynamicResource Lv2Bg}">
+                        <Grid ColumnDefinitions="70,*,Auto" ColumnSpacing="16">
+                            <Border Grid.Column="0" Width="70" Height="70" CornerRadius="16"
+                                    Background="{DynamicResource Lv2Border}" ClipToBounds="True">
+                                <Grid>
+                                    <PathIcon Data="{StaticResource IconSpinner}" Width="28" Height="28"
+                                              Foreground="{DynamicResource TextTertiary}" Opacity="0.7"
+                                              HorizontalAlignment="Center" VerticalAlignment="Center"
+                                              Classes="spinner"
+                                              IsVisible="{Binding IconLoadFailed, Converter={StaticResource InverseBool}}"/>
+                                    <PathIcon Data="{StaticResource IconBroken}" Width="28" Height="28"
+                                              Foreground="{DynamicResource AccentBlue}" Opacity="0.6"
+                                              HorizontalAlignment="Center" VerticalAlignment="Center"
+                                              IsVisible="{Binding IconLoadFailed}"/>
+                                    <Image Source="{Binding IconBitmap}"
+                                           Stretch="UniformToFill"
+                                           IsVisible="{Binding IconBitmap, Converter={StaticResource IsNotNull}}"/>
+                                </Grid>
+                            </Border>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Top" Spacing="0">
+                                <TextBlock Text="{Binding DisplayName}" FontSize="18" FontWeight="Bold"
+                                           Foreground="{DynamicResource TextPrimary}"/>
+                                <TextBlock Text="{Binding Description}" FontSize="13" LineHeight="20"
+                                           Foreground="{DynamicResource TextSecondary}"
+                                           TextWrapping="Wrap"
+                                           MaxLines="3" TextTrimming="CharacterEllipsis"
+                                           Margin="0,6,0,8"/>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Border CornerRadius="12" Padding="10,4"
+                                            Background="{DynamicResource Lv3Bg}">
+                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                            <PathIcon Data="{StaticResource IconDisk}" Width="14" Height="14"
+                                                      Foreground="{DynamicResource TextSecondary}"/>
+                                            <TextBlock Text="{Binding SizeFormatted}" FontSize="12"
+                                                       Foreground="{DynamicResource TextSecondary}"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border CornerRadius="12" Padding="10,4"
+                                            Background="{DynamicResource Lv3Bg}">
+                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                            <PathIcon Data="{StaticResource IconCalendar}" Width="14" Height="14"
+                                                      Foreground="{DynamicResource TextSecondary}"/>
+                                            <TextBlock Text="{Binding PublishDateDisplay}" FontSize="12"
+                                                       Foreground="{DynamicResource TextSecondary}"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- ===== 音频列表区域（匹配 Android DetailScreen.kt / DetailAudioItem.kt） ===== -->
+                    <Border Padding="16,16,16,20">
+                        <StackPanel Spacing="0">
+                            <!-- ===== 试听模式头部（未安装时显示）：叠加 / 替换 ===== -->
+                            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,16"
+                                  IsVisible="{Binding IsInstalled, Converter={StaticResource InverseBool}}">
+                                <TextBlock Grid.Column="0" Text="{i18n:Translate online_preview}" FontSize="16" FontWeight="SemiBold"
+                                           Foreground="{DynamicResource TextPrimary}" VerticalAlignment="Center"/>
+                                <common:PillToggle2 Grid.Column="1"
+                                                    Height="28"
+                                                    HorizontalAlignment="Right"
+                                                    Label0="{i18n:Translate overlay_mode}"
+                                                    Label1="{i18n:Translate replace_mode}"
+                                                    IsSelected0="{Binding #Root.ViewModel.PlayMode, Converter={StaticResource StringEquals}, ConverterParameter=Overlay}"
+                                                    IsSelected1="{Binding #Root.ViewModel.PlayMode, Converter={StaticResource StringEquals}, ConverterParameter=Replace}"
+                                                    Command="{Binding #Root.ViewModel.SetPlayModeCommand}"
+                                                    CommandParameter0="{x:Static models:PlayMode.Overlay}"
+                                                    CommandParameter1="{x:Static models:PlayMode.Replace}"/>
+                            </Grid>
+
+                            <!-- ===== 本地模式设置区（已安装时显示，匹配 ResourceSettingSection） ===== -->
+                            <StackPanel Margin="0,0,0,16"
+                                        IsVisible="{Binding IsInstalled}">
+                                <!-- 播放模式 -->
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                        <TextBlock Text="{i18n:Translate play_mode_label}" FontSize="14" FontWeight="Medium"
+                                                   Foreground="{DynamicResource TextPrimary}"/>
+                                        <TextBlock Text="{i18n:Translate overlay_desc}" FontSize="11"
+                                                   Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0"
+                                                   IsVisible="{Binding #Root.ViewModel.PlayMode, Converter={StaticResource StringEquals}, ConverterParameter=Overlay}"/>
+                                        <TextBlock Text="{i18n:Translate replace_desc}" FontSize="11"
+                                                   Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0"
+                                                   IsVisible="{Binding #Root.ViewModel.PlayMode, Converter={StaticResource StringEquals}, ConverterParameter=Replace}"/>
+                                        <TextBlock Text="{i18n:Translate loop_desc}" FontSize="11"
+                                                   Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0"
+                                                   IsVisible="{Binding #Root.ViewModel.PlayMode, Converter={StaticResource StringEquals}, ConverterParameter=Loop}"/>
+                                    </StackPanel>
+                                    <!-- PillToggle 3项：叠加/替换/循环 -->
+                                    <common:PillToggle3 Grid.Column="1"
+                                                        Height="28"
+                                                        HorizontalAlignment="Right"
+                                                        Label0="{i18n:Translate overlay_mode}"
+                                                        Label1="{i18n:Translate replace_mode}"
+                                                        Label2="{i18n:Translate loop_mode}"
+                                                        IsSelected0="{Binding #Root.ViewModel.PlayMode, Converter={StaticResource StringEquals}, ConverterParameter=Overlay}"
+                                                        IsSelected1="{Binding #Root.ViewModel.PlayMode, Converter={StaticResource StringEquals}, ConverterParameter=Replace}"
+                                                        IsSelected2="{Binding #Root.ViewModel.PlayMode, Converter={StaticResource StringEquals}, ConverterParameter=Loop}"
+                                                        Command="{Binding #Root.ViewModel.SetPlayModeCommand}"
+                                                        CommandParameter0="{x:Static models:PlayMode.Overlay}"
+                                                        CommandParameter1="{x:Static models:PlayMode.Replace}"
+                                                        CommandParameter2="{x:Static models:PlayMode.Loop}"/>
+                                </Grid>
+
+                                <!-- 循环方式（仅在播放模式为"循环"时显示） -->
+                                <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,0"
+                                      IsVisible="{Binding #Root.ViewModel.PlayMode, Converter={StaticResource StringEquals}, ConverterParameter=Loop}">
+                                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                        <TextBlock Text="{i18n:Translate loop_type_label}" FontSize="14" FontWeight="Medium"
+                                                   Foreground="{DynamicResource TextPrimary}"/>
+                                        <TextBlock Text="{i18n:Translate single_loop_desc}" FontSize="11"
+                                                   Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0"
+                                                   IsVisible="{Binding #Root.ViewModel.LoopMode, Converter={StaticResource StringEquals}, ConverterParameter=SingleLoop}"/>
+                                        <TextBlock Text="{i18n:Translate list_loop_desc}" FontSize="11"
+                                                   Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0"
+                                                   IsVisible="{Binding #Root.ViewModel.LoopMode, Converter={StaticResource StringEquals}, ConverterParameter=ListLoop}"/>
+                                    </StackPanel>
+                                    <!-- PillToggle 2项：单曲循环/列表循环 -->
+                                    <common:PillToggle2 Grid.Column="1"
+                                                        Height="28"
+                                                        HorizontalAlignment="Right"
+                                                        Label0="{i18n:Translate loop_single}"
+                                                        Label1="{i18n:Translate loop_list}"
+                                                        IsSelected0="{Binding #Root.ViewModel.LoopMode, Converter={StaticResource StringEquals}, ConverterParameter=SingleLoop}"
+                                                        IsSelected1="{Binding #Root.ViewModel.LoopMode, Converter={StaticResource StringEquals}, ConverterParameter=ListLoop}"
+                                                        Command="{Binding #Root.ViewModel.SetLoopModeCommand}"
+                                                        CommandParameter0="{x:Static models:LoopMode.SingleLoop}"
+                                                        CommandParameter1="{x:Static models:LoopMode.ListLoop}"/>
+                                </Grid>
+
+                                <!-- 桌面播放顺序（每次触发快捷方式播放时的选曲策略） -->
+                                <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,0">
+                                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                        <TextBlock Text="{i18n:Translate play_order_label}" FontSize="14" FontWeight="Medium"
+                                                   Foreground="{DynamicResource TextPrimary}"/>
+                                        <TextBlock Text="{i18n:Translate order_desc}" FontSize="11"
+                                                   Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0"
+                                                   IsVisible="{Binding #Root.ViewModel.OrderMode, Converter={StaticResource StringEquals}, ConverterParameter=Order}"/>
+                                        <TextBlock Text="{i18n:Translate random_desc}" FontSize="11"
+                                                   Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0"
+                                                   IsVisible="{Binding #Root.ViewModel.OrderMode, Converter={StaticResource StringEquals}, ConverterParameter=Random}"/>
+                                    </StackPanel>
+                                    <common:PillToggle2 Grid.Column="1"
+                                                        Height="28"
+                                                        HorizontalAlignment="Right"
+                                                        Label0="{i18n:Translate order_play}"
+                                                        Label1="{i18n:Translate random_play}"
+                                                        IsSelected0="{Binding #Root.ViewModel.OrderMode, Converter={StaticResource StringEquals}, ConverterParameter=Order}"
+                                                        IsSelected1="{Binding #Root.ViewModel.OrderMode, Converter={StaticResource StringEquals}, ConverterParameter=Random}"
+                                                        Command="{Binding #Root.ViewModel.SetOrderModeToCommand}"
+                                                        CommandParameter0="{x:Static models:OrderMode.Order}"
+                                                        CommandParameter1="{x:Static models:OrderMode.Random}"/>
+                                </Grid>
+                            </StackPanel>
+
+                            <!-- 设置区与音频列表之间的分隔线 -->
+                            <Rectangle Height="0.5" Fill="{DynamicResource Lv2Border}"
+                                       Opacity="0.6" Margin="8,0"/>
+
+                            <views:AudioItemList ViewModel="{Binding ViewModel, RelativeSource={RelativeSource AncestorType=views:DetailContent}}"/>
+                            <!-- 底部占位空间，避免内容被浮动按钮遮挡 -->
+                            <Rectangle Height="80" Fill="Transparent"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+
+        <!-- ===== 浮动按钮层（停止 + 安装，不占据布局空间） ===== -->
+        <Grid Grid.RowSpan="2">
+            <!-- 停止按钮 -->
+            <Border CornerRadius="25" Background="{DynamicResource ErrorRed}"
+                    HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                    Padding="0"
+                    IsHitTestVisible="True"
+                    Height="48"
+                    Margin="{Binding #Root.ViewModel.IsAudioActive, Converter={StaticResource BoolToThickness}, ConverterParameter=76|-100}"
+                    Opacity="{Binding #Root.ViewModel.IsAudioActive, Converter={StaticResource BoolToDouble}, ConverterParameter=1}">
+                <Border.Transitions>
+                    <Transitions>
+                        <ThicknessTransition Property="Margin" Duration="0:0:0.5" Easing="SineEaseOut"/>
+                        <DoubleTransition Property="Opacity" Duration="0:0:0.5" Easing="SineEaseOut"/>
+                    </Transitions>
+                </Border.Transitions>
+                <Button Height="48" Padding="24,0" CornerRadius="25"
+                        Background="Transparent" BorderThickness="0"
+                        Cursor="Hand"
+                        Command="{Binding #Root.ViewModel.StopAudioCommand}"
+                        FontSize="14" FontWeight="SemiBold" Foreground="White"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="6"
+                                HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <PathIcon Data="{StaticResource IconStop}" Width="18" Height="18"
+                                  Foreground="White" VerticalAlignment="Center"/>
+                        <TextBlock Text="{i18n:Translate stop}" Foreground="White" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </Border>
+
+            <!-- 安装按钮（浮动） -->
+            <Panel IsVisible="{Binding #Root.ViewModel.SelectedResource, Converter={StaticResource IsNotNull}}">
+                <ibtn:WideInstallButton VerticalAlignment="Bottom" Margin="24,0,24,16"
+                                                    IsVisible="{Binding #Root.ViewModel.SelectedResource.IsInstalled, Converter={StaticResource InverseBool}}"
+                                                    Command="{Binding #Root.ViewModel.InstallResourceCommand}"
+                                                    CommandParameter="{Binding SelectedResource}"
+                                                    InstallingResourceId="{Binding #Root.ViewModel.SelectedResource.ActiveInstallingId, FallbackValue=''}"
+                                                    ResourceId="{Binding #Root.ViewModel.SelectedResource.Id, FallbackValue=''}"
+                                                    InstallProgress="{Binding #Root.ViewModel.SelectedResource.DownloadProgress, FallbackValue=0}"
+                                                    InstallStatusText="{Binding #Root.ViewModel.SelectedResource.DownloadStatusText, FallbackValue=''}"
+                                                    IsPaused="{Binding #Root.ViewModel.SelectedResource.IsDownloadPaused, FallbackValue=False}"/>
+            </Panel>
+        </Grid>
+    </Grid>
+
+    <UserControl.Styles>
+        <StyleInclude Source="/Views/Common/Templates/PillToggle2.axaml"/>
+        <StyleInclude Source="/Views/Common/Templates/PillToggle3.axaml"/>
+
+        <Style Selector="PathIcon.spinner">
+            <Setter Property="RenderTransformOrigin" Value="50%,50%"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <RotateTransform Angle="0"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Animations>
+                <Animation Duration="0:0:0.8" IterationCount="Infinite">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="RotateTransform.Angle" Value="0"/>
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="RotateTransform.Angle" Value="360"/>
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+    </UserControl.Styles>
+</UserControl>

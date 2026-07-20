@@ -1,0 +1,289 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Sounder_APP.ViewModels"
+             xmlns:common="clr-namespace:Sounder_APP.Views.Common"
+             xmlns:i18n="clr-namespace:Sounder_APP.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1050" d:DesignHeight="750"
+             x:Class="Sounder_APP.Views.SettingsView"
+             x:Name="Root"
+             x:CompileBindings="False">
+
+    <Design.DataContext>
+        <vm:SettingsViewModel/>
+    </Design.DataContext>
+
+    <ScrollViewer>
+        <StackPanel Margin="40,32" Spacing="20" MaxWidth="680">
+
+            <!-- ===== 页面标题 ===== -->
+            <TextBlock Text="{i18n:Translate settings_title}" FontSize="24" FontWeight="Bold"
+                       Foreground="{DynamicResource TextPrimary}"/>
+
+            <!-- ===== 设置列表 ===== -->
+            <Border CornerRadius="12" Background="{DynamicResource Lv2Bg}" Padding="0">
+
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+
+                    <!-- 1. 主题模式 -->
+                    <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="20,16">
+                        <PathIcon Grid.Column="0" Data="{StaticResource IconTheme}"
+                                  Width="18" Height="18" VerticalAlignment="Center"
+                                  Foreground="{DynamicResource AccentBlue}"/>
+                        <TextBlock Grid.Column="1" Text="{i18n:Translate theme_mode}" FontSize="14"
+                                   FontWeight="Medium" VerticalAlignment="Center" Margin="12,0,0,0"
+                                   Foreground="{DynamicResource TextPrimary}"/>
+                        <common:PillToggle3 Grid.Column="2"
+                                            Height="28" HorizontalAlignment="Right"
+                                            Background="{DynamicResource Lv1Bg}"
+                                            Label0="{i18n:Translate auto_theme}"
+                                            Label1="{i18n:Translate light}"
+                                            Label2="{i18n:Translate dark}"
+                                            IsSelected0="{Binding ThemeMode, Converter={StaticResource StringEquals}, ConverterParameter=Auto}"
+                                            IsSelected1="{Binding ThemeMode, Converter={StaticResource StringEquals}, ConverterParameter=Light}"
+                                            IsSelected2="{Binding ThemeMode, Converter={StaticResource StringEquals}, ConverterParameter=Dark}"
+                                            Command="{Binding SetThemeModeCommand}"
+                                            CommandParameter0="Auto"
+                                            CommandParameter1="Light"
+                                            CommandParameter2="Dark"/>
+                    </Grid>
+
+                    <!-- 分割线 -->
+                    <Border Grid.Row="1" Height="0.5" Background="{DynamicResource Lv2Border}" Margin="20,0,0,0"/>
+
+                    <!-- 2. 语言设置 -->
+                    <Grid Grid.Row="2" ColumnDefinitions="Auto,*,Auto" Margin="20,16">
+                        <PathIcon Grid.Column="0" Data="{StaticResource IconDesktop}"
+                                  Width="18" Height="18" VerticalAlignment="Center"
+                                  Foreground="{DynamicResource AccentBlue}"/>
+                        <TextBlock Grid.Column="1" Text="{i18n:Translate language_setting}" FontSize="14"
+                                   FontWeight="Medium" VerticalAlignment="Center" Margin="12,0,0,0"
+                                   Foreground="{DynamicResource TextPrimary}"/>
+                        <ComboBox Grid.Column="2"
+                                  ItemsSource="{Binding LanguageOptions}"
+                                  SelectedItem="{Binding SelectedLanguage}"
+                                  DisplayMemberBinding="{Binding Label}"
+                                  MinWidth="120" Height="30"
+                                  HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <ComboBox.Styles>
+                                <Style Selector="ComboBox">
+                                    <Setter Property="Background" Value="{DynamicResource Lv1Bg}"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="CornerRadius" Value="6"/>
+                                    <Setter Property="Padding" Value="8,4"/>
+                                </Style>
+                            </ComboBox.Styles>
+                        </ComboBox>
+                    </Grid>
+
+                    <!-- 分割线 -->
+                    <Border Grid.Row="3" Height="0.5" Background="{DynamicResource Lv2Border}" Margin="20,0,0,0"/>
+
+                    <!-- 3. 缓存清理 -->
+                    <Grid Grid.Row="4" ColumnDefinitions="Auto,*,Auto" Margin="20,16">
+                        <PathIcon Grid.Column="0" Data="{StaticResource IconBroom}"
+                                  Width="18" Height="18" VerticalAlignment="Center"
+                                  Foreground="{DynamicResource AccentBlue}"/>
+                        <TextBlock Grid.Column="1" Text="{i18n:Translate cache_cleanup}" FontSize="14"
+                                   FontWeight="Medium" VerticalAlignment="Center" Margin="12,0,0,0"
+                                   Foreground="{DynamicResource TextPrimary}"/>
+                        <Button Grid.Column="2" Command="{Binding ClearCacheCommand}"
+                                Classes="btn secondary" Padding="10,6"
+                                VerticalAlignment="Center" Cursor="Hand">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Text="{Binding CacheSize}" FontSize="13"
+                                           Foreground="{DynamicResource TextSecondary}" VerticalAlignment="Center"/>
+                                <PathIcon Data="{StaticResource IconArrowRight}" Width="16" Height="16"
+                                          Foreground="{DynamicResource TextSecondary}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+
+                    <!-- 分割线 -->
+                    <Border Grid.Row="5" Height="0.5" Background="{DynamicResource Lv2Border}" Margin="20,0,0,0"/>
+
+                    <!-- 4. 进入官网 -->
+                    <Grid Grid.Row="6" ColumnDefinitions="Auto,*,Auto" Margin="20,16">
+                        <PathIcon Grid.Column="0" Data="{StaticResource IconLink}"
+                                  Width="18" Height="18" VerticalAlignment="Center"
+                                  Foreground="{DynamicResource AccentBlue}"/>
+                        <TextBlock Grid.Column="1" Text="{i18n:Translate enter_official_site}" FontSize="14"
+                                   FontWeight="Medium" VerticalAlignment="Center" Margin="12,0,0,0"
+                                   Foreground="{DynamicResource TextPrimary}"/>
+                        <Button Grid.Column="2" Command="{Binding OpenWebsiteCommand}"
+                                Classes="btn secondary" Padding="10,6"
+                                VerticalAlignment="Center" Cursor="Hand">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Text="{i18n:Translate get_fan_group}" FontSize="13"
+                                           Foreground="{DynamicResource TextSecondary}" VerticalAlignment="Center"/>
+                                <PathIcon Data="{StaticResource IconArrowRight}" Width="16" Height="16"
+                                          Foreground="{DynamicResource TextSecondary}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+
+                    <!-- 分割线 -->
+                    <Border Grid.Row="7" Height="0.5" Background="{DynamicResource Lv2Border}" Margin="20,0,0,0"/>
+
+                    <!-- 5. 作者 -->
+                    <Grid Grid.Row="8" ColumnDefinitions="Auto,*,Auto" Margin="20,16">
+                        <PathIcon Grid.Column="0" Data="{StaticResource IconPerson}"
+                                  Width="18" Height="18" VerticalAlignment="Center"
+                                  Foreground="{DynamicResource AccentBlue}"/>
+                        <TextBlock Grid.Column="1" Text="{i18n:Translate author_name}" FontSize="14"
+                                   FontWeight="Medium" VerticalAlignment="Center" Margin="12,0,0,0"
+                                   Foreground="{DynamicResource TextPrimary}"/>
+                        <TextBlock Grid.Column="2" Text="{Binding AuthorName}" FontSize="13" Margin="0,0,16,0"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextSecondary}"/>
+                    </Grid>
+
+                    <!-- 占位 Bottom -->
+                    <Panel Grid.Row="9" Height="0"/>
+                </Grid>
+            </Border>
+
+            <!-- ===== 关于 ===== -->
+            <Border CornerRadius="12" Background="{DynamicResource Lv2Bg}" Padding="0">
+
+                <StackPanel>
+                    <!-- 关于头部 -->
+                    <StackPanel Orientation="Horizontal" Spacing="10" Margin="20,16">
+                        <PathIcon Data="{StaticResource IconInfo}" Width="18" Height="18"
+                                  VerticalAlignment="Center" Foreground="{DynamicResource AccentBlue}"/>
+                        <TextBlock Text="{i18n:Translate about_title}" FontSize="15" FontWeight="SemiBold"
+                                   VerticalAlignment="Center" Foreground="{DynamicResource TextPrimary}"/>
+                    </StackPanel>
+
+                    <!-- 关于内容区 -->
+                    <StackPanel Margin="20,0,20,20">
+
+                        <!-- 版本卡片1：发声APP -->
+                        <Border CornerRadius="12" Background="{DynamicResource Lv3Bg}" Padding="16">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                                <Border Grid.Column="0" Width="56" Height="56" VerticalAlignment="Top">
+                                    <Image Source="/Assets/sounder.png" Stretch="UniformToFill"/>
+                                </Border>
+                                <StackPanel Grid.Column="1" Spacing="4">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="{i18n:Translate app_name_display}" FontSize="15" FontWeight="Bold"
+                                                   Foreground="{DynamicResource TextPrimary}" VerticalAlignment="Center"/>
+                                        <Border CornerRadius="6" Padding="4,2"
+                                                Background="{DynamicResource AccentBlue}">
+                                            <TextBlock Text="{i18n:Translate badge_android}" FontSize="11"
+                                                       Foreground="White" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <TextBlock Text="{i18n:Translate app_description}" FontSize="13"
+                                               Foreground="{DynamicResource TextSecondary}" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- 版本卡片2：发声APP · 造化版 -->
+                        <Border CornerRadius="12" Background="{DynamicResource Lv3Bg}" Padding="16" Margin="0,16">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                                <Border Grid.Column="0" Width="56" Height="56" VerticalAlignment="Top">
+                                    <Image Source="/Assets/ico.png" Stretch="UniformToFill"/>
+                                </Border>
+                                <StackPanel Grid.Column="1" Spacing="4">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="{i18n:Translate app_name_zaohua}" FontSize="15" FontWeight="Bold"
+                                                   Foreground="{DynamicResource TextPrimary}" VerticalAlignment="Center"/>
+                                        <Border CornerRadius="6" Padding="5,2">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                                                    <GradientStop Color="#f7971e" Offset="0"/>
+                                                    <GradientStop Color="#ffd200" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                            <TextBlock Text="{i18n:Translate badge_multi_platform}" FontSize="11"
+                                                       Foreground="White" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <TextBlock Text="{i18n:Translate app_full_description}" FontSize="13"
+                                               Foreground="{DynamicResource TextSecondary}" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- 版本卡片3：整合包获取方式 -->
+                        <Button Command="{Binding OpenPackageCommand}"
+                                Background="{DynamicResource Lv3Bg}" BorderThickness="0"
+                                CornerRadius="12" Padding="16" Margin="0,0,0,16"
+                                Cursor="Hand"
+                                HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                                <Border Grid.Column="0" Width="56" Height="56" VerticalAlignment="Center">
+                                    <Image Source="/Assets/blue_android.png" Stretch="UniformToFill"/>
+                                </Border>
+                                <StackPanel Grid.Column="1" Spacing="4" VerticalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="{i18n:Translate independent_package}" FontSize="15" FontWeight="Bold"
+                                                   Foreground="{DynamicResource TextPrimary}" VerticalAlignment="Center"/>
+                                        <Border CornerRadius="6" Padding="4,2"
+                                                Background="{DynamicResource AccentBlue}">
+                                            <TextBlock Text="{i18n:Translate badge_android}" FontSize="11"
+                                                       Foreground="White" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <TextBlock Text="{i18n:Translate independent_desc}" FontSize="13"
+                                               Foreground="{DynamicResource TextSecondary}" TextWrapping="Wrap"/>
+                                </StackPanel>
+                                <PathIcon Grid.Column="2" Data="{StaticResource IconArrowRight}" Width="20" Height="20"
+                                          Foreground="{DynamicResource TextTertiary}" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+
+                        <!-- 版本卡片4：音频文件获取方式 -->
+                        <Button Command="{Binding OpenAudioFilesCommand}"
+                                Background="{DynamicResource Lv3Bg}" BorderThickness="0"
+                                CornerRadius="12" Padding="16" Margin="0,0,0,16"
+                                Cursor="Hand"
+                                HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                                <Border Grid.Column="0" Width="56" Height="56" VerticalAlignment="Center">
+                                    <Image Source="/Assets/audio_files.png" Stretch="UniformToFill"/>
+                                </Border>
+                                <StackPanel Grid.Column="1" Spacing="4" VerticalAlignment="Center">
+                                    <TextBlock Text="{i18n:Translate audio_files}" FontSize="15" FontWeight="Bold"
+                                               Foreground="{DynamicResource TextPrimary}"/>
+                                    <TextBlock Text="{i18n:Translate audio_files_desc}" FontSize="13"
+                                               Foreground="{DynamicResource TextSecondary}" TextWrapping="Wrap"/>
+                                </StackPanel>
+                                <PathIcon Grid.Column="2" Data="{StaticResource IconArrowRight}" Width="20" Height="20"
+                                          Foreground="{DynamicResource TextTertiary}" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+
+                        <!-- 隐私声明 -->
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <PathIcon Grid.Column="0" Data="{StaticResource IconEye}" Width="16" Height="16"
+                                      VerticalAlignment="Top" Margin="0,2,0,0"
+                                      Foreground="{DynamicResource TextTertiary}"/>
+                            <TextBlock Grid.Column="1" FontSize="12"
+                                       Foreground="{DynamicResource TextSecondary}" TextWrapping="Wrap" LineHeight="16"
+                                       Text="{i18n:Translate privacy_notice}"/>
+                        </Grid>
+
+                        <!-- 反馈提示 -->
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" Margin="0,8,0,0">
+                            <PathIcon Grid.Column="0" Data="{StaticResource IconChat}" Width="16" Height="16"
+                                      VerticalAlignment="Top" Margin="0,2,0,0"
+                                      Foreground="{DynamicResource TextTertiary}"/>
+                            <TextBlock Grid.Column="1" FontSize="12"
+                                       Foreground="{DynamicResource TextSecondary}" TextWrapping="Wrap" LineHeight="16"
+                                       Text="{i18n:Translate feedback_notice}"/>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+
+    <UserControl.Styles>
+        <StyleInclude Source="/Views/Common/Templates/PillToggle3.axaml"/>
+    </UserControl.Styles>
+</UserControl>

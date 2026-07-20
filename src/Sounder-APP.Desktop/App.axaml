@@ -1,0 +1,199 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Sounder_APP.App"
+             xmlns:local="using:Sounder_APP"
+             xmlns:converters="using:Sounder_APP.Converters"
+             RequestedThemeVariant="Default">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <!-- ============================================================
+                     亮色主题 — 三层视觉深度
+                     冷调灰 + 靛蓝强调色，干净清爽的现代 APP 风格
+                     ============================================================ -->
+                <ResourceDictionary x:Key="Light">
+                    <!-- 三层背景：Lv1(页面底) → Lv2(区块/面板) → Lv3(卡片/弹窗) -->
+                    <SolidColorBrush x:Key="Lv1Bg" Color="#F5F6FA"/>
+                    <SolidColorBrush x:Key="Lv2Bg" Color="#FAFBFC"/>
+                    <SolidColorBrush x:Key="Lv2Border" Color="#E2E5EB"/>
+                    <SolidColorBrush x:Key="Lv2Hover" Color="#EEF1F7"/>
+                    <SolidColorBrush x:Key="Lv3Bg" Color="#FFFFFF"/>
+                    <SolidColorBrush x:Key="Lv3Border" Color="#E8EBF0"/>
+
+                    <!-- 文本色：深蓝灰→中灰→浅灰，提升可读性 -->
+                    <SolidColorBrush x:Key="TextPrimary" Color="#1D1F27"/>
+                    <SolidColorBrush x:Key="TextSecondary" Color="#6B7280"/>
+                    <SolidColorBrush x:Key="TextTertiary" Color="#9CA3AF"/>
+                    <SolidColorBrush x:Key="LabelText" Color="#82858F"/>
+
+                    <!-- 强调色：与暗色主题一致的天空蓝 -->
+                    <SolidColorBrush x:Key="AccentBlue" Color="#5DA3E8"/>
+                    <SolidColorBrush x:Key="AccentBlueHover" Color="#4A8AD0"/>
+                    <SolidColorBrush x:Key="AccentBluePressed" Color="#7DBAF0"/>
+
+                    <!-- 按钮文字（深色按钮上的白色文字） -->
+                    <SolidColorBrush x:Key="BtnFgSoft" Color="#FFFFFF"/>
+
+                    <!-- 选中态：中性灰底色 -->
+                    <SolidColorBrush x:Key="SelectBg" Color="#F0F0F3"/>
+
+                    <!-- 顶部提示条背景（浅主题色） -->
+                    <SolidColorBrush x:Key="TipBg" Color="#E5EFF9"/>
+
+                    <!-- 播放中高亮背景（AccentBlue 8% 透明） -->
+                    <SolidColorBrush x:Key="PlayingHighlightBg" Color="#145DA3E8"/>
+
+                    <!-- 状态色：已安装/未安装/错误 -->
+                    <SolidColorBrush x:Key="StatusInstalled" Color="#ECFDF5"/>
+                    <SolidColorBrush x:Key="StatusInstalledText" Color="#059669"/>
+                    <SolidColorBrush x:Key="StatusNotInstalled" Color="#F3F4F6"/>
+                    <SolidColorBrush x:Key="StatusNotInstalledText" Color="#8B8F98"/>
+                    <SolidColorBrush x:Key="ErrorRed" Color="#EF4444"/>
+                    <SolidColorBrush x:Key="ErrorRedHover" Color="#DC2626"/>
+                    <SolidColorBrush x:Key="ErrorRedPressed" Color="#F87171"/>
+
+                    <!-- 侧边栏 / 标题栏 -->
+                    <SolidColorBrush x:Key="SidebarBg" Color="#F8F9FC"/>
+                    <SolidColorBrush x:Key="SidebarIconActive" Color="#4B4F5C"/>
+                    <SolidColorBrush x:Key="SidebarIconInactive" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TitleBarBtnFg" Color="#4B4F5C"/>
+                    <SolidColorBrush x:Key="TitleBarBtnHoverBg" Color="#0A000000"/>
+                    <SolidColorBrush x:Key="NavBtnHoverBg" Color="#08000000"/>
+                </ResourceDictionary>
+
+                <!-- ============================================================
+                     暗色主题 — 三层视觉深度
+                     ============================================================ -->
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="Lv1Bg" Color="#0D0D0D"/>
+                    <SolidColorBrush x:Key="Lv2Bg" Color="#1A1A1A"/>
+                    <SolidColorBrush x:Key="Lv2Border" Color="#2A2A2A"/>
+                    <SolidColorBrush x:Key="Lv2Hover" Color="#202020"/>
+                    <SolidColorBrush x:Key="Lv3Bg" Color="#212121"/>
+                    <SolidColorBrush x:Key="Lv3Border" Color="#333333"/>
+
+                    <!-- 文本色 -->
+                    <SolidColorBrush x:Key="TextPrimary" Color="#E6E6E6"/>
+                    <SolidColorBrush x:Key="TextSecondary" Color="#8E8E8E"/>
+                    <SolidColorBrush x:Key="TextTertiary" Color="#5E5E5E"/>
+                    <SolidColorBrush x:Key="LabelText" Color="#767676"/>
+
+                    <!-- 强调色 -->
+                    <SolidColorBrush x:Key="AccentBlue" Color="#5DA3E8"/>
+                    <SolidColorBrush x:Key="AccentBlueHover" Color="#4A8AD0"/>
+                    <SolidColorBrush x:Key="AccentBluePressed" Color="#7DBAF0"/>
+
+                    <!-- 按钮文字（浅底色上的柔白） -->
+                    <SolidColorBrush x:Key="BtnFgSoft" Color="#E0E0E0"/>
+
+                    <!-- 选中态 -->
+                    <SolidColorBrush x:Key="SelectBg" Color="#2A2A2A"/>
+
+                    <!-- 顶部提示条背景（浅主题色） -->
+                    <SolidColorBrush x:Key="TipBg" Color="#1A2430"/>
+
+                    <!-- 播放中高亮背景（AccentBlue 16% 透明，暗底需更明显） -->
+                    <SolidColorBrush x:Key="PlayingHighlightBg" Color="#285DA3E8"/>
+
+                    <!-- 状态色 -->
+                    <SolidColorBrush x:Key="StatusInstalled" Color="#1A3422"/>
+                    <SolidColorBrush x:Key="StatusInstalledText" Color="#5CB860"/>
+                    <SolidColorBrush x:Key="StatusNotInstalled" Color="#242424"/>
+                    <SolidColorBrush x:Key="StatusNotInstalledText" Color="#7A7A7A"/>
+                    <SolidColorBrush x:Key="ErrorRed" Color="#EF5350"/>
+                    <SolidColorBrush x:Key="ErrorRedHover" Color="#E53935"/>
+                    <SolidColorBrush x:Key="ErrorRedPressed" Color="#F27774"/>
+
+                    <!-- 侧边栏 / 标题栏 -->
+                    <SolidColorBrush x:Key="SidebarBg" Color="#0A0A0A"/>
+                    <SolidColorBrush x:Key="SidebarIconActive" Color="#9E9E9E"/>
+                    <SolidColorBrush x:Key="SidebarIconInactive" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TitleBarBtnFg" Color="#666666"/>
+                    <SolidColorBrush x:Key="TitleBarBtnHoverBg" Color="#30FFFFFF"/>
+                    <SolidColorBrush x:Key="NavBtnHoverBg" Color="#18FFFFFF"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+
+        <!-- 转换器 -->
+        <converters:PlayModeToIndexConverter x:Key="PlayModeToIndex"/>
+        <converters:OrderModeToIndexConverter x:Key="OrderModeToIndex"/>
+        <converters:BoolToValueConverter x:Key="BoolToValue"/>
+        <converters:InverseBoolConverter x:Key="InverseBool"/>
+        <converters:NullToBoolConverter x:Key="IsNotNull"/>
+        <converters:InverseNullToBoolConverter x:Key="IsNull"/>
+        <converters:StringEqualsConverter x:Key="StringEquals"/>
+        <converters:StringNotEqualsConverter x:Key="StringNotEquals"/>
+        <converters:StringEqualMultiConverter x:Key="StringEqualMulti"/>
+        <converters:StringNotEqualMultiConverter x:Key="StringNotEqualMulti"/>
+        <converters:PlayingBackgroundMultiConverter x:Key="PlayingBackground"/>
+        <converters:PlayingForegroundMultiConverter x:Key="PlayingForeground"/>
+        <converters:BoolToDoubleConverter x:Key="BoolToDouble"/>
+        <converters:BoolToOffsetConverter x:Key="BoolToOffset"/>
+        <converters:SetContainsMultiConverter x:Key="SetContainsMulti"/>
+        <converters:SetNotContainsMultiConverter x:Key="SetNotContainsMulti"/>
+        <converters:PlayingBackgroundSetConverter x:Key="PlayingBackgroundSet"/>
+        <converters:BoolToThicknessConverter x:Key="BoolToThickness"/>
+        <converters:FloatToPercentConverter x:Key="FloatToPercent"/>
+        <converters:HexToBrushConverter x:Key="HexToBrush"/>
+        <converters:FloatToBoolConverter x:Key="FloatToBool"/>
+
+
+        <!-- 图标资源 -->
+        <StreamGeometry x:Key="IconSearch">M15.5,14h-.79l-.28-.27C15.41,12.59 16,11.11 16,9.5 16,5.91 13.09,3 9.5,3S3,5.91 3,9.5 5.91,16 9.5,16c1.61,0 3.09-.59 4.23-1.57l.27.28v.79l5,4.99L20.49,19l-4.99-5zm-6,0C7.01,14 5,11.99 5,9.5S7.01,5 9.5,5 14,7.01 14,9.5 11.99,14 9.5,14z</StreamGeometry>
+        <StreamGeometry x:Key="IconDownload">M19,9L15,9 15,3 9,3 9,9 5,9 12,16ZM5,18L5,20 19,20 19,18Z</StreamGeometry>
+        <StreamGeometry x:Key="IconDelete">M6,19C6,20.1 6.9,21 8,21L16,21C17.1,21 18,20.1 18,19L18,7 6,7ZM19,4L15.5,4 14.5,3 9.5,3 8.5,4 5,4 5,6 19,6Z</StreamGeometry>
+        <StreamGeometry x:Key="IconBroom">M853.3 448v-85.3a64 64 0 0 0-21.3-21.3h-213.3a64 64 0 0 1-21.3-21.3v-128a64 64 0 0 0-21.3-21.3h-128a64 64 0 0 0-21.3 21.3v128a64 64 0 0 1-21.3 21.3h-213.3a64 64 0 0 0-21.3 21.3v85.3a64 64 0 0 0 21.3 21.3h640a64 64 0 0 0 21.3-21.3z m42.7 106.7v341.3a128 128 0 0 1-42.7 42.7h-405.3a64 64 0 0 1-21.3-21.3V725.3a128 128 0 0 0-85.3 0v192a64 64 0 0 1-21.3 21.3H170.7a128 128 0 0 1-42.7-42.7v-341.3h-21.3a64 64 0 0 1-21.3-21.3V298.7a128 128 0 0 1 42.7-42.7h213.3V128a128 128 0 0 1 42.7-42.7h256a128 128 0 0 1 42.7 42.7v128h213.3a128 128 0 0 1 42.7 42.7v234.7a64 64 0 0 1-21.3 21.3H896z</StreamGeometry>
+        <StreamGeometry x:Key="IconEdit">M3,17.25V21h3.75L17.81,9.94l-3.75-3.75L3,17.25z M20.71,7.04c0.39-0.39,0.39-1.02,0-1.41l-2.34-2.34c-0.39-0.39-1.02-0.39-1.41,0l-1.83,1.83 3.75,3.75 1.83-1.83z</StreamGeometry>
+
+        <StreamGeometry x:Key="IconPlay">M8,5L8,19 19,12Z</StreamGeometry>
+        <StreamGeometry x:Key="IconPause">M6,4L10,4 10,20 6,20ZM14,4L18,4 18,20 14,20Z</StreamGeometry>
+
+        <StreamGeometry x:Key="IconRefresh">M17.65,6.35C16.2,4.9 14.21,4 12,4 7.58,4 4.01,7.58 4.01,12 4.01,16.42 7.58,20 12,20 15.73,20 18.84,17.45 19.73,14L17.65,14C16.83,16.33 14.61,18 12,18 8.69,18 6.01,15.31 6.01,12 6.01,8.69 8.69,6 12,6 13.66,6 15.14,6.69 16.22,7.78L13,11 20,11 20,4Z</StreamGeometry>
+        <StreamGeometry x:Key="IconSchedule">M11.99,2C6.47,2 2,6.48 2,12s4.47,10 9.99,10C17.52,22 22,17.52 22,12S17.52,2 11.99,2zM12,20c-4.42,0-8-3.58-8-8s3.58-8 8-8 8,3.58 8,8-3.58,8-8,8zM12.5,7H11v6l5.25,3.15.75-1.23-4.5-2.67z</StreamGeometry>
+        <StreamGeometry x:Key="IconFolder">M20,6h-8l-2-2H4c-1.1,0-1.99,0.9-1.99,2L2,18c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V8C22,6.9,21.1,6,20,6z M20,18H4V8h16V18z</StreamGeometry>
+        <StreamGeometry x:Key="IconDisk">M20,6h-8l-2-2H4C2.9,4,2,4.9,2,6v12c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V8C22,6.9,21.1,6,20,6M18,12H16V14H18V16H16V18H14V16H16V14H14V12H16V10H14V8H16V10H18V12Z</StreamGeometry>
+        <StreamGeometry x:Key="IconCalendar">M19,3h-1V1h-2v2H8V1H6v2H5c-1.1,0-2,0.9-2,2v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2z M19,19H5V8h14v11z</StreamGeometry>
+        <StreamGeometry x:Key="IconSpinner">M12,2 A10,10 0 1,1 2,12 A1.5,1.5 0 0,1 5,12 A7,7 0 1,0 12,5 A1.5,1.5 0 0,1 12,2 Z</StreamGeometry>
+        <StreamGeometry x:Key="IconMore">M8,10L12,13.5 16,10 15,9 12,11.5 9,9Z</StreamGeometry>
+        <StreamGeometry x:Key="IconBroken">M21,19V5c0-1.1-0.9-2-2-2H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14C20.1,21,21,20.1,21,19z M8.5,13.5l2.5,3.01L14.5,12l4.5,6H5L8.5,13.5z</StreamGeometry>
+        <StreamGeometry x:Key="IconStop">M6,6L18,6 18,18 6,18Z</StreamGeometry>
+        <StreamGeometry x:Key="IconCheck">M10.8,4.3L5.4,9.7L2.5,6.8L1.3,8L5.4,12.1L12,5.5L10.8,4.3Z</StreamGeometry>
+        <StreamGeometry x:Key="IconClone">M16,1H4C2.9,1,2,1.9,2,3v14h2V3h12V1z M19,5H8C6.9,5,6,5.9,6,7v14c0,1.1,0.9,2,2,2h11c1.1,0,2-0.9,2-2V7C21,5.9,20.1,5,19,5z M19,21H8V7h11V21z</StreamGeometry>
+        <StreamGeometry x:Key="IconExport">M17.65,6.35C16.2,4.9,14.21,4,12,4C7.58,4,4.01,7.58,4.01,12s3.57,8,7.99,8c3.73,0,6.84-2.55,7.73-6h-2.08c-0.82,2.33-3.04,4-5.65,4c-3.31,0-5.99-2.69-5.99-6s2.68-6,5.99-6c1.66,0,3.14,0.69,4.22,1.78L13,11h7V4L17.65,6.35z</StreamGeometry>
+        <StreamGeometry x:Key="IconImport">M9,16h6v-6h4l-7-7-7,7h4z M5,18h14v2H5z</StreamGeometry>
+        <StreamGeometry x:Key="IconCreate">M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z</StreamGeometry>
+        <StreamGeometry x:Key="IconPerson">M12,12c2.21,0,4-1.79,4-4s-1.79-4-4-4-4,1.79-4,4,1.79,4,4,4z M12,14c-2.67,0-8,1.34-8,4v2h16v-2c0-2.66-5.33-4-8-4z</StreamGeometry>
+        <StreamGeometry x:Key="IconLink">M3.9,12c0-1.71,1.39-3.1,3.1-3.1h4V7H7c-2.76,0-5,2.24-5,5s2.24,5,5,5h4v-1.9H7C5.29,15.1,3.9,13.71,3.9,12z M8,13h8v-2H8V13z M17,7h-4v1.9h4c1.71,0,3.1,1.39,3.1,3.1s-1.39,3.1-3.1,3.1h-4V17h4c2.76,0,5-2.24,5-5s-2.24-5-5-5z</StreamGeometry>
+        <StreamGeometry x:Key="IconInfo">M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10,10-4.48,10-10S17.52,2,12,2z M13,17h-2v-6h2V17z M13,9h-2V7h2V9z</StreamGeometry>
+        <StreamGeometry x:Key="IconEye">M12,4.5C7,4.5,2.73,7.61,1,12c1.73,4.39,6,7.5,11,7.5s9.27-3.11,11-7.5c-1.73-4.39-6-7.5-11-7.5z M12,17c-2.76,0-5-2.24-5-5s2.24-5,5-5,5,2.24,5,5-2.24,5-5,5z M12,9c-1.66,0-3,1.34-3,3s1.34,3,3,3,3-1.34,3-3-1.34-3-3-3z</StreamGeometry>
+        <StreamGeometry x:Key="IconChat">M18,3.5a3.5,3.5 0 0 1 3.5,3.5v8a3.5,3.5 0 0 1-3.5,3.5H14l-4,3.5l-4,-3.5H6a3.5,3.5 0 0 1-3.5,-3.5v-8A3.5,3.5 0 0 1 6,3.5h12z</StreamGeometry>
+        <StreamGeometry x:Key="IconArrowRight">M8.59,16.59L13.17,12L8.59,7.41L10,6l6,6l-6,6L8.59,16.59z</StreamGeometry>
+        <StreamGeometry x:Key="IconTheme">M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,4v16c-4.41,0-8-3.59-8-8s3.59-8,8-8z</StreamGeometry>
+        <StreamGeometry x:Key="IconTag">M21.41,11.58l-9-9C12.05,2.22,11.55,2,11,2H4C2.9,2,2,2.9,2,4v7c0,0.55,0.22,1.05,0.59,1.42l9,9c0.36,0.36,0.86,0.58,1.41,0.58c0.55,0,1.05-0.22,1.41-0.59l7-7c0.37-0.36,0.59-0.86,0.59-1.41C22,12.44,21.78,11.94,21.41,11.58z M5.5,7C4.67,7,4,6.33,4,5.5S4.67,4,5.5,4S7,4.67,7,5.5S6.33,7,5.5,7z</StreamGeometry>
+        <StreamGeometry x:Key="IconDesktop">M21,2H3C1.9,2,1,2.9,1,4v12c0,1.1,0.9,2,2,2h7v2H8v2h8v-2h-2v-2h7c1.1,0,2-0.9,2-2V4C23,2.9,22.1,2,21,2z M21,14H3V4h18V14z</StreamGeometry>
+        <StreamGeometry x:Key="IconMusic">M12,3v10.55c-0.59-0.34-1.27-0.55-2-0.55C7.79,13,6,14.79,6,17s1.79,4,4,4s4-1.79,4-4V7h4V3H12z</StreamGeometry>
+        <StreamGeometry x:Key="IconBox">M3.1,5.8 C3.1,4.6 4.6,3.1 5.8,3.1 L18.2,3.1 C19.4,3.1 20.9,4.6 20.9,5.8 L20.9,18.2 C20.9,19.4 19.4,20.9 18.2,20.9 L5.8,20.9 C4.6,20.9 3.1,19.4 3.1,18.2 Z M4.9,6 C4.9,5.3 5.3,4.9 6,4.9 L18,4.9 C18.7,4.9 19.1,5.3 19.1,6 L19.1,18 C19.1,18.7 18.7,19.1 18,19.1 L6,19.1 C5.3,19.1 4.9,18.7 4.9,18 Z M8,9.1 L16,9.1 L16,10.9 L8,10.9 Z</StreamGeometry>
+        <StreamGeometry x:Key="IconDragHandle">M5,8 m-1.8,0 a1.8,1.8 0,1 1,3.6 0 a1.8,1.8 0,1 1,-3.6 0 M12,8 m-1.8,0 a1.8,1.8 0,1 1,3.6 0 a1.8,1.8 0,1 1,-3.6 0 M19,8 m-1.8,0 a1.8,1.8 0,1 1,3.6 0 a1.8,1.8 0,1 1,-3.6 0 M5,16 m-1.8,0 a1.8,1.8 0,1 1,3.6 0 a1.8,1.8 0,1 1,-3.6 0 M12,16 m-1.8,0 a1.8,1.8 0,1 1,3.6 0 a1.8,1.8 0,1 1,-3.6 0 M19,16 m-1.8,0 a1.8,1.8 0,1 1,3.6 0 a1.8,1.8 0,1 1,-3.6 0</StreamGeometry>
+    </Application.Resources>
+
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+
+    <Application.Styles>
+        <FluentTheme />
+
+        <!-- 全局字体：按平台选择原生最佳中文字体
+             Win → 微软雅黑，macOS → 苹方，Linux → 系统默认 sans-serif
+             FontFamily 是 TextElement 的附加属性，设置到 Control 即可对全局生效。 -->
+        <Style Selector="Control">
+            <Setter Property="TextElement.FontFamily" Value="Microsoft YaHei, PingFang SC, sans-serif" />
+        </Style>
+
+        <!-- 全局样式引入 -->
+        <StyleInclude Source="/Views/Common/Templates/ButtonStyles.axaml"/>
+        <StyleInclude Source="/Views/Common/Templates/InputStyles.axaml"/>
+    </Application.Styles>
+</Application>

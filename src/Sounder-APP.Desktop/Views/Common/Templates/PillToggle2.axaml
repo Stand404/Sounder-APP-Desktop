@@ -1,0 +1,68 @@
+<Styles xmlns="https://github.com/avaloniaui"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:common="clr-namespace:Sounder_APP.Views.Common">
+
+    <!-- ===== PillToggle2 模板及其交互样式 ===== -->
+
+    <Style Selector="common|PillToggle2">
+        <Setter Property="Background" Value="{DynamicResource Lv3Bg}"/>
+        <Setter Property="Height" Value="28"/>
+        <Setter Property="MinWidth" Value="140"/>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border CornerRadius="50" Padding="3"
+                        Background="{TemplateBinding Background}">
+                    <Grid Name="PART_Host" ColumnDefinitions="*,*">
+                        <Border Name="PART_Indicator"
+                                Background="{DynamicResource AccentBlue}"
+                                CornerRadius="45"
+                                VerticalAlignment="Stretch" ZIndex="0"/>
+                        <Button Name="PART_Btn0" Grid.Column="0"
+                                Background="Transparent" BorderThickness="0"
+                                Cursor="Hand" Padding="0"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                RenderTransformOrigin="50%,50%" ZIndex="1" FontSize="12">
+                            <Panel>
+                                <TextBlock Text="{TemplateBinding Label0}" TextAlignment="Center"
+                                           Foreground="{DynamicResource TextSecondary}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Text="{TemplateBinding Label0}" TextAlignment="Center" FontWeight="Medium"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           IsVisible="{TemplateBinding IsSelected0}"/>
+                            </Panel>
+                        </Button>
+                        <Button Name="PART_Btn1" Grid.Column="1"
+                                Background="Transparent" BorderThickness="0"
+                                Cursor="Hand" Padding="0"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                RenderTransformOrigin="50%,50%" ZIndex="1" FontSize="12">
+                            <Panel>
+                                <TextBlock Text="{TemplateBinding Label1}" TextAlignment="Center"
+                                           Foreground="{DynamicResource TextSecondary}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Text="{TemplateBinding Label1}" TextAlignment="Center" FontWeight="Medium"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           IsVisible="{TemplateBinding IsSelected1}"/>
+                            </Panel>
+                        </Button>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="common|PillToggle2 Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style Selector="common|PillToggle2 Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="RenderTransformOrigin" Value="50%,50%"/>
+        <Setter Property="RenderTransform">
+            <ScaleTransform ScaleX="0.94" ScaleY="0.94"/>
+        </Setter>
+    </Style>
+
+</Styles>

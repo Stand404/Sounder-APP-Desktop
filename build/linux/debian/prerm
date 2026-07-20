@@ -1,0 +1,15 @@
+#!/bin/sh
+# prerm script for sounder-app
+# 卸载前清理协议注册
+
+set -e
+
+# 删除协议处理器
+rm -f /usr/local/share/applications/sounder-protocol.desktop
+
+# 更新桌面数据库
+if command -v update-desktop-database >/dev/null 2>&1; then
+    update-desktop-database /usr/local/share/applications/ || true
+fi
+
+exit 0

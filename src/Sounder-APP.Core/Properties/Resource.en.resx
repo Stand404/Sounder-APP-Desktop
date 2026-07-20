@@ -1,0 +1,872 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="settings_title" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="language_setting" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="language_system" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="theme_mode" xml:space="preserve">
+    <value>Theme Mode</value>
+  </data>
+  <data name="auto_theme" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="light" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="dark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="cache_cleanup" xml:space="preserve">
+    <value>Cache Cleanup</value>
+  </data>
+  <data name="enter_official_site" xml:space="preserve">
+    <value>Visit Website</value>
+  </data>
+  <data name="get_fan_group" xml:space="preserve">
+    <value>Fan Group</value>
+  </data>
+  <data name="author_name" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="about_title" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="app_name_display" xml:space="preserve">
+    <value>Sounder</value>
+  </data>
+  <data name="app_description" xml:space="preserve">
+    <value>A general term for standalone apps, Android only.</value>
+  </data>
+  <data name="app_name_zaohua" xml:space="preserve">
+    <value>Sounder APP · Evolution</value>
+  </data>
+  <data name="badge_multi_platform" xml:space="preserve">
+    <value>Multi-platform</value>
+  </data>
+  <data name="app_full_description" xml:space="preserve">
+    <value>Browse, search, download, create, edit, import and export various resource packages, and play all kinds of audio resources. Supports Windows, macOS, Linux, Android, iOS.</value>
+  </data>
+  <data name="independent_package" xml:space="preserve">
+    <value>Standalone App Bundle</value>
+  </data>
+  <data name="independent_desc" xml:space="preserve">
+    <value>A collection of all standalone apps, perfect for batch downloads</value>
+  </data>
+  <data name="audio_files" xml:space="preserve">
+    <value>Audio Files</value>
+  </data>
+  <data name="audio_files_desc" xml:space="preserve">
+    <value>All audio files used by resources, sourced from the internet</value>
+  </data>
+  <data name="privacy_notice" xml:space="preserve">
+    <value>This app does not collect any of your personal information. All personal data is stored locally on your device and is never uploaded to any server.</value>
+  </data>
+  <data name="feedback_notice" xml:space="preserve">
+    <value>If you run into problems or bugs, you can reach the author via the official website, Douyin, Bilibili, or the fan group, meow♪</value>
+  </data>
+  <data name="clear_cache_confirm_title" xml:space="preserve">
+    <value>Clear Cache</value>
+  </data>
+  <data name="clear_cache_confirm_msg" xml:space="preserve">
+    <value>Are you sure you want to clear all cache (images and preview audio)? There's no going back♪</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="confirm" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="show_window" xml:space="preserve">
+    <value>Show Window</value>
+  </data>
+  <data name="exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="dirty_confirm_title" xml:space="preserve">
+    <value>Unsaved Changes</value>
+  </data>
+  <data name="dirty_exit_message" xml:space="preserve">
+    <value>Current edits have not been saved. Exiting will lose all changes.</value>
+  </data>
+  <data name="dirty_save_exit" xml:space="preserve">
+    <value>Save &amp; Exit</value>
+  </data>
+  <data name="dirty_confirm_exit" xml:space="preserve">
+    <value>Confirm Exit</value>
+  </data>
+  <data name="dirty_switch_message" xml:space="preserve">
+    <value>Current edits have not been saved. Switching will lose all changes.</value>
+  </data>
+  <data name="dirty_save_switch" xml:space="preserve">
+    <value>Save &amp; Switch</value>
+  </data>
+  <data name="dirty_confirm_switch" xml:space="preserve">
+    <value>Confirm Switch</value>
+  </data>
+  <data name="dirty_delete_title" xml:space="preserve">
+    <value>Delete Resource</value>
+  </data>
+  <data name="dirty_delete_message" xml:space="preserve">
+    <value>Are you sure you want to delete &quot;{0}&quot;?
+This action cannot be undone.</value>
+  </data>
+  <data name="dirty_confirm_delete" xml:space="preserve">
+    <value>Confirm Delete</value>
+  </data>
+  <data name="dirty_confirm_btn" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="tooltip_title" xml:space="preserve">
+    <value>Sounder APP</value>
+  </data>
+  <data name="tab_personal" xml:space="preserve">
+    <value>My Resources</value>
+  </data>
+  <data name="tab_shop" xml:space="preserve">
+    <value>Shop</value>
+  </data>
+  <data name="tab_submissions" xml:space="preserve">
+    <value>Submissions</value>
+  </data>
+  <data name="tab_task_manager" xml:space="preserve">
+    <value>Task Manager</value>
+  </data>
+  <data name="tab_settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="loading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="load_more" xml:space="preserve">
+    <value>Load More</value>
+  </data>
+  <data name="no_more_data" xml:space="preserve">
+    <value>— That's the end —</value>
+  </data>
+  <data name="search_audio_hint" xml:space="preserve">
+    <value>Search audio name…</value>
+  </data>
+  <data name="search_hint" xml:space="preserve">
+    <value>Search resources…</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="install" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="installed" xml:space="preserve">
+    <value>Installed</value>
+  </data>
+  <data name="retry" xml:space="preserve">
+    <value>Retry</value>
+  </data>
+  <data name="shop_empty" xml:space="preserve">
+    <value>The shop's little shelf is still empty</value>
+  </data>
+  <data name="no_resources_yet" xml:space="preserve">
+    <value>It's all empty here</value>
+  </data>
+  <data name="go_shop_to_install" xml:space="preserve">
+    <value>Go to the shop and bring resources home, meow♪</value>
+  </data>
+  <data name="view_detail" xml:space="preserve">
+    <value>View Details</value>
+  </data>
+  <data name="edit_resource" xml:space="preserve">
+    <value>Edit Resource</value>
+  </data>
+  <data name="clone_resource" xml:space="preserve">
+    <value>Clone Resource</value>
+  </data>
+  <data name="export_package" xml:space="preserve">
+    <value>Export Package</value>
+  </data>
+  <data name="add_to_desktop" xml:space="preserve">
+    <value>Add to Desktop</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="confirm_delete_title" xml:space="preserve">
+    <value>Confirm Delete</value>
+  </data>
+  <data name="confirm_delete_message" xml:space="preserve">
+    <value>Are you sure you want to delete this resource? No takesies backsies, meow~</value>
+  </data>
+  <data name="add_resource_desc" xml:space="preserve">
+    <value>Add resource</value>
+  </data>
+  <data name="searching" xml:space="preserve">
+    <value>Searching...</value>
+  </data>
+  <data name="no_personal_resources" xml:space="preserve">
+    <value>No personal resources</value>
+  </data>
+  <data name="resource_count_fmt" xml:space="preserve">
+    <value>{0} resources total</value>
+  </data>
+  <data name="load_failed" xml:space="preserve">
+    <value>Loading failed</value>
+  </data>
+  <data name="load_error_fmt" xml:space="preserve">
+    <value>Failed to load: {0}</value>
+  </data>
+  <data name="found_resource_count_fmt" xml:space="preserve">
+    <value>Found {0} resources</value>
+  </data>
+  <data name="no_match_resource" xml:space="preserve">
+    <value>No matching resources</value>
+  </data>
+  <data name="import_title" xml:space="preserve">
+    <value>Select resource package (.zip)</value>
+  </data>
+  <data name="zip_file_type" xml:space="preserve">
+    <value>ZIP Archive</value>
+  </data>
+  <data name="invalid_package_no_manifest" xml:space="preserve">
+    <value>Invalid package: missing manifest.json</value>
+  </data>
+  <data name="invalid_package_incomplete_manifest" xml:space="preserve">
+    <value>Invalid package: incomplete manifest data</value>
+  </data>
+  <data name="export_title" xml:space="preserve">
+    <value>Export Resource</value>
+  </data>
+  <data name="default_resource_name" xml:space="preserve">
+    <value>New Resource</value>
+  </data>
+  <data name="default_resource_desc" xml:space="preserve">
+    <value>An interesting resource pack</value>
+  </data>
+  <data name="clone_suffix" xml:space="preserve">
+    <value> (Copy)</value>
+  </data>
+  <data name="added_to_desktop" xml:space="preserve">
+    <value>Added to Desktop</value>
+  </data>
+  <data name="shortcut_created_fmt" xml:space="preserve">
+    <value>Shortcut for &quot;{0}&quot; created</value>
+  </data>
+  <data name="no_match" xml:space="preserve">
+    <value>Couldn't find the resource you're looking for</value>
+  </data>
+  <data name="go_to_shop" xml:space="preserve">
+    <value>Go to Shop</value>
+  </data>
+  <data name="create_new_resource" xml:space="preserve">
+    <value>Create New Resource</value>
+  </data>
+  <data name="import_package" xml:space="preserve">
+    <value>Import Package</value>
+  </data>
+  <data name="back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="online_preview" xml:space="preserve">
+    <value>Online Preview</value>
+  </data>
+  <data name="select_audio" xml:space="preserve">
+    <value>Select Audio</value>
+  </data>
+  <data name="no_audio_in_package" xml:space="preserve">
+    <value>This package is all quiet, no audio inside</value>
+  </data>
+  <data name="normal_mode" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="interrupt_mode" xml:space="preserve">
+    <value>Interrupt</value>
+  </data>
+  <data name="play_mode_label" xml:space="preserve">
+    <value>Play Mode</value>
+  </data>
+  <data name="overlay_desc" xml:space="preserve">
+    <value>Sounds play without interfering with each other</value>
+  </data>
+  <data name="replace_desc" xml:space="preserve">
+    <value>A new sound interrupts the previous one</value>
+  </data>
+  <data name="loop_desc" xml:space="preserve">
+    <value>Keeps playing and never stops</value>
+  </data>
+  <data name="overlay_mode" xml:space="preserve">
+    <value>Overlay</value>
+  </data>
+  <data name="replace_mode" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="loop_mode" xml:space="preserve">
+    <value>Loop</value>
+  </data>
+  <data name="loop_type_label" xml:space="preserve">
+    <value>Loop Type</value>
+  </data>
+  <data name="loop_type_desc" xml:space="preserve">
+    <value>Single track repeat / List playback in turn</value>
+  </data>
+  <data name="loop_single" xml:space="preserve">
+    <value>Single</value>
+  </data>
+  <data name="loop_list" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="play_mode_single_loop" xml:space="preserve">
+    <value>Single Loop</value>
+  </data>
+  <data name="play_mode_list_loop" xml:space="preserve">
+    <value>List Loop</value>
+  </data>
+  <data name="play_order_label" xml:space="preserve">
+    <value>Play Order</value>
+  </data>
+  <data name="order_desc" xml:space="preserve">
+    <value>This setting applies to desktop shortcut clicks</value>
+  </data>
+  <data name="order_play" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="random_play" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="stop_playback" xml:space="preserve">
+    <value>Stop Playback</value>
+  </data>
+  <data name="more_actions" xml:space="preserve">
+    <value>More actions</value>
+  </data>
+  <data name="resource_not_found" xml:space="preserve">
+    <value>Couldn't find this resource</value>
+  </data>
+  <data name="task_manager" xml:space="preserve">
+    <value>Task Manager</value>
+  </data>
+  <data name="no_tasks" xml:space="preserve">
+    <value>No active tasks playing</value>
+  </data>
+  <data name="stop_all" xml:space="preserve">
+    <value>Stop All</value>
+  </data>
+  <data name="status_in_progress" xml:space="preserve">
+    <value>In Progress</value>
+  </data>
+  <data name="status_pending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="status_completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="no_submissions" xml:space="preserve">
+    <value>No one has submitted anything yet</value>
+  </data>
+  <data name="submissions_header_title" xml:space="preserve">
+    <value>Submissions &amp; Plans</value>
+  </data>
+  <data name="submissions_header_desc" xml:space="preserve">
+    <value>Submit to Sounder APP and track the release progress</value>
+  </data>
+  <data name="submissions_new_btn" xml:space="preserve">
+    <value>Submit Now</value>
+  </data>
+  <data name="submission_search_placeholder" xml:space="preserve">
+    <value>Search submissions…</value>
+  </data>
+  <data name="submission_no_schedule" xml:space="preserve">
+    <value>Unscheduled</value>
+  </data>
+  <data name="submission_link_copied" xml:space="preserve">
+    <value>Link copied</value>
+  </data>
+  <data name="resumable" xml:space="preserve">
+    <value>Resumable</value>
+  </data>
+  <data name="search_history" xml:space="preserve">
+    <value>Search History</value>
+  </data>
+  <data name="clear_text" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="copy_link" xml:space="preserve">
+    <value>Copy Link</value>
+  </data>
+  <data name="unnamed_resource" xml:space="preserve">
+    <value>Unnamed Resource</value>
+  </data>
+  <data name="search_task_hint" xml:space="preserve">
+    <value>Search tasks…</value>
+  </data>
+  <data name="task_management_desc" xml:space="preserve">
+    <value>Playback tasks you poke from the desktop are all lined up here, meow~</value>
+  </data>
+  <data name="no_matching_tasks" xml:space="preserve">
+    <value>No task matches what you're looking for</value>
+  </data>
+  <data name="try_different_keywords" xml:space="preserve">
+    <value>Try a different meowy keyword, okay~</value>
+  </data>
+  <data name="task_instance_count" xml:space="preserve">
+    <value>{0} instances</value>
+  </data>
+  <data name="now_playing" xml:space="preserve">
+    <value>Now Playing: {0}</value>
+  </data>
+  <data name="task_count" xml:space="preserve">
+    <value>{0} active playback tasks</value>
+  </data>
+  <data name="instance_unit" xml:space="preserve">
+    <value> instances</value>
+  </data>
+  <data name="no_active_tasks" xml:space="preserve">
+    <value>No active tasks</value>
+  </data>
+  <data name="task_desc_hint" xml:space="preserve">
+    <value>Playback tasks triggered from desktop shortcuts appear here</value>
+  </data>
+  <data name="no_match_task" xml:space="preserve">
+    <value>No matching tasks</value>
+  </data>
+  <data name="task_in_progress_fmt" xml:space="preserve">
+    <value>{0} tasks in progress</value>
+  </data>
+  <data name="found_tasks_fmt" xml:space="preserve">
+    <value>Found {0} tasks</value>
+  </data>
+  <data name="deleted_files" xml:space="preserve">
+    <value>Deleted {0} files, freed up {1}♪</value>
+  </data>
+  <data name="resource_not_found_clone" xml:space="preserve">
+    <value>This resource is missing, can't clone it</value>
+  </data>
+  <data name="cloned_as" xml:space="preserve">
+    <value>Cloned it as「{0}」♪</value>
+  </data>
+  <data name="resource_not_found_export" xml:space="preserve">
+    <value>This resource is missing, can't export it</value>
+  </data>
+  <data name="export_failed" xml:space="preserve">
+    <value>Export didn't work, give it another try?</value>
+  </data>
+  <data name="import_success" xml:space="preserve">
+    <value>Import succeeded, awesome♪</value>
+  </data>
+  <data name="import_failed" xml:space="preserve">
+    <value>Import didn't work: {0}</value>
+  </data>
+  <data name="unknown_error" xml:space="preserve">
+    <value>A weird little problem popped up</value>
+  </data>
+  <data name="created" xml:space="preserve">
+    <value>Created「{0}」♪</value>
+  </data>
+  <data name="new_resource_name" xml:space="preserve">
+    <value>New Resource Pack</value>
+  </data>
+  <data name="new_resource_desc" xml:space="preserve">
+    <value>A fun resource pack</value>
+  </data>
+  <data name="date_today" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="date_yesterday" xml:space="preserve">
+    <value>Yesterday</value>
+  </data>
+  <data name="date_tomorrow" xml:space="preserve">
+    <value>Tomorrow</value>
+  </data>
+  <data name="idle_empty_hint" xml:space="preserve">
+    <value>Select a resource on the left</value>
+  </data>
+  <data name="stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="brief_label" xml:space="preserve">
+    <value>Brief</value>
+  </data>
+  <data name="image_source_label" xml:space="preserve">
+    <value>Image Source</value>
+  </data>
+  <data name="voice_source_label" xml:space="preserve">
+    <value>Voice Source</value>
+  </data>
+  <data name="image_source_link_label" xml:space="preserve">
+    <value>Image Source Link</value>
+  </data>
+  <data name="voice_source_link_label" xml:space="preserve">
+    <value>Voice Source Link</value>
+  </data>
+  <data name="notes_label" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="platform_account_label" xml:space="preserve">
+    <value>Platform Account</value>
+  </data>
+  <data name="submission_form_tip" xml:space="preserve">
+    <value>Refer to other submissions for format reference. Contact Stand via the website if you have questions.</value>
+  </data>
+  <data name="resource_full_name" xml:space="preserve">
+    <value>Resource Full Name *</value>
+  </data>
+  <data name="resource_full_name_placeholder" xml:space="preserve">
+    <value>e.g. Gugu Gaga, Xiaotao Geimu</value>
+  </data>
+  <data name="app_short_name" xml:space="preserve">
+    <value>App Short Name *</value>
+  </data>
+  <data name="app_short_name_placeholder" xml:space="preserve">
+    <value>Max 5 chars, e.g. Gugu Gaga, Geimu</value>
+  </data>
+  <data name="brief_required" xml:space="preserve">
+    <value>Brief *</value>
+  </data>
+  <data name="brief_placeholder" xml:space="preserve">
+    <value>One sentence that best represents this voice</value>
+  </data>
+  <data name="platform_required" xml:space="preserve">
+    <value>Platform *</value>
+  </data>
+  <data name="platform_selected" xml:space="preserve">
+    <value>Selected: </value>
+  </data>
+  <data name="platform_account_optional" xml:space="preserve">
+    <value>Platform Account (optional)</value>
+  </data>
+  <data name="platform_account_placeholder" xml:space="preserve">
+    <value>For contact if needed; leave blank and we can't reach you</value>
+  </data>
+  <data name="nickname_required" xml:space="preserve">
+    <value>Nickname *</value>
+  </data>
+  <data name="nickname_placeholder" xml:space="preserve">
+    <value>How should we address you?</value>
+  </data>
+  <data name="source_info" xml:space="preserve">
+    <value>Source Info</value>
+  </data>
+  <data name="image_source_required" xml:space="preserve">
+    <value>Image Source *</value>
+  </data>
+  <data name="image_source_link_placeholder" xml:space="preserve">
+    <value>Provide image source link (leave blank if self-captured)</value>
+  </data>
+  <data name="voice_source_required" xml:space="preserve">
+    <value>Voice Source *</value>
+  </data>
+  <data name="voice_source_link_placeholder" xml:space="preserve">
+    <value>Provide voice source link (leave blank if self-recorded)</value>
+  </data>
+  <data name="submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="copy_success" xml:space="preserve">
+    <value>Link copied</value>
+  </data>
+  <data name="bilibili" xml:space="preserve">
+    <value>Bilibili</value>
+  </data>
+  <data name="douyin" xml:space="preserve">
+    <value>Douyin</value>
+  </data>
+  <data name="kuaishou" xml:space="preserve">
+    <value>Kuaishou</value>
+  </data>
+  <data name="fan_group" xml:space="preserve">
+    <value>Fan Group</value>
+  </data>
+  <data name="game_screenshot" xml:space="preserve">
+    <value>Game Screenshot</value>
+  </data>
+  <data name="anime_screenshot" xml:space="preserve">
+    <value>Anime Screenshot</value>
+  </data>
+  <data name="internet" xml:space="preserve">
+    <value>Internet</value>
+  </data>
+  <data name="video_screenshot" xml:space="preserve">
+    <value>Video Screenshot</value>
+  </data>
+  <data name="game_recording" xml:space="preserve">
+    <value>Game Recording</value>
+  </data>
+  <data name="video_link" xml:space="preserve">
+    <value>Video Link</value>
+  </data>
+  <data name="no_data" xml:space="preserve">
+    <value>No data</value>
+  </data>
+  <data name="form_voice_source_link_ph" xml:space="preserve">
+    <value>Link to audio source (skip if self-recorded)</value>
+  </data>
+  <data name="form_source_info" xml:space="preserve">
+    <value>Source Info</value>
+  </data>
+  <data name="single_loop_desc" xml:space="preserve">
+    <value>Single loop → repeats the current audio</value>
+  </data>
+  <data name="form_note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="form_brief_ph" xml:space="preserve">
+    <value>One line that best represents the sound</value>
+  </data>
+  <data name="card_voice_source" xml:space="preserve">
+    <value>Audio Source</value>
+  </data>
+  <data name="list_loop_desc" xml:space="preserve">
+    <value>List loop → after all played, restarts from the beginning</value>
+  </data>
+  <data name="card_voice_source_link" xml:space="preserve">
+    <value>Audio Source Link</value>
+  </data>
+  <data name="install_resource" xml:space="preserve">
+    <value>Install Resource</value>
+  </data>
+  <data name="select_all" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="clone" xml:space="preserve">
+    <value>Clone</value>
+  </data>
+  <data name="form_brief" xml:space="preserve">
+    <value>Brief *</value>
+  </data>
+  <data name="form_resource_name" xml:space="preserve">
+    <value>Full Resource Name *</value>
+  </data>
+  <data name="import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="choose" xml:space="preserve">
+    <value>Choose</value>
+  </data>
+  <data name="form_resource_name_ph" xml:space="preserve">
+    <value>e.g. Gugu Gaga, Xiaotao Gaimu</value>
+  </data>
+  <data name="leave_edit" xml:space="preserve">
+    <value>Leave Editing</value>
+  </data>
+  <data name="form_image_source_link_ph" xml:space="preserve">
+    <value>Link to image source (skip if self-captured)</value>
+  </data>
+  <data name="form_platform" xml:space="preserve">
+    <value>Platform *</value>
+  </data>
+  <data name="card_image_source" xml:space="preserve">
+    <value>Image Source</value>
+  </data>
+  <data name="random_desc" xml:space="preserve">
+    <value>Random → each desktop shortcut click plays a random track</value>
+  </data>
+  <data name="resume_download" xml:space="preserve">
+    <value>Resume Download</value>
+  </data>
+  <data name="form_app_name_ph" xml:space="preserve">
+    <value>Max 5 chars, e.g. Gugu Gaga</value>
+  </data>
+  <data name="card_brief_label" xml:space="preserve">
+    <value>Brief</value>
+  </data>
+  <data name="language_ja" xml:space="preserve">
+    <value>日本語</value>
+  </data>
+  <data name="resource_desc_ph" xml:space="preserve">
+    <value>Enter resource description</value>
+  </data>
+  <data name="add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="pick_icon_in_app" xml:space="preserve">
+    <value>Pick an icon from within the app</value>
+  </data>
+  <data name="form_note_ph" xml:space="preserve">
+    <value>Usage requirements or a cloud-drive link to finished assets</value>
+  </data>
+  <data name="form_note_hint" xml:space="preserve">
+    <value>Requirements for using the audio/images, or a cloud-drive link to finished assets</value>
+  </data>
+  <data name="short_name_ph" xml:space="preserve">
+    <value>Short name (internal ID)</value>
+  </data>
+  <data name="selected_colon" xml:space="preserve">
+    <value>Selected: </value>
+  </data>
+  <data name="audio_list" xml:space="preserve">
+    <value>Audio List</value>
+  </data>
+  <data name="language_en" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="detail_select_hint" xml:space="preserve">
+    <value>Please select a resource on the left</value>
+  </data>
+  <data name="change_icon" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="resume" xml:space="preserve">
+    <value>Resume</value>
+  </data>
+  <data name="language_zh" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="form_nickname" xml:space="preserve">
+    <value>Nickname *</value>
+  </data>
+  <data name="resource_name_ph" xml:space="preserve">
+    <value>Resource name</value>
+  </data>
+  <data name="form_voice_source_link" xml:space="preserve">
+    <value>Audio Source Link</value>
+  </data>
+  <data name="card_note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="submission_tip" xml:space="preserve">
+    <value>Before submitting, you can refer to others' submission formats to ensure complete and accurate info. For questions, contact Stand via the official site.</value>
+  </data>
+  <data name="drag_sort_hint" xml:space="preserve">
+    <value>Drag the handle to reorder; each audio name is editable</value>
+  </data>
+  <data name="folder" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+  <data name="no_submission_data" xml:space="preserve">
+    <value>No submissions yet</value>
+  </data>
+  <data name="select_icon" xml:space="preserve">
+    <value>Select Icon</value>
+  </data>
+  <data name="form_image_source" xml:space="preserve">
+    <value>Image Source *</value>
+  </data>
+  <data name="language_ru" xml:space="preserve">
+    <value>Русский</value>
+  </data>
+  <data name="form_image_source_link" xml:space="preserve">
+    <value>Image Source Link</value>
+  </data>
+  <data name="audio_name_ph" xml:space="preserve">
+    <value>Enter audio name</value>
+  </data>
+  <data name="create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="no_audio_hint" xml:space="preserve">
+    <value>No audio yet, tap the button above to add</value>
+  </data>
+  <data name="card_image_source_link" xml:space="preserve">
+    <value>Image Source Link</value>
+  </data>
+  <data name="go_shop_install" xml:space="preserve">
+    <value>Go to the shop to install resources</value>
+  </data>
+  <data name="badge_android" xml:space="preserve">
+    <value>Android</value>
+  </data>
+  <data name="form_app_name" xml:space="preserve">
+    <value>APP Short Name *</value>
+  </data>
+  <data name="form_platform_id" xml:space="preserve">
+    <value>Platform ID (optional)</value>
+  </data>
+  <data name="no_personal_resource" xml:space="preserve">
+    <value>No personal resources yet</value>
+  </data>
+  <data name="shop_no_resources" xml:space="preserve">
+    <value>No resources in the shop yet</value>
+  </data>
+  <data name="form_platform_id_ph" xml:space="preserve">
+    <value>For contact if issues arise; leave blank if you prefer not to be reached</value>
+  </data>
+  <data name="language_zh_tw" xml:space="preserve">
+    <value>繁體中文</value>
+  </data>
+  <data name="card_platform_id" xml:space="preserve">
+    <value>Platform ID</value>
+  </data>
+  <data name="form_voice_source" xml:space="preserve">
+    <value>Audio Source *</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="form_nickname_ph" xml:space="preserve">
+    <value>What should we call you?</value>
+  </data>
+  <data name="export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="loading_shop" xml:space="preserve">
+    <value>Loading resources...</value>
+  </data>
+  <data name="search_error_fmt" xml:space="preserve">
+    <value>Search failed: {0}</value>
+  </data>
+  <data name="play_failed" xml:space="preserve">
+    <value>Audio playback failed</value>
+  </data>
+  <data name="error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+</root>

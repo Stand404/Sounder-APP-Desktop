@@ -1,0 +1,102 @@
+<Styles xmlns="https://github.com/avaloniaui"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ===== 全局 CheckBox 样式：选中时使用主题色 ===== -->
+    <!-- 使用自定义模板，完全控制勾选填充色，避免 Fluent 默认外层干扰 -->
+    <Style Selector="CheckBox.theme-checkbox">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Center">
+                    <Border x:Name="PART_BorderElement"
+                            Grid.Column="0"
+                            Width="22" Height="22"
+                            CornerRadius="4"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="2"
+                            VerticalAlignment="Center">
+                        <Path x:Name="PART_CheckMark"
+                              Data="M3.59504 9.24665L1.09504 6.74665L0.155044 7.68665L3.59504 11.1266L9.99504 4.72665L9.05504 3.78665L3.59504 9.24665Z"
+                              Width="12" Height="12"
+                              Stretch="Uniform"
+                              Fill="White"
+                              Opacity="0"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"/>
+                    </Border>
+                    <ContentPresenter Grid.Column="1"
+                                      Content="{TemplateBinding Content}"
+                                      Margin="8,0,0,0"
+                                      VerticalAlignment="Center"
+                                      Foreground="{TemplateBinding Foreground}"/>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Lv3Border}"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <!-- 选中：填充与边框均为主题色 -->
+    <Style Selector="CheckBox.theme-checkbox:checked">
+        <Setter Property="Background" Value="{DynamicResource AccentBlue}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentBlue}"/>
+    </Style>
+    <Style Selector="CheckBox.theme-checkbox:checked /template/ Path#PART_CheckMark">
+        <Setter Property="Opacity" Value="1"/>
+    </Style>
+
+    <!-- ===== 全局输入框样式 ===== -->
+    <!-- 无边框输入框 -->
+    <Style Selector="TextBox.input-flat">
+        <Setter Property="Background" Value="{DynamicResource Lv3Bg}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="CornerRadius" Value="6"/>
+    </Style>
+    <Style Selector="TextBox.input-flat:pointerover /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="{DynamicResource Lv3Bg}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    <Style Selector="TextBox.input-flat:focus-within /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="{DynamicResource Lv2Hover}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    <Style Selector="TextBox.input-flat:pointerover:focus-within /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="{DynamicResource Lv2Hover}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
+    <!-- 带边框输入框（背景透明，仅边框变色） -->
+    <Style Selector="TextBox.input-bordered">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Lv2Border}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="6"/>
+    </Style>
+    <Style Selector="TextBox.input-bordered:pointerover /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TextTertiary}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+    <Style Selector="TextBox.input-bordered:focus-within /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentBlue}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+    <Style Selector="TextBox.input-bordered:pointerover:focus-within /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentBlue}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
+    <!-- 大号输入框 -->
+    <Style Selector="TextBox.input-bordered.lg">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Padding" Value="12,10"/>
+    </Style>
+
+</Styles>

@@ -1,0 +1,170 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:models="using:Sounder_APP.Models"
+             xmlns:views="using:Sounder_APP.Views"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Sounder_APP.Views.AudioItemList"
+             x:Name="Root"
+             x:CompileBindings="False">
+
+    <ItemsControl ItemsSource="{Binding AudioItems}">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Spacing="0"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="models:AudioItem" x:CompileBindings="False">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Button Grid.Row="0" CornerRadius="12" Padding="12,10"
+                            Cursor="Hand" BorderThickness="0"
+                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                            Command="{Binding #Root.ViewModel.TogglePlayAudioCommand}"
+                            CommandParameter="{Binding}">
+                        <Button.Styles>
+                            <Style Selector="Button > Grid">
+                                <Setter Property="Transitions">
+                                    <Setter.Value>
+                                        <Transitions>
+                                            <DoubleTransition Property="Opacity" Duration="0:0:0.6" Easing="SineEaseOut"/>
+                                        </Transitions>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                            <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                <Setter Property="Background" Value="{DynamicResource Lv2Hover}"/>
+                            </Style>
+                            <Style Selector="Button:pressed > Grid">
+                                <Setter Property="Opacity" Value="0.9"/>
+                            </Style>
+                        </Button.Styles>
+                        <Button.Background>
+                            <MultiBinding Converter="{StaticResource PlayingBackgroundSet}">
+                                <Binding Path="Id"/>
+                                <Binding Path="#Root.ViewModel.PlayingAudioIds"/>
+                                <Binding Path="#Root.ViewModel.PlayingVersion"/>
+                            </MultiBinding>
+                        </Button.Background>
+
+                        <Grid ColumnDefinitions="*,Auto" VerticalAlignment="Center" Opacity="1">
+                            <!-- 左侧：名称 + 时长 -->
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="2">
+                                <Grid>
+                                    <TextBlock Text="{Binding Name}" FontSize="15" FontWeight="Medium"
+                                               TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource AccentBlue}">
+                                        <TextBlock.IsVisible>
+                                            <MultiBinding Converter="{StaticResource SetContainsMulti}">
+                                                <Binding Path="Id"/>
+                                                <Binding Path="#Root.ViewModel.PlayingAudioIds"/>
+                                                <Binding Path="#Root.ViewModel.PlayingVersion"/>
+                                            </MultiBinding>
+                                        </TextBlock.IsVisible>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding Name}" FontSize="15"
+                                               TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource TextPrimary}">
+                                        <TextBlock.IsVisible>
+                                            <MultiBinding Converter="{StaticResource SetNotContainsMulti}">
+                                                <Binding Path="Id"/>
+                                                <Binding Path="#Root.ViewModel.PlayingAudioIds"/>
+                                                <Binding Path="#Root.ViewModel.PlayingVersion"/>
+                                            </MultiBinding>
+                                        </TextBlock.IsVisible>
+                                    </TextBlock>
+                                </Grid>
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <Grid>
+                                        <PathIcon Data="{StaticResource IconSchedule}" Width="13" Height="13"
+                                                  VerticalAlignment="Center" Foreground="{DynamicResource AccentBlue}">
+                                            <PathIcon.IsVisible>
+                                                <MultiBinding Converter="{StaticResource SetContainsMulti}">
+                                                    <Binding Path="Id"/>
+                                                    <Binding Path="#Root.ViewModel.PlayingAudioIds"/>
+                                                    <Binding Path="#Root.ViewModel.PlayingVersion"/>
+                                                </MultiBinding>
+                                            </PathIcon.IsVisible>
+                                        </PathIcon>
+                                        <PathIcon Data="{StaticResource IconSchedule}" Width="13" Height="13"
+                                                  VerticalAlignment="Center" Foreground="{DynamicResource TextSecondary}">
+                                            <PathIcon.IsVisible>
+                                                <MultiBinding Converter="{StaticResource SetNotContainsMulti}">
+                                                    <Binding Path="Id"/>
+                                                    <Binding Path="#Root.ViewModel.PlayingAudioIds"/>
+                                                    <Binding Path="#Root.ViewModel.PlayingVersion"/>
+                                                </MultiBinding>
+                                            </PathIcon.IsVisible>
+                                        </PathIcon>
+                                    </Grid>
+                                    <Grid>
+                                        <TextBlock Text="{Binding DurationFormatted}" FontSize="12"
+                                                   VerticalAlignment="Center" Foreground="{DynamicResource AccentBlue}">
+                                            <TextBlock.IsVisible>
+                                                <MultiBinding Converter="{StaticResource SetContainsMulti}">
+                                                    <Binding Path="Id"/>
+                                                    <Binding Path="#Root.ViewModel.PlayingAudioIds"/>
+                                                    <Binding Path="#Root.ViewModel.PlayingVersion"/>
+                                                </MultiBinding>
+                                            </TextBlock.IsVisible>
+                                        </TextBlock>
+                                        <TextBlock Text="{Binding DurationFormatted}" FontSize="12"
+                                                   VerticalAlignment="Center" Foreground="{DynamicResource TextSecondary}">
+                                            <TextBlock.IsVisible>
+                                                <MultiBinding Converter="{StaticResource SetNotContainsMulti}">
+                                                    <Binding Path="Id"/>
+                                                    <Binding Path="#Root.ViewModel.PlayingAudioIds"/>
+                                                    <Binding Path="#Root.ViewModel.PlayingVersion"/>
+                                                </MultiBinding>
+                                            </TextBlock.IsVisible>
+                                        </TextBlock>
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- 右侧状态 -->
+                            <Grid Grid.Column="1" Width="28" Height="28"
+                                  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12,0,0,0">
+                                <!-- 加载中旋转 -->
+                                <PathIcon Data="{StaticResource IconSpinner}" Width="18" Height="18"
+                                          Foreground="{DynamicResource AccentBlue}"
+                                          HorizontalAlignment="Center" VerticalAlignment="Center"
+                                          Classes="spinner">
+                                    <PathIcon.IsVisible>
+                                        <MultiBinding Converter="{StaticResource SetContainsMulti}">
+                                            <Binding Path="Id"/>
+                                            <Binding Path="#Root.ViewModel.LoadingAudioIds"/>
+                                            <Binding Path="#Root.ViewModel.LoadingVersion"/>
+                                        </MultiBinding>
+                                    </PathIcon.IsVisible>
+                                </PathIcon>
+                                <!-- 播放中波形 -->
+                                <views:AudioWaveIndicator HorizontalAlignment="Center"
+                                                          VerticalAlignment="Center">
+                                    <views:AudioWaveIndicator.IsVisible>
+                                        <MultiBinding Converter="{StaticResource SetContainsMulti}">
+                                            <Binding Path="Id"/>
+                                            <Binding Path="#Root.ViewModel.PlayingAudioIds"/>
+                                            <Binding Path="#Root.ViewModel.PlayingVersion"/>
+                                        </MultiBinding>
+                                    </views:AudioWaveIndicator.IsVisible>
+                                </views:AudioWaveIndicator>
+                            </Grid>
+                        </Grid>
+                    </Button>
+
+                    <Rectangle Grid.Row="1" Height="0.5" Fill="{DynamicResource Lv2Border}"
+                               Opacity="0.6" Margin="8,0"/>
+                </Grid>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</UserControl>

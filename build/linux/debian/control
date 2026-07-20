@@ -1,0 +1,18 @@
+Package: sounder-app
+Version: 1.0.0.0
+Section: sound
+Priority: optional
+Architecture: amd64
+Depends: dotnet-runtime-10.0, libc6 (>= 2.31), libicu76, libice6, libsm6,
+ libx11-6, libxrandr2, libxinerama1, libxcursor1, libxfixes3,
+ libxcomposite1, libxrender1, libxi6, libgl1, libegl1,
+ libfontconfig1, libfreetype6, xdg-utils
+Maintainer: Stand404 <https://stand.homes>
+Homepage: https://stand.homes
+Description: 发声APP - 音频管理和播放工具
+ 发声APP是一款专业的音频管理和播放工具，支持多格式音频播放、
+ 资源管理、在线资源浏览等功能。基于 Avalonia 跨平台框架开发。
+ .
+ Sounder-APP is a professional audio management and playback tool
+ supporting multi-format audio playback, resource management,
+ online resource browsing, and more. Built on Avalonia cross-platform framework.

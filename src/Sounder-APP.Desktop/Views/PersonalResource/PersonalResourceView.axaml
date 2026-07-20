@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Sounder_APP.ViewModels"
+             xmlns:views="using:Sounder_APP.Views"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1050" d:DesignHeight="750"
+             x:Class="Sounder_APP.Views.PersonalResourceView"
+             x:Name="Root"
+             x:DataType="vm:PersonalResourceViewModel"
+             Background="{DynamicResource Lv1Bg}">
+
+    <Design.DataContext>
+        <vm:PersonalResourceViewModel/>
+    </Design.DataContext>
+
+    <views:ResourceDetailLayout>
+        <views:ResourceDetailLayout.LeftContent>
+            <views:PersonalResourceList Background="{DynamicResource Lv2Bg}"/>
+        </views:ResourceDetailLayout.LeftContent>
+        <views:ResourceDetailLayout.RightContent>
+            <Grid>
+                <!-- 详情面板（非编辑模式） -->
+                <views:PersonalResourceDetailPanel ViewModel="{Binding}"
+                                                   Background="{DynamicResource Lv1Bg}"
+                                                   IsVisible="{Binding IsEditing, Converter={StaticResource InverseBool}}"/>
+                <!-- 编辑视图（编辑模式） -->
+                <ContentControl Content="{Binding EditViewModel}"
+                                IsVisible="{Binding IsEditing}"
+                                Background="{DynamicResource Lv1Bg}">
+                    <ContentControl.ContentTemplate>
+                        <DataTemplate DataType="vm:PersonalResourceEditViewModel">
+                            <views:PersonalResourceEditView/>
+                        </DataTemplate>
+                    </ContentControl.ContentTemplate>
+                </ContentControl>
+            </Grid>
+        </views:ResourceDetailLayout.RightContent>
+    </views:ResourceDetailLayout>
+</UserControl>

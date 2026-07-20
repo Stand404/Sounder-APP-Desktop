@@ -1,0 +1,30 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Sounder_APP.ViewModels"
+             xmlns:views="using:Sounder_APP.Views"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1050" d:DesignHeight="750"
+             x:Class="Sounder_APP.Views.ShopView"
+             x:Name="Root"
+             x:DataType="vm:ShopViewModel"
+             Background="{DynamicResource Lv1Bg}">
+
+    <Design.DataContext>
+        <vm:ShopViewModel/>
+    </Design.DataContext>
+
+    <Grid>
+        <!-- ====== 共享左右布局（无分割线） ====== -->
+        <views:ResourceDetailLayout>
+            <views:ResourceDetailLayout.LeftContent>
+                <views:ShopResourceList ViewModel="{Binding}"
+                                        Background="{DynamicResource Lv2Bg}"/>
+            </views:ResourceDetailLayout.LeftContent>
+            <views:ResourceDetailLayout.RightContent>
+                <views:ShopDetailPanel ViewModel="{Binding}"
+                                       Background="{DynamicResource Lv1Bg}"/>
+            </views:ResourceDetailLayout.RightContent>
+        </views:ResourceDetailLayout>
+    </Grid>
+</UserControl>

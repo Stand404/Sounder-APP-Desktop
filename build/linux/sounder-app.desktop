@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=发声APP
+GenericName=发声APP
+Comment=发声APP - 音频管理和播放工具
+Exec=/usr/lib/sounder-app/Sounder-APP
+Icon=sounder-app
+Terminal=false
+Categories=Audio;AudioVideo;Education;
+Keywords=sound;audio;player;发声;音频;
+StartupWMClass=Sounder-APP

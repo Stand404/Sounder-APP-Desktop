@@ -1,0 +1,91 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Sounder_APP.ViewModels"
+             xmlns:models="using:Sounder_APP.Models"
+             xmlns:common="clr-namespace:Sounder_APP.Views.Common"
+             xmlns:i18n="clr-namespace:Sounder_APP.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="340" d:DesignHeight="750"
+             x:Class="Sounder_APP.Views.PersonalResourceListContent"
+             x:Name="Root"
+             x:DataType="vm:PersonalResourceViewModel">
+
+    <Design.DataContext>
+        <vm:PersonalResourceViewModel/>
+    </Design.DataContext>
+
+    <Grid>
+        <!-- 错误状态 -->
+        <StackPanel IsVisible="{Binding HasError}"
+                    VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="12" Margin="20">
+            <PathIcon Data="{StaticResource IconRefresh}" Width="40" Height="40"
+                      Foreground="{DynamicResource ErrorRed}" HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding ErrorMessage}" FontSize="14"
+                       Foreground="{DynamicResource TextSecondary}" HorizontalAlignment="Center"
+                       TextWrapping="Wrap" TextAlignment="Center"/>
+        </StackPanel>
+
+        <!-- 列表区域 -->
+        <ScrollViewer IsVisible="{Binding HasError, Converter={StaticResource InverseBool}}">
+            <StackPanel>
+                <ListBox ItemsSource="{Binding Resources}"
+                         SelectedItem="{Binding SelectedResource, Mode=TwoWay}"
+                         BorderThickness="0" Background="Transparent"
+                         Margin="8,0,8,0"
+                         IsVisible="{Binding IsEmpty, Converter={StaticResource InverseBool}}"
+                         ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <ListBox.Styles>
+                        <Style Selector="ListBoxItem">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="Margin" Value="0,0,0,4"/>
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                        <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="{DynamicResource Lv2Hover}"/>
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                        <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                            <Setter Property="Background" Value="{DynamicResource SelectBg}"/>
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                        <Style Selector="ListBoxItem:pressed /template/ ContentPresenter">
+                            <Setter Property="RenderTransformOrigin" Value="50%,50%"/>
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.97" ScaleY="0.97"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.Styles>
+                    <ListBox.DataTemplates>
+                        <DataTemplate DataType="models:Resource">
+                            <common:PersonalResourceListItem Resource="{Binding}"
+                                                             ViewModel="{Binding #Root.DataContext}"/>
+                        </DataTemplate>
+                    </ListBox.DataTemplates>
+                </ListBox>
+
+                <!-- 列表空状态 -->
+                <StackPanel IsVisible="{Binding IsEmpty}"
+                            VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="12" Margin="20">
+                    <PathIcon Data="{StaticResource IconMusic}" Width="40" Height="40"
+                              Foreground="{DynamicResource TextTertiary}" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{i18n:Translate no_personal_resource}" FontSize="15"
+                               Foreground="{DynamicResource TextSecondary}" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{i18n:Translate go_shop_install}" FontSize="12"
+                               Foreground="{DynamicResource TextTertiary}" HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- 底部状态 -->
+                <Border Padding="12,4,12,12" Background="Transparent"
+                        IsVisible="{Binding IsEmpty, Converter={StaticResource InverseBool}}">
+                    <TextBlock Text="{Binding StatusText}" FontSize="12"
+                               Foreground="{DynamicResource TextTertiary}"
+                               HorizontalAlignment="Center"/>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

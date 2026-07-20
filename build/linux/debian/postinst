@@ -1,0 +1,39 @@
+#!/bin/sh
+# postinst script for sounder-app
+#
+# 注册 sounder:// URL 协议处理器
+# 注册应用菜单
+
+set -e
+
+APP_DIR="/usr/lib/sounder-app"
+APP_EXE="$APP_DIR/Sounder-APP"
+APP_ICON="$APP_DIR/Assets/Sounder-APP.png"
+
+# 注册 sounder:// 协议 → 创建 .desktop 文件
+mkdir -p /usr/local/share/applications
+
+cat > /usr/local/share/applications/sounder-protocol.desktop << 'PROTOEOF'
+[Desktop Entry]
+Type=Application
+Name=Sounder Protocol Handler
+Exec=/usr/lib/sounder-app/Sounder-APP %u
+StartupNotify=false
+MimeType=x-scheme-handler/sounder;
+NoDisplay=true
+PROTOEOF
+
+chmod 644 /usr/local/share/applications/sounder-protocol.desktop
+
+# 更新桌面数据库
+if command -v update-desktop-database >/dev/null 2>&1; then
+    update-desktop-database /usr/local/share/applications/ || true
+fi
+
+# 确保应用可执行
+chmod +x "$APP_EXE" 2>/dev/null || true
+
+# 设置所有用户可读
+chmod -R a+rX "$APP_DIR" 2>/dev/null || true
+
+exit 0

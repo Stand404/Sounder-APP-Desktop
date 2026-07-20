@@ -1,0 +1,166 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Sounder_APP.ViewModels"
+             xmlns:views="using:Sounder_APP.Views"
+             xmlns:sub="using:Sounder_APP.Views.Submissions"
+             xmlns:common="using:Sounder_APP.Views.Common"
+             xmlns:models="using:Sounder_APP.Models"
+             xmlns:i18n="clr-namespace:Sounder_APP.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1050" d:DesignHeight="750"
+             x:Class="Sounder_APP.Views.SubmissionsView"
+             x:Name="Root"
+             x:DataType="vm:SubmissionsViewModel"
+             Background="{DynamicResource Lv1Bg}">
+
+    <Design.DataContext>
+        <vm:SubmissionsViewModel/>
+    </Design.DataContext>
+
+    <Grid>
+        <ScrollViewer>
+            <StackPanel Margin="40,32" Spacing="0" MaxWidth="820">
+
+                <!-- ===== 页面标题 ===== -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,20">
+                    <StackPanel Grid.Column="0" Spacing="4">
+                        <TextBlock Text="{i18n:Translate submissions_header_title}" FontSize="24" FontWeight="Bold"
+                                       Foreground="{DynamicResource TextPrimary}"/>
+                        <TextBlock Text="{i18n:Translate submissions_header_desc}" FontSize="13"
+                                   Foreground="{DynamicResource TextSecondary}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                        <!-- 搜索框 -->
+                        <views:SearchBar ViewModel="{Binding}" Width="220"/>
+                        <!-- 新建投稿按钮 -->
+                        <Button Classes="btn primary" Padding="12,10"
+                                Command="{Binding OpenFormDrawerCommand}"
+                                Cursor="Hand">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <PathIcon Data="{StaticResource IconCreate}" Width="16" Height="16"
+                                          Foreground="{DynamicResource BtnFgSoft}" VerticalAlignment="Center"/>
+                                <TextBlock Text="{i18n:Translate submissions_new_btn}" FontSize="15" FontWeight="SemiBold"
+                                           Foreground="{DynamicResource BtnFgSoft}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+                <!-- ===== 标签栏 ===== -->
+                <Border Margin="0,0,0,20" HorizontalAlignment="Center">
+                    <common:PillToggle3
+                        Height="36" MinWidth="360"
+                        Background="{DynamicResource Lv2Bg}"
+                        Label0="{i18n:Translate status_in_progress}"
+                        Label1="{i18n:Translate status_pending}"
+                        Label2="{i18n:Translate status_completed}"
+                        IsSelected0="{Binding ActiveTab, Converter={StaticResource StringEquals}, ConverterParameter=inProgress}"
+                        IsSelected1="{Binding ActiveTab, Converter={StaticResource StringEquals}, ConverterParameter=waiting}"
+                        IsSelected2="{Binding ActiveTab, Converter={StaticResource StringEquals}, ConverterParameter=completed}"
+                        IndicatorColor0="#5DA3E8"
+                        IndicatorColor1="#F59E0B"
+                        IndicatorColor2="#10B981"
+                        Command="{Binding SwitchTabCommand}"
+                        CommandParameter0="inProgress"
+                        CommandParameter1="waiting"
+                        CommandParameter2="completed"/>
+                </Border>
+
+                <!-- ===== 加载中 ===== -->
+                <StackPanel IsVisible="{Binding IsLoading}" Orientation="Horizontal" Spacing="10"
+                            HorizontalAlignment="Center" Margin="0,20">
+                    <common:Spinner Size="20" VerticalAlignment="Center"/>
+                    <TextBlock Text="{i18n:Translate loading}" FontSize="14"
+                               Foreground="{DynamicResource TextSecondary}" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- ===== 空态 ===== -->
+                <StackPanel HorizontalAlignment="Center" Margin="0,40"
+                            IsVisible="{Binding NoSubmissions}">
+                    <PathIcon Data="{StaticResource IconCalendar}" Width="48" Height="48"
+                              Foreground="{DynamicResource TextTertiary}" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{i18n:Translate no_submission_data}" FontSize="14" Margin="0,12,0,0"
+                               Foreground="{DynamicResource TextTertiary}" HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- ===== 待排表（简单列表） ===== -->
+                <StackPanel Spacing="12"
+                            IsVisible="{Binding HasSubmissions}">
+                    <ItemsControl ItemsSource="{Binding Submissions}"
+                                  IsVisible="{Binding IsTimelineView, Converter={StaticResource InverseBool}}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="models:Submission">
+                                <sub:SubmissionCardView Margin="0,0,0,4"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <!-- ===== 进行中/已完成（分组视图） ===== -->
+                <StackPanel IsVisible="{Binding HasSubmissions}" Spacing="0">
+                    <ItemsControl ItemsSource="{Binding GroupedSubmissions}"
+                                  IsVisible="{Binding IsTimelineView}"
+                                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="vm:SubmissionDateGroup">
+                                <StackPanel Spacing="8" Margin="0,0,0,20">
+                                    <!-- 日期标题行 -->
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="{Binding FormattedDate}" FontSize="14" FontWeight="Bold"
+                                                   Foreground="{DynamicResource TextPrimary}" VerticalAlignment="Center"/>
+                                        <Border CornerRadius="6" Padding="6,1"
+                                                Background="{DynamicResource Lv3Bg}"
+                                                BorderBrush="{DynamicResource Lv2Border}" BorderThickness="1"
+                                                VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Date}" FontSize="11" FontWeight="Medium"
+                                                       Foreground="{DynamicResource TextTertiary}" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <!-- 日期下的卡片 -->
+                                    <StackPanel Spacing="8">
+                                        <ItemsControl ItemsSource="{Binding Items}"
+                                                      ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate DataType="models:Submission">
+                                                    <sub:SubmissionCardView Margin="0,0,0,4"/>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <!-- ===== 加载更多 ===== -->
+                <common:LoadMoreFooter IsLoading="{Binding IsLoadingMore}"
+                                       HasMore="{Binding ShowLoadMore}"
+                                       LoadMoreCommand="{Binding LoadMoreCommand}"
+                                       IsVisible="{Binding HasSubmissions}"/>
+
+                <Rectangle Height="40" Fill="Transparent"/>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ===== 新建投稿抽屉 ===== -->
+        <common:Drawer x:Name="FormDrawer"
+                       Title="{i18n:Translate submissions_new_btn}"
+                       DrawerWidth="480"
+                       IsOpen="{Binding IsFormDrawerOpen}"
+                       ConfirmText="{i18n:Translate submit}"
+                       CancelText="{i18n:Translate cancel}">
+            <common:Drawer.DrawerContent>
+                <sub:SubmissionFormView DataContext="{Binding FormViewModel}"/>
+            </common:Drawer.DrawerContent>
+        </common:Drawer>
+
+    </Grid>
+
+    <UserControl.Styles>
+        <StyleInclude Source="/Views/Common/Templates/PillToggle3.axaml"/>
+    </UserControl.Styles>
+</UserControl>

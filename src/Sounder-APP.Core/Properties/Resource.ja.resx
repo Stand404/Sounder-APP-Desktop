@@ -1,0 +1,872 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="settings_title" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="language_setting" xml:space="preserve">
+    <value>言語設定</value>
+  </data>
+  <data name="language_system" xml:space="preserve">
+    <value>システムに従う</value>
+  </data>
+  <data name="theme_mode" xml:space="preserve">
+    <value>テーマモード</value>
+  </data>
+  <data name="auto_theme" xml:space="preserve">
+    <value>自動</value>
+  </data>
+  <data name="light" xml:space="preserve">
+    <value>ライト</value>
+  </data>
+  <data name="dark" xml:space="preserve">
+    <value>ダーク</value>
+  </data>
+  <data name="cache_cleanup" xml:space="preserve">
+    <value>キャッシュの消去</value>
+  </data>
+  <data name="enter_official_site" xml:space="preserve">
+    <value>公式サイトへ</value>
+  </data>
+  <data name="get_fan_group" xml:space="preserve">
+    <value>ファングループ</value>
+  </data>
+  <data name="author_name" xml:space="preserve">
+    <value>作者</value>
+  </data>
+  <data name="about_title" xml:space="preserve">
+    <value>このアプリについて</value>
+  </data>
+  <data name="app_name_display" xml:space="preserve">
+    <value>発声APP</value>
+  </data>
+  <data name="app_description" xml:space="preserve">
+    <value>独立したAPPの総称で、Androidのみ対応しています。</value>
+  </data>
+  <data name="app_name_zaohua" xml:space="preserve">
+    <value>発声APP · 造化版</value>
+  </data>
+  <data name="badge_multi_platform" xml:space="preserve">
+    <value>マルチプラットフォーム</value>
+  </data>
+  <data name="app_full_description" xml:space="preserve">
+    <value>リソースパックの閲覧、検索、ダウンロード、作成、編集、インポート/エクスポート、各種オーディオリソースの再生に対応。Windows、macOS、Linux、Android、iOSに対応。</value>
+  </data>
+  <data name="independent_package" xml:space="preserve">
+    <value>独立APP統合パック</value>
+  </data>
+  <data name="independent_desc" xml:space="preserve">
+    <value>すべての独立APPの詰め合わせ、まとめてダウンロードしたいときにぴったり</value>
+  </data>
+  <data name="audio_files" xml:space="preserve">
+    <value>音声ファイルの取得</value>
+  </data>
+  <data name="audio_files_desc" xml:space="preserve">
+    <value>すべてのリソースで使う音声ファイルは、インターネットから取得したものです</value>
+  </data>
+  <data name="privacy_notice" xml:space="preserve">
+    <value>本アプリはお客様の個人情報を一切収集しません。すべての個人データはお客様のデバイス内にのみ保存され、いかなるサーバーにもアップロードされません。</value>
+  </data>
+  <data name="feedback_notice" xml:space="preserve">
+    <value>問題やバグに遭遇したら、公式サイト、Douyin、Bilibili、ファングループなどから作者にフィードバックできるにゃ♪</value>
+  </data>
+  <data name="clear_cache_confirm_title" xml:space="preserve">
+    <value>キャッシュを消去</value>
+  </data>
+  <data name="clear_cache_confirm_msg" xml:space="preserve">
+    <value>すべてのキャッシュ（画像と試聴音声）を消去してもいいにゃ？これは取り消せないよ♪</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="confirm" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="show_window" xml:space="preserve">
+    <value>ウィンドウを表示</value>
+  </data>
+  <data name="exit" xml:space="preserve">
+    <value>終了</value>
+  </data>
+  <data name="dirty_confirm_title" xml:space="preserve">
+    <value>未保存の変更</value>
+  </data>
+  <data name="dirty_exit_message" xml:space="preserve">
+    <value>現在の編集内容は保存されていません。終了するとすべての変更が失われます。</value>
+  </data>
+  <data name="dirty_save_exit" xml:space="preserve">
+    <value>保存して終了</value>
+  </data>
+  <data name="dirty_confirm_exit" xml:space="preserve">
+    <value>終了を確認</value>
+  </data>
+  <data name="dirty_switch_message" xml:space="preserve">
+    <value>現在の編集内容は保存されていません。切り替えるとすべての変更が失われます。</value>
+  </data>
+  <data name="dirty_save_switch" xml:space="preserve">
+    <value>保存して切替</value>
+  </data>
+  <data name="dirty_confirm_switch" xml:space="preserve">
+    <value>切替を確認</value>
+  </data>
+  <data name="dirty_delete_title" xml:space="preserve">
+    <value>リソースを削除</value>
+  </data>
+  <data name="dirty_delete_message" xml:space="preserve">
+    <value>「{0}」を削除してもよろしいですか？
+この操作は元に戻せません。</value>
+  </data>
+  <data name="dirty_confirm_delete" xml:space="preserve">
+    <value>削除を確認</value>
+  </data>
+  <data name="dirty_confirm_btn" xml:space="preserve">
+    <value>確認</value>
+  </data>
+  <data name="tooltip_title" xml:space="preserve">
+    <value>発声APP</value>
+  </data>
+  <data name="tab_personal" xml:space="preserve">
+    <value>マイリソース</value>
+  </data>
+  <data name="tab_shop" xml:space="preserve">
+    <value>ストア</value>
+  </data>
+  <data name="tab_submissions" xml:space="preserve">
+    <value>投稿</value>
+  </data>
+  <data name="tab_task_manager" xml:space="preserve">
+    <value>タスク管理</value>
+  </data>
+  <data name="tab_settings" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="loading" xml:space="preserve">
+    <value>読み込み中...</value>
+  </data>
+  <data name="load_more" xml:space="preserve">
+    <value>さらに読み込む</value>
+  </data>
+  <data name="no_more_data" xml:space="preserve">
+    <value>— もうおしまい —</value>
+  </data>
+  <data name="search_audio_hint" xml:space="preserve">
+    <value>オーディオ名を検索…</value>
+  </data>
+  <data name="search_hint" xml:space="preserve">
+    <value>リソースを検索…</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>検索</value>
+  </data>
+  <data name="install" xml:space="preserve">
+    <value>インストール</value>
+  </data>
+  <data name="installed" xml:space="preserve">
+    <value>インストール済み</value>
+  </data>
+  <data name="retry" xml:space="preserve">
+    <value>再試行</value>
+  </data>
+  <data name="shop_empty" xml:space="preserve">
+    <value>お店の棚がまだ空っぽだにゃ</value>
+  </data>
+  <data name="no_resources_yet" xml:space="preserve">
+    <value>ここはまだ空っぽだにゃ</value>
+  </data>
+  <data name="go_shop_to_install" xml:space="preserve">
+    <value>ストアでリソースをお家に迎えに行きましょにゃ♪</value>
+  </data>
+  <data name="view_detail" xml:space="preserve">
+    <value>詳細を見る</value>
+  </data>
+  <data name="edit_resource" xml:space="preserve">
+    <value>リソースを編集</value>
+  </data>
+  <data name="clone_resource" xml:space="preserve">
+    <value>リソースを複製</value>
+  </data>
+  <data name="export_package" xml:space="preserve">
+    <value>パッケージをエクスポート</value>
+  </data>
+  <data name="add_to_desktop" xml:space="preserve">
+    <value>デスクトップに追加</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="confirm_delete_title" xml:space="preserve">
+    <value>削除の確認</value>
+  </data>
+  <data name="confirm_delete_message" xml:space="preserve">
+    <value>このリソースを削除してもいいにゃ？戻せなくなっちゃうよ〜</value>
+  </data>
+  <data name="add_resource_desc" xml:space="preserve">
+    <value>リソースを追加</value>
+  </data>
+  <data name="searching" xml:space="preserve">
+    <value>検索中...</value>
+  </data>
+  <data name="no_personal_resources" xml:space="preserve">
+    <value>個人リソースがありません</value>
+  </data>
+  <data name="resource_count_fmt" xml:space="preserve">
+    <value>合計 {0} 個のリソース</value>
+  </data>
+  <data name="load_failed" xml:space="preserve">
+    <value>読み込み失敗</value>
+  </data>
+  <data name="load_error_fmt" xml:space="preserve">
+    <value>読み込み失敗: {0}</value>
+  </data>
+  <data name="found_resource_count_fmt" xml:space="preserve">
+    <value>{0} 個のリソースが見つかりました</value>
+  </data>
+  <data name="no_match_resource" xml:space="preserve">
+    <value>一致するリソースが見つかりません</value>
+  </data>
+  <data name="import_title" xml:space="preserve">
+    <value>インポートするリソースパッケージを選択（.zip）</value>
+  </data>
+  <data name="zip_file_type" xml:space="preserve">
+    <value>ZIP アーカイブ</value>
+  </data>
+  <data name="invalid_package_no_manifest" xml:space="preserve">
+    <value>無効なパッケージ：manifest.json がありません</value>
+  </data>
+  <data name="invalid_package_incomplete_manifest" xml:space="preserve">
+    <value>無効なパッケージ：manifest データが不完全です</value>
+  </data>
+  <data name="export_title" xml:space="preserve">
+    <value>リソースをエクスポート</value>
+  </data>
+  <data name="default_resource_name" xml:space="preserve">
+    <value>新規リソース</value>
+  </data>
+  <data name="default_resource_desc" xml:space="preserve">
+    <value>面白いリソースパック</value>
+  </data>
+  <data name="clone_suffix" xml:space="preserve">
+    <value> (コピー)</value>
+  </data>
+  <data name="added_to_desktop" xml:space="preserve">
+    <value>デスクトップに追加しました</value>
+  </data>
+  <data name="shortcut_created_fmt" xml:space="preserve">
+    <value>「{0}」のショートカットを作成しました</value>
+  </data>
+  <data name="no_match" xml:space="preserve">
+    <value>お探しのリソースが見つからないにゃ</value>
+  </data>
+  <data name="go_to_shop" xml:space="preserve">
+    <value>ストアへ</value>
+  </data>
+  <data name="create_new_resource" xml:space="preserve">
+    <value>新規リソースを作成</value>
+  </data>
+  <data name="import_package" xml:space="preserve">
+    <value>パッケージをインポート</value>
+  </data>
+  <data name="back" xml:space="preserve">
+    <value>戻る</value>
+  </data>
+  <data name="online_preview" xml:space="preserve">
+    <value>オンラインプレビュー</value>
+  </data>
+  <data name="select_audio" xml:space="preserve">
+    <value>音声を選択</value>
+  </data>
+  <data name="no_audio_in_package" xml:space="preserve">
+    <value>このパッケージはまだ静かで、音声がないにゃ</value>
+  </data>
+  <data name="normal_mode" xml:space="preserve">
+    <value>ノーマル</value>
+  </data>
+  <data name="interrupt_mode" xml:space="preserve">
+    <value>割り込み</value>
+  </data>
+  <data name="play_mode_label" xml:space="preserve">
+    <value>再生モード</value>
+  </data>
+  <data name="overlay_desc" xml:space="preserve">
+    <value>音声が互いに干渉せずに再生されます</value>
+  </data>
+  <data name="replace_desc" xml:space="preserve">
+    <value>新しい再生が前のを中断します</value>
+  </data>
+  <data name="loop_desc" xml:space="preserve">
+    <value>ずっと再生し続けて止まりません</value>
+  </data>
+  <data name="overlay_mode" xml:space="preserve">
+    <value>重ねる</value>
+  </data>
+  <data name="replace_mode" xml:space="preserve">
+    <value>置き換え</value>
+  </data>
+  <data name="loop_mode" xml:space="preserve">
+    <value>リピート</value>
+  </data>
+  <data name="loop_type_label" xml:space="preserve">
+    <value>リピートタイプ</value>
+  </data>
+  <data name="loop_type_desc" xml:space="preserve">
+    <value>単曲リピート / リスト順次再生</value>
+  </data>
+  <data name="loop_single" xml:space="preserve">
+    <value>単曲</value>
+  </data>
+  <data name="loop_list" xml:space="preserve">
+    <value>リスト</value>
+  </data>
+  <data name="play_mode_single_loop" xml:space="preserve">
+    <value>単曲リピート</value>
+  </data>
+  <data name="play_mode_list_loop" xml:space="preserve">
+    <value>リストリピート</value>
+  </data>
+  <data name="play_order_label" xml:space="preserve">
+    <value>再生順序</value>
+  </data>
+  <data name="order_desc" xml:space="preserve">
+    <value>この設定はデスクトップショートカットのクリックに適用されます</value>
+  </data>
+  <data name="order_play" xml:space="preserve">
+    <value>順序</value>
+  </data>
+  <data name="random_play" xml:space="preserve">
+    <value>ランダム</value>
+  </data>
+  <data name="stop_playback" xml:space="preserve">
+    <value>再生を停止</value>
+  </data>
+  <data name="more_actions" xml:space="preserve">
+    <value>その他の操作</value>
+  </data>
+  <data name="resource_not_found" xml:space="preserve">
+    <value>このリソースが見つからないにゃ</value>
+  </data>
+  <data name="task_manager" xml:space="preserve">
+    <value>タスク管理</value>
+  </data>
+  <data name="no_tasks" xml:space="preserve">
+    <value>再生中のタスクはないよ</value>
+  </data>
+  <data name="stop_all" xml:space="preserve">
+    <value>すべて停止</value>
+  </data>
+  <data name="status_in_progress" xml:space="preserve">
+    <value>進行中</value>
+  </data>
+  <data name="status_pending" xml:space="preserve">
+    <value>保留中</value>
+  </data>
+  <data name="status_completed" xml:space="preserve">
+    <value>完了</value>
+  </data>
+  <data name="no_submissions" xml:space="preserve">
+    <value>まだ誰も投稿してないにゃ</value>
+  </data>
+  <data name="submissions_header_title" xml:space="preserve">
+    <value>投稿と計画</value>
+  </data>
+  <data name="submissions_header_desc" xml:space="preserve">
+    <value>発声APPに投稿して、公開の進捗を追跡</value>
+  </data>
+  <data name="submissions_new_btn" xml:space="preserve">
+    <value>投稿する</value>
+  </data>
+  <data name="submission_search_placeholder" xml:space="preserve">
+    <value>投稿を検索…</value>
+  </data>
+  <data name="submission_no_schedule" xml:space="preserve">
+    <value>未スケジュール</value>
+  </data>
+  <data name="submission_link_copied" xml:space="preserve">
+    <value>リンクをコピーしました</value>
+  </data>
+  <data name="resumable" xml:space="preserve">
+    <value>再開可能</value>
+  </data>
+  <data name="search_history" xml:space="preserve">
+    <value>検索履歴</value>
+  </data>
+  <data name="clear_text" xml:space="preserve">
+    <value>クリア</value>
+  </data>
+  <data name="copy_link" xml:space="preserve">
+    <value>リンクをコピー</value>
+  </data>
+  <data name="unnamed_resource" xml:space="preserve">
+    <value>無名のリソース</value>
+  </data>
+  <data name="search_task_hint" xml:space="preserve">
+    <value>タスクを検索…</value>
+  </data>
+  <data name="task_management_desc" xml:space="preserve">
+    <value>デスクトップからちょんと押した再生タスクが、ここに並ぶにゃ~</value>
+  </data>
+  <data name="no_matching_tasks" xml:space="preserve">
+    <value>探しているタスクがないにゃ</value>
+  </data>
+  <data name="try_different_keywords" xml:space="preserve">
+    <value>にゃんな言葉に変えてもう一度探してみてにゃ~</value>
+  </data>
+  <data name="deleted_files" xml:space="preserve">
+    <value>{0} 個のファイルを削除して、{1} を解放したにゃ♪</value>
+  </data>
+  <data name="cloned_as" xml:space="preserve">
+    <value>「{0}」を複製したにゃ♪</value>
+  </data>
+  <data name="import_success" xml:space="preserve">
+    <value>インポートできたにゃ、やったね♪</value>
+  </data>
+  <data name="created" xml:space="preserve">
+    <value>「{0}」を作成したにゃ♪</value>
+  </data>
+  <data name="new_resource_name" xml:space="preserve">
+    <value>新規リソースパック</value>
+  </data>
+  <data name="new_resource_desc" xml:space="preserve">
+    <value>面白いリソースパック</value>
+  </data>
+  <data name="date_today" xml:space="preserve">
+    <value>今日</value>
+  </data>
+  <data name="date_yesterday" xml:space="preserve">
+    <value>昨日</value>
+  </data>
+  <data name="date_tomorrow" xml:space="preserve">
+    <value>明日</value>
+  </data>
+  <data name="idle_empty_hint" xml:space="preserve">
+    <value>左側のリソースを選択してください</value>
+  </data>
+  <data name="stop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="brief_label" xml:space="preserve">
+    <value>概要</value>
+  </data>
+  <data name="image_source_label" xml:space="preserve">
+    <value>画像出典</value>
+  </data>
+  <data name="voice_source_label" xml:space="preserve">
+    <value>音声出典</value>
+  </data>
+  <data name="image_source_link_label" xml:space="preserve">
+    <value>画像出典リンク</value>
+  </data>
+  <data name="voice_source_link_label" xml:space="preserve">
+    <value>音声出典リンク</value>
+  </data>
+  <data name="notes_label" xml:space="preserve">
+    <value>備考</value>
+  </data>
+  <data name="platform_account_label" xml:space="preserve">
+    <value>プラットフォームアカウント</value>
+  </data>
+  <data name="submission_form_tip" xml:space="preserve">
+    <value>投稿前に他の人の形式を参考にして、情報をしっかり埋めてにゃ~わからない時は公式サイトでStandに連絡してね♪</value>
+  </data>
+  <data name="resource_full_name" xml:space="preserve">
+    <value>リソースパック名 *</value>
+  </data>
+  <data name="resource_full_name_placeholder" xml:space="preserve">
+    <value>例：ググガガ、シャオタオゲイム</value>
+  </data>
+  <data name="app_short_name" xml:space="preserve">
+    <value>APP略称 *</value>
+  </data>
+  <data name="app_short_name_placeholder" xml:space="preserve">
+    <value>5文字以内、例：ググガガ、ゲイム</value>
+  </data>
+  <data name="brief_required" xml:space="preserve">
+    <value>概要 *</value>
+  </data>
+  <data name="brief_placeholder" xml:space="preserve">
+    <value>この音声を最も表す一言</value>
+  </data>
+  <data name="platform_required" xml:space="preserve">
+    <value>プラットフォーム *</value>
+  </data>
+  <data name="platform_selected" xml:space="preserve">
+    <value>選択中：</value>
+  </data>
+  <data name="platform_account_optional" xml:space="preserve">
+    <value>プラットフォームアカウント（任意）</value>
+  </data>
+  <data name="platform_account_placeholder" xml:space="preserve">
+    <value>連絡用、未記入だとご連絡できません</value>
+  </data>
+  <data name="nickname_required" xml:space="preserve">
+    <value>ニックネーム *</value>
+  </data>
+  <data name="nickname_placeholder" xml:space="preserve">
+    <value>どのようにお呼びすれば？</value>
+  </data>
+  <data name="source_info" xml:space="preserve">
+    <value>出典情報</value>
+  </data>
+  <data name="image_source_required" xml:space="preserve">
+    <value>画像出典 *</value>
+  </data>
+  <data name="image_source_link_placeholder" xml:space="preserve">
+    <value>画像の出典リンクを記入（自作の場合は空欄可）</value>
+  </data>
+  <data name="voice_source_required" xml:space="preserve">
+    <value>音声出典 *</value>
+  </data>
+  <data name="voice_source_link_placeholder" xml:space="preserve">
+    <value>音声の出典リンクを記入（自作の場合は空欄可）</value>
+  </data>
+  <data name="submit" xml:space="preserve">
+    <value>送信</value>
+  </data>
+  <data name="copy_success" xml:space="preserve">
+    <value>リンクをコピーしました</value>
+  </data>
+  <data name="bilibili" xml:space="preserve">
+    <value>ビリビリ</value>
+  </data>
+  <data name="douyin" xml:space="preserve">
+    <value>ドウイン</value>
+  </data>
+  <data name="kuaishou" xml:space="preserve">
+    <value>クアイショウ</value>
+  </data>
+  <data name="fan_group" xml:space="preserve">
+    <value>ファングループ</value>
+  </data>
+  <data name="game_screenshot" xml:space="preserve">
+    <value>ゲームスクリーンショット</value>
+  </data>
+  <data name="anime_screenshot" xml:space="preserve">
+    <value>アニメスクリーンショット</value>
+  </data>
+  <data name="internet" xml:space="preserve">
+    <value>インターネット</value>
+  </data>
+  <data name="video_screenshot" xml:space="preserve">
+    <value>動画スクリーンショット</value>
+  </data>
+  <data name="game_recording" xml:space="preserve">
+    <value>ゲーム録音</value>
+  </data>
+  <data name="video_link" xml:space="preserve">
+    <value>動画リンク</value>
+  </data>
+  <data name="no_data" xml:space="preserve">
+    <value>データなし</value>
+  </data>
+  <data name="form_voice_source_link_ph" xml:space="preserve">
+    <value>音声の出典リンク（自分で録音なら不要）</value>
+  </data>
+  <data name="form_source_info" xml:space="preserve">
+    <value>出典情報</value>
+  </data>
+  <data name="single_loop_desc" xml:space="preserve">
+    <value>単曲リピート → 現在の音声を繰り返す</value>
+  </data>
+  <data name="form_note" xml:space="preserve">
+    <value>備考</value>
+  </data>
+  <data name="form_brief_ph" xml:space="preserve">
+    <value>その音を一番表す一文</value>
+  </data>
+  <data name="card_voice_source" xml:space="preserve">
+    <value>音声ソース</value>
+  </data>
+  <data name="list_loop_desc" xml:space="preserve">
+    <value>リストリピート → 全部再生後は最初から</value>
+  </data>
+  <data name="instance_unit" xml:space="preserve">
+    <value> インスタンス</value>
+  </data>
+  <data name="card_voice_source_link" xml:space="preserve">
+    <value>音声ソースリンク</value>
+  </data>
+  <data name="install_resource" xml:space="preserve">
+    <value>リソースをインストール</value>
+  </data>
+  <data name="select_all" xml:space="preserve">
+    <value>すべて選択</value>
+  </data>
+  <data name="clone" xml:space="preserve">
+    <value>複製</value>
+  </data>
+  <data name="form_brief" xml:space="preserve">
+    <value>概要 *</value>
+  </data>
+  <data name="form_resource_name" xml:space="preserve">
+    <value>リソースパッケージ名 *</value>
+  </data>
+  <data name="import" xml:space="preserve">
+    <value>インポート</value>
+  </data>
+  <data name="choose" xml:space="preserve">
+    <value>選択</value>
+  </data>
+  <data name="form_resource_name_ph" xml:space="preserve">
+    <value>例：ググガーガー、シャオタオ</value>
+  </data>
+  <data name="leave_edit" xml:space="preserve">
+    <value>編集を離れる</value>
+  </data>
+  <data name="form_image_source_link_ph" xml:space="preserve">
+    <value>画像の出典リンク（自分で撮影なら不要）</value>
+  </data>
+  <data name="form_platform" xml:space="preserve">
+    <value>プラットフォーム *</value>
+  </data>
+  <data name="card_image_source" xml:space="preserve">
+    <value>画像ソース</value>
+  </data>
+  <data name="random_desc" xml:space="preserve">
+    <value>ランダム → ショートカットごとにランダム再生</value>
+  </data>
+  <data name="task_instance_count" xml:space="preserve">
+    <value>{0} インスタンス</value>
+  </data>
+  <data name="resume_download" xml:space="preserve">
+    <value>ダウンロード再開</value>
+  </data>
+  <data name="form_app_name_ph" xml:space="preserve">
+    <value>5文字以内、例：ググガーガー</value>
+  </data>
+  <data name="card_brief_label" xml:space="preserve">
+    <value>概要</value>
+  </data>
+  <data name="language_ja" xml:space="preserve">
+    <value>日本語</value>
+  </data>
+  <data name="task_count" xml:space="preserve">
+    <value>{0} 個の進行中の再生タスク</value>
+  </data>
+  <data name="resource_desc_ph" xml:space="preserve">
+    <value>リソースの説明を入力</value>
+  </data>
+  <data name="add" xml:space="preserve">
+    <value>追加</value>
+  </data>
+  <data name="pick_icon_in_app" xml:space="preserve">
+    <value>アプリ内からアイコンを選択</value>
+  </data>
+  <data name="form_note_ph" xml:space="preserve">
+    <value>使用要件や完成素材のクラウドリンク</value>
+  </data>
+  <data name="form_note_hint" xml:space="preserve">
+    <value>音声・画像の使用要件、または完成素材のクラウドリンク</value>
+  </data>
+  <data name="no_match_task" xml:space="preserve">
+    <value>一致するタスクがありません</value>
+  </data>
+  <data name="task_in_progress_fmt" xml:space="preserve">
+    <value>進行中: {0} 個のタスク</value>
+  </data>
+  <data name="found_tasks_fmt" xml:space="preserve">
+    <value>{0} 個のタスクが見つかりました</value>
+  </data>
+  <data name="short_name_ph" xml:space="preserve">
+    <value>略称（内部識別用）</value>
+  </data>
+  <data name="selected_colon" xml:space="preserve">
+    <value>選択済み：</value>
+  </data>
+  <data name="resource_not_found_clone" xml:space="preserve">
+    <value>このリソースが見つからないから、複製できないにゃ</value>
+  </data>
+  <data name="audio_list" xml:space="preserve">
+    <value>音声リスト</value>
+  </data>
+  <data name="language_en" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="detail_select_hint" xml:space="preserve">
+    <value>左側からリソースを選択してください</value>
+  </data>
+  <data name="change_icon" xml:space="preserve">
+    <value>変更</value>
+  </data>
+  <data name="resume" xml:space="preserve">
+    <value>再開</value>
+  </data>
+  <data name="language_zh" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="form_nickname" xml:space="preserve">
+    <value>ニックネーム *</value>
+  </data>
+  <data name="resource_name_ph" xml:space="preserve">
+    <value>リソース名</value>
+  </data>
+  <data name="form_voice_source_link" xml:space="preserve">
+    <value>音声ソースリンク</value>
+  </data>
+  <data name="card_note" xml:space="preserve">
+    <value>備考</value>
+  </data>
+  <data name="submission_tip" xml:space="preserve">
+    <value>投稿前は他の人の投稿フォーマットを参考にして、情報の完全性と正確性を確保しましょう。ご質問は公式サイトからStandまで。</value>
+  </data>
+  <data name="drag_sort_hint" xml:space="preserve">
+    <value>ハンドルをドラッグして並べ替え、各音声名は編集可</value>
+  </data>
+  <data name="import_failed" xml:space="preserve">
+    <value>インポートがうまくいかなかったにゃ：{0}</value>
+  </data>
+  <data name="folder" xml:space="preserve">
+    <value>フォルダ</value>
+  </data>
+  <data name="no_submission_data" xml:space="preserve">
+    <value>投稿データはまだありません</value>
+  </data>
+  <data name="resource_not_found_export" xml:space="preserve">
+    <value>このリソースが見つからないから、エクスポートできないにゃ</value>
+  </data>
+  <data name="select_icon" xml:space="preserve">
+    <value>アイコンを選択</value>
+  </data>
+  <data name="form_image_source" xml:space="preserve">
+    <value>画像ソース *</value>
+  </data>
+  <data name="language_ru" xml:space="preserve">
+    <value>Русский</value>
+  </data>
+  <data name="export_failed" xml:space="preserve">
+    <value>エクスポートがうまくいかなかったにゃ、もう一度試してみて</value>
+  </data>
+  <data name="form_image_source_link" xml:space="preserve">
+    <value>画像ソースリンク</value>
+  </data>
+  <data name="now_playing" xml:space="preserve">
+    <value>再生中: {0}</value>
+  </data>
+  <data name="audio_name_ph" xml:space="preserve">
+    <value>音声名を入力</value>
+  </data>
+  <data name="create" xml:space="preserve">
+    <value>作成</value>
+  </data>
+  <data name="no_audio_hint" xml:space="preserve">
+    <value>音声はまだありません、上のボタンで追加</value>
+  </data>
+  <data name="card_image_source_link" xml:space="preserve">
+    <value>画像ソースリンク</value>
+  </data>
+  <data name="go_shop_install" xml:space="preserve">
+    <value>ストアへ行ってリソースをインストール</value>
+  </data>
+  <data name="badge_android" xml:space="preserve">
+    <value>Android</value>
+  </data>
+  <data name="form_app_name" xml:space="preserve">
+    <value>APP略称 *</value>
+  </data>
+  <data name="task_desc_hint" xml:space="preserve">
+    <value>デスクトップショートカットから起動した再生タスクがここに表示されます</value>
+  </data>
+  <data name="no_active_tasks" xml:space="preserve">
+    <value>進行中のタスクはありません</value>
+  </data>
+  <data name="unknown_error" xml:space="preserve">
+    <value>未知の小さな問題が起きたにゃ</value>
+  </data>
+  <data name="form_platform_id" xml:space="preserve">
+    <value>プラットフォームID（任意）</value>
+  </data>
+  <data name="no_personal_resource" xml:space="preserve">
+    <value>個人リソースはまだありません</value>
+  </data>
+  <data name="shop_no_resources" xml:space="preserve">
+    <value>お店にリソースはまだありません</value>
+  </data>
+  <data name="form_platform_id_ph" xml:space="preserve">
+    <value>問題時に連絡しやすく、空欄なら連絡不可</value>
+  </data>
+  <data name="language_zh_tw" xml:space="preserve">
+    <value>繁體中文</value>
+  </data>
+  <data name="card_platform_id" xml:space="preserve">
+    <value>プラットフォームID</value>
+  </data>
+  <data name="form_voice_source" xml:space="preserve">
+    <value>音声ソース *</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>編集</value>
+  </data>
+  <data name="form_nickname_ph" xml:space="preserve">
+    <value>どう呼べばいいですか？</value>
+  </data>
+  <data name="export" xml:space="preserve">
+    <value>エクスポート</value>
+  </data>
+  <data name="loading_shop" xml:space="preserve">
+    <value>リソースを読み込み中...</value>
+  </data>
+  <data name="search_error_fmt" xml:space="preserve">
+    <value>検索失敗: {0}</value>
+  </data>
+  <data name="play_failed" xml:space="preserve">
+    <value>オーディオ再生失敗</value>
+  </data>
+  <data name="error" xml:space="preserve">
+    <value>エラー</value>
+  </data>
+</root>

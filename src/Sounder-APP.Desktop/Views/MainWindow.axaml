@@ -1,0 +1,199 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Sounder_APP.ViewModels"
+        xmlns:views="using:Sounder_APP.Views"
+        xmlns:sub="using:Sounder_APP.Views.Submissions"
+        xmlns:i18n="clr-namespace:Sounder_APP.Converters"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="750"
+        x:Class="Sounder_APP.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="{i18n:Translate tooltip_title}"
+        Width="1100" Height="750"
+        MinWidth="800" MinHeight="500"
+        CanResize="False"
+        Background="Transparent"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaTitleBarHeightHint="32"
+        WindowDecorations="None">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Window.Styles>
+        <Style Selector="Button.titlebar-btn">
+            <Setter Property="CornerRadius" Value="0"/>
+        </Style>
+        <Style Selector="Button.titlebar-btn:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource TitleBarBtnHoverBg}"/>
+        </Style>
+        <Style Selector="Button.titlebar-btn-close">
+            <Setter Property="CornerRadius" Value="0"/>
+        </Style>
+        <Style Selector="Button.titlebar-btn-close:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#E81123"/>
+        </Style>
+    </Window.Styles>
+
+    <Border CornerRadius="12" ClipToBounds="True">
+    <Grid RowDefinitions="32,*">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="52"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- 标题栏（跨越两列，从左上角延伸到右侧） -->
+        <Border Grid.Column="0" Grid.ColumnSpan="2" Background="{DynamicResource SidebarBg}"
+                x:Name="TitleBar"
+                PointerPressed="OnTitleBarPointerPressed">
+            <Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Image Source="avares://Sounder-APP/Assets/ico.png"
+                        Width="20" Height="20" Stretch="Uniform"
+                        HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,0,0,0"/>
+                    <TextBlock Text="{i18n:Translate tooltip_title}" FontSize="12" VerticalAlignment="Center" Foreground="{DynamicResource TitleBarFg}" Margin="6,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                            VerticalAlignment="Center" Spacing="2">
+                    <!-- 最小化 -->
+                    <Button Width="42" Height="32" Padding="0" FontSize="10"
+                            Background="Transparent" BorderThickness="0"
+                            Cursor="Hand" Click="OnMinimizeClick"
+                            Foreground="{DynamicResource TitleBarBtnFg}"
+                            Classes="titlebar-btn">
+                        <TextBlock Text="&#x2013;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                    <!-- 关闭 -->
+                    <Button Width="42" Height="32" Padding="0" FontSize="10"
+                            Background="Transparent" BorderThickness="0"
+                            Cursor="Hand" Click="OnCloseClick"
+                            Foreground="{DynamicResource TitleBarBtnFg}"
+                            Classes="titlebar-btn-close">
+                        <TextBlock Text="&#x2715;" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- 左侧导航栏（标题栏之下） -->
+        <Border Grid.Column="0" Grid.Row="1" Background="{DynamicResource SidebarBg}" Padding="0,6,0,0">
+            <StackPanel VerticalAlignment="Top" Spacing="4">
+                <StackPanel.Styles>
+                    <Style Selector="Button.nav-btn">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="CornerRadius" Value="8"/>
+                        <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                    </Style>
+                </StackPanel.Styles>
+                <!-- 我的资源 -->
+                <Button Width="40" Height="40" Padding="0" HorizontalAlignment="Center"
+                        Command="{Binding NavigateToPersonalCommand}"
+                        ToolTip.Tip="{i18n:Translate tab_personal}"
+                        Classes="nav-btn">
+                    <Grid Width="24" Height="24">
+                        <Image Source="avares://Sounder-APP/Assets/sidebar-manage-active.png"
+                               Width="24" Height="24" Stretch="Uniform"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               IsVisible="{Binding IsPersonalSelected}"/>
+                        <Image Source="avares://Sounder-APP/Assets/sidebar-manage-close.png"
+                               Width="24" Height="24" Stretch="Uniform"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               IsVisible="{Binding IsPersonalSelected, Converter={StaticResource InverseBool}}"/>
+                    </Grid>
+                </Button>
+                <!-- 商店 -->
+                <Button Width="40" Height="40" Padding="0" HorizontalAlignment="Center"
+                        Command="{Binding NavigateToShopCommand}"
+                        ToolTip.Tip="{i18n:Translate tab_shop}"
+                        Classes="nav-btn">
+                    <Grid Width="24" Height="24">
+                        <Image Source="avares://Sounder-APP/Assets/sidebar-shop-active.png"
+                               Width="24" Height="24" Stretch="Uniform"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               IsVisible="{Binding IsShopSelected}"/>
+                        <Image Source="avares://Sounder-APP/Assets/sidebar-shop-close.png"
+                               Width="24" Height="24" Stretch="Uniform"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               IsVisible="{Binding IsShopSelected, Converter={StaticResource InverseBool}}"/>
+                    </Grid>
+                </Button>
+                <!-- 投稿 -->
+                <Button Width="40" Height="40" Padding="0" HorizontalAlignment="Center"
+                        Command="{Binding NavigateToSubmissionsCommand}"
+                        ToolTip.Tip="{i18n:Translate tab_submissions}"
+                        Classes="nav-btn">
+                    <Grid Width="24" Height="24">
+                        <Image Source="avares://Sounder-APP/Assets/sidebar-plan-active.png"
+                               Width="24" Height="24" Stretch="Uniform"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               IsVisible="{Binding IsSubmissionsSelected}"/>
+                        <Image Source="avares://Sounder-APP/Assets/sidebar-plan-close.png"
+                               Width="24" Height="24" Stretch="Uniform"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               IsVisible="{Binding IsSubmissionsSelected, Converter={StaticResource InverseBool}}"/>
+                    </Grid>
+                </Button>
+                <!-- 任务管理 -->
+                <Button Width="40" Height="40" Padding="0" HorizontalAlignment="Center"
+                        Command="{Binding NavigateToTaskManagerCommand}"
+                        ToolTip.Tip="{i18n:Translate tab_task_manager}"
+                        Classes="nav-btn">
+                    <Grid Width="24" Height="24">
+                        <Image Source="avares://Sounder-APP/Assets/sidebar-runner-active.png"
+                               Width="24" Height="24" Stretch="Uniform"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               IsVisible="{Binding IsTaskManagerSelected}"/>
+                        <Image Source="avares://Sounder-APP/Assets/sidebar-runner-close.png"
+                               Width="24" Height="24" Stretch="Uniform"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               IsVisible="{Binding IsTaskManagerSelected, Converter={StaticResource InverseBool}}"/>
+                    </Grid>
+                </Button>
+                <!-- 设置 -->
+                <Button Width="40" Height="40" Padding="0" HorizontalAlignment="Center"
+                        Command="{Binding NavigateToSettingsCommand}"
+                        ToolTip.Tip="{i18n:Translate tab_settings}"
+                        Classes="nav-btn">
+                    <Grid Width="24" Height="24">
+                        <Image Source="avares://Sounder-APP/Assets/sidebar-settings-active.png"
+                               Width="24" Height="24" Stretch="Uniform"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               IsVisible="{Binding IsSettingsSelected}"/>
+                        <Image Source="avares://Sounder-APP/Assets/sidebar-settings-close.png"
+                               Width="24" Height="24" Stretch="Uniform"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               IsVisible="{Binding IsSettingsSelected, Converter={StaticResource InverseBool}}"/>
+                    </Grid>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <!-- 右侧内容区域 -->
+        <ContentControl Grid.Column="1" Grid.Row="1"
+                        Content="{Binding ActiveViewModel}"
+                        Background="{DynamicResource Lv1Bg}">
+            <ContentControl.DataTemplates>
+                <DataTemplate DataType="vm:PersonalResourceViewModel">
+                    <views:PersonalResourceView/>
+                </DataTemplate>
+                <DataTemplate DataType="vm:ShopViewModel">
+                    <views:ShopView/>
+                </DataTemplate>
+                <DataTemplate DataType="vm:SettingsViewModel">
+                    <views:SettingsView/>
+                </DataTemplate>
+                <DataTemplate DataType="vm:SubmissionsViewModel">
+                    <views:SubmissionsView/>
+                </DataTemplate>
+                <DataTemplate DataType="vm:TaskManagerViewModel">
+                    <views:TaskManagerView/>
+                </DataTemplate>
+            </ContentControl.DataTemplates>
+        </ContentControl>
+    </Grid>
+    </Border>
+</Window>
