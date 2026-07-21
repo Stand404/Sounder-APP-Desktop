@@ -9,16 +9,6 @@ using Sounder_APP.Services;
 
 namespace Sounder_APP.Views
 {
-    /// <summary>
-    /// 脏数据确认弹窗 — 编辑模式下内容有修改时，取消或切换前弹出询问
-    /// </summary>
-    public enum DirtyConfirmAction
-    {
-        SaveAndProceed,    // 保存并继续
-        DiscardAndProceed, // 放弃并继续
-        Cancel             // 取消操作
-    }
-
     public class DirtyConfirmWindow : Window
     {
         private static readonly BoxShadows DialogShadow = new(new BoxShadow
@@ -74,31 +64,6 @@ namespace Sounder_APP.Views
             return to - (to - from) * x * y;
         }
 
-        private DirtyConfirmAction _result = DirtyConfirmAction.Cancel;
-
-        private DirtyConfirmWindow(string title, string message, string primaryText, string dangerText)
-        {
-            SizeToContent = SizeToContent.WidthAndHeight;
-            WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            CanResize = false;
-            WindowDecorations = Avalonia.Controls.WindowDecorations.None;
-            TransparencyLevelHint = new[] { WindowTransparencyLevel.Transparent };
-
-            var cardBg = TryGetThemeBrush("Lv3Bg", SolidColorBrush.Parse("#FFFFFF"));
-            Background = cardBg;
-            var textPrimary = TryGetThemeBrush("TextPrimary", SolidColorBrush.Parse("#E6E6E6"));
-            var textSecondary = TryGetThemeBrush("TextSecondary", SolidColorBrush.Parse("#8E8E8E"));
-
-            // 卡片容器
-            var cardGrid = BuildDialogGrid(title, message, textPrimary, textSecondary,
-                dangerText, primaryText);
-            var card = CreateDialogCard(360, cardBg, cardGrid, this);
-
-            SetupEntranceState(card);
-            Content = card;
-            ApplyEntranceAnimation(this, card);
-        }
-
         /// <summary>
         /// 创建弹窗卡片。macOS 上不设圆角（因 NSWindow 不支持透明圆角），
         /// 其他平台保持 12px 圆角。
@@ -140,70 +105,6 @@ namespace Sounder_APP.Views
                     return brush;
             }
             return fallback;
-        }
-
-        // ---- Grid 构建方法 -----
-
-        /// <summary>构建 DirtyConfirmWindow 的三按钮 Grid（取消/放弃/保存）</summary>
-        private Grid BuildDialogGrid(string title, string message, IBrush textPrimary,
-            IBrush textSecondary, string dangerText, string primaryText)
-        {
-            var grid = new Grid
-            {
-                RowDefinitions = new RowDefinitions("Auto,Auto,Auto"),
-                Margin = new Thickness(24, 20, 24, 20),
-                RowSpacing = 12,
-            };
-
-            var titleBlock = new TextBlock
-            {
-                Text = title, FontSize = 16, FontWeight = FontWeight.SemiBold, Foreground = textPrimary,
-            };
-            Grid.SetRow(titleBlock, 0);
-
-            var msgBlock = new TextBlock
-            {
-                Text = message, FontSize = 13, Foreground = textSecondary,
-                TextWrapping = TextWrapping.Wrap, VerticalAlignment = VerticalAlignment.Center,
-            };
-            Grid.SetRow(msgBlock, 1);
-
-            var btnPanel = new StackPanel
-            {
-                Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Spacing = 8,
-            };
-            Grid.SetRow(btnPanel, 2);
-
-            var cancelBtn = new Button
-            {
-                Content = LocalizationService.Instance.Get("cancel"),
-                Padding = new Thickness(14, 6), FontSize = 13, MinWidth = 60,
-            };
-            cancelBtn.Classes.AddRange(new[] { "btn", "secondary" });
-            cancelBtn.Click += (_, _) => { _result = DirtyConfirmAction.Cancel; Close(); };
-
-            var discardBtn = new Button
-            {
-                Content = dangerText, Padding = new Thickness(14, 6), FontSize = 13, MinWidth = 60,
-            };
-            discardBtn.Classes.AddRange(new[] { "btn", "danger" });
-            discardBtn.Click += (_, _) => { _result = DirtyConfirmAction.DiscardAndProceed; Close(); };
-
-            var saveBtn = new Button
-            {
-                Content = primaryText, Padding = new Thickness(14, 6), FontSize = 13, MinWidth = 60,
-            };
-            saveBtn.Classes.AddRange(new[] { "btn", "primary" });
-            saveBtn.Click += (_, _) => { _result = DirtyConfirmAction.SaveAndProceed; Close(); };
-
-            btnPanel.Children.Add(discardBtn);
-            btnPanel.Children.Add(cancelBtn);
-            btnPanel.Children.Add(saveBtn);
-
-            grid.Children.Add(titleBlock);
-            grid.Children.Add(msgBlock);
-            grid.Children.Add(btnPanel);
-            return grid;
         }
 
         /// <summary>构建删除确认弹窗的 Grid（取消/删除）</summary>
@@ -426,7 +327,7 @@ namespace Sounder_APP.Views
 
         private static Window? GetTopWindow()
         {
-            if (Applicastion.Current?.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)
+            if (Application.Current?.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)
                 return desktop.MainWindow;
             return null;
         }

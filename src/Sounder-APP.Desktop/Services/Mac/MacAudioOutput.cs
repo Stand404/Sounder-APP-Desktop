@@ -83,10 +83,34 @@ namespace Sounder_APP.Services.Mac
             }
 
             _isRunning = false;
-            KillProcess();
 
-            if (_playbackThread?.IsAlive == true)
-                _playbackThread.Join(KillTimeoutMs);
+            // 在后台线程中杀进程和等待，避免阻塞 UI 线程
+            var process = _audioProcess;
+            _audioProcess = null;
+            if (process != null)
+            {
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        if (!process.HasExited)
+                        {
+                            try { process.StandardInput.Close(); } catch { }
+                            if (!process.WaitForExit(1000))
+                            {
+                                process.Kill(entireProcessTree: true);
+                                process.WaitForExit(2000);
+                            }
+                        }
+                    }
+                    catch { }
+                    finally
+                    {
+                        try { process.Dispose(); } catch { }
+                    }
+                });
+            }
+
             _playbackThread = null;
         }
 
