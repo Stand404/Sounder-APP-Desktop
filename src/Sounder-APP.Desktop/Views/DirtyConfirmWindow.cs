@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
+using Avalonia.Platform;
 using Sounder_APP.Services;
 
 namespace Sounder_APP.Views
@@ -77,115 +78,53 @@ namespace Sounder_APP.Views
 
         private DirtyConfirmWindow(string title, string message, string primaryText, string dangerText)
         {
-            Width = 400;
-            Height = 250;
+            SizeToContent = SizeToContent.WidthAndHeight;
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
             CanResize = false;
             WindowDecorations = Avalonia.Controls.WindowDecorations.None;
-            Background = Brushes.Transparent;
+            TransparencyLevelHint = new[] { WindowTransparencyLevel.Transparent };
 
             var cardBg = TryGetThemeBrush("Lv3Bg", SolidColorBrush.Parse("#FFFFFF"));
+            Background = cardBg;
             var textPrimary = TryGetThemeBrush("TextPrimary", SolidColorBrush.Parse("#E6E6E6"));
             var textSecondary = TryGetThemeBrush("TextSecondary", SolidColorBrush.Parse("#8E8E8E"));
 
-            // 卡片容器 — 可拖拽
+            // 卡片容器
+            var cardGrid = BuildDialogGrid(title, message, textPrimary, textSecondary,
+                dangerText, primaryText);
+            var card = CreateDialogCard(360, cardBg, cardGrid, this);
+
+            SetupEntranceState(card);
+            Content = card;
+            ApplyEntranceAnimation(this, card);
+        }
+
+        /// <summary>
+        /// 创建弹窗卡片。macOS 上不设圆角（因 NSWindow 不支持透明圆角），
+        /// 其他平台保持 12px 圆角。
+        /// </summary>
+        private static Border CreateDialogCard(int width, IBrush cardBg, Grid content, Window dragWindow)
+        {
             var card = new Border
             {
-                Width = 360,
-                CornerRadius = new CornerRadius(12),
+                Width = width,
                 Background = cardBg,
                 BoxShadow = DialogShadow,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
             };
+
+            if (!OperatingSystem.IsMacOS())
+                card.CornerRadius = new CornerRadius(12);
+
             card.PointerPressed += (_, e) =>
             {
-                if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-                    BeginMoveDrag(e);
+                if (e.GetCurrentPoint(dragWindow).Properties.IsLeftButtonPressed)
+                    dragWindow.BeginMoveDrag(e);
             };
 
-            var cardGrid = new Grid
-            {
-                RowDefinitions = new RowDefinitions("Auto,Auto,Auto"),
-                Margin = new Thickness(24, 20, 24, 20),
-                RowSpacing = 12,
-            };
-
-            // 标题
-            var titleBlock = new TextBlock
-            {
-                Text = title,
-                FontSize = 16,
-                FontWeight = FontWeight.SemiBold,
-                Foreground = textPrimary,
-            };
-            Grid.SetRow(titleBlock, 0);
-
-            // 消息
-            var msgBlock = new TextBlock
-            {
-                Text = message,
-                FontSize = 13,
-                Foreground = textSecondary,
-                TextWrapping = TextWrapping.Wrap,
-                VerticalAlignment = VerticalAlignment.Center,
-            };
-            Grid.SetRow(msgBlock, 1);
-
-            // 按钮行
-            var btnPanel = new StackPanel
-            {
-                Orientation = Orientation.Horizontal,
-                HorizontalAlignment = HorizontalAlignment.Right,
-                Spacing = 8,
-            };
-            Grid.SetRow(btnPanel, 2);
-
-            // 取消按钮（outline）
-            var cancelBtn = new Button
-            {
-                Content = LocalizationService.Instance.Get("cancel"),
-                Padding = new Thickness(14, 6),
-                FontSize = 13,
-                MinWidth = 60,
-            };
-            cancelBtn.Classes.AddRange(new[] { "btn", "secondary" });
-            cancelBtn.Click += (_, _) => { _result = DirtyConfirmAction.Cancel; Close(); };
-
-            // 放弃按钮（danger 填充）
-            var discardBtn = new Button
-            {
-                Content = dangerText,
-                Padding = new Thickness(14, 6),
-                FontSize = 13,
-                MinWidth = 60,
-            };
-            discardBtn.Classes.AddRange(new[] { "btn", "danger" });
-            discardBtn.Click += (_, _) => { _result = DirtyConfirmAction.DiscardAndProceed; Close(); };
-
-            // 保存并继续按钮（primary）
-            var saveBtn = new Button
-            {
-                Content = primaryText,
-                Padding = new Thickness(14, 6),
-                FontSize = 13,
-                MinWidth = 60,
-            };
-            saveBtn.Classes.AddRange(new[] { "btn", "primary" });
-            saveBtn.Click += (_, _) => { _result = DirtyConfirmAction.SaveAndProceed; Close(); };
-
-            btnPanel.Children.Add(discardBtn);
-            btnPanel.Children.Add(cancelBtn);
-            btnPanel.Children.Add(saveBtn);
-
-            cardGrid.Children.Add(titleBlock);
-            cardGrid.Children.Add(msgBlock);
-            cardGrid.Children.Add(btnPanel);
-            card.Child = cardGrid;
-
-            SetupEntranceState(card);
-            Content = card;
-            ApplyEntranceAnimation(this, card);
+            card.Child = content;
+            return card;
         }
 
         /// <summary>
@@ -203,40 +142,217 @@ namespace Sounder_APP.Views
             return fallback;
         }
 
-        /// <summary>
-        /// 创建取消场景的确认弹窗
-        /// </summary>
-        public static async Task<DirtyConfirmAction> ShowExitConfirmAsync(Visual parent)
+        // ---- Grid 构建方法 -----
+
+        /// <summary>构建 DirtyConfirmWindow 的三按钮 Grid（取消/放弃/保存）</summary>
+        private Grid BuildDialogGrid(string title, string message, IBrush textPrimary,
+            IBrush textSecondary, string dangerText, string primaryText)
         {
-            var L = LocalizationService.Instance;
-            var window = new DirtyConfirmWindow(
-                L.Get("dirty_confirm_title"),
-                L.Get("dirty_exit_message"),
-                L.Get("dirty_save_exit"),
-                L.Get("dirty_confirm_exit"))
+            var grid = new Grid
             {
-                Topmost = true,
+                RowDefinitions = new RowDefinitions("Auto,Auto,Auto"),
+                Margin = new Thickness(24, 20, 24, 20),
+                RowSpacing = 12,
             };
-            await window.ShowDialog(parent as Window ?? GetTopWindow()!);
-            return window._result;
+
+            var titleBlock = new TextBlock
+            {
+                Text = title, FontSize = 16, FontWeight = FontWeight.SemiBold, Foreground = textPrimary,
+            };
+            Grid.SetRow(titleBlock, 0);
+
+            var msgBlock = new TextBlock
+            {
+                Text = message, FontSize = 13, Foreground = textSecondary,
+                TextWrapping = TextWrapping.Wrap, VerticalAlignment = VerticalAlignment.Center,
+            };
+            Grid.SetRow(msgBlock, 1);
+
+            var btnPanel = new StackPanel
+            {
+                Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Spacing = 8,
+            };
+            Grid.SetRow(btnPanel, 2);
+
+            var cancelBtn = new Button
+            {
+                Content = LocalizationService.Instance.Get("cancel"),
+                Padding = new Thickness(14, 6), FontSize = 13, MinWidth = 60,
+            };
+            cancelBtn.Classes.AddRange(new[] { "btn", "secondary" });
+            cancelBtn.Click += (_, _) => { _result = DirtyConfirmAction.Cancel; Close(); };
+
+            var discardBtn = new Button
+            {
+                Content = dangerText, Padding = new Thickness(14, 6), FontSize = 13, MinWidth = 60,
+            };
+            discardBtn.Classes.AddRange(new[] { "btn", "danger" });
+            discardBtn.Click += (_, _) => { _result = DirtyConfirmAction.DiscardAndProceed; Close(); };
+
+            var saveBtn = new Button
+            {
+                Content = primaryText, Padding = new Thickness(14, 6), FontSize = 13, MinWidth = 60,
+            };
+            saveBtn.Classes.AddRange(new[] { "btn", "primary" });
+            saveBtn.Click += (_, _) => { _result = DirtyConfirmAction.SaveAndProceed; Close(); };
+
+            btnPanel.Children.Add(discardBtn);
+            btnPanel.Children.Add(cancelBtn);
+            btnPanel.Children.Add(saveBtn);
+
+            grid.Children.Add(titleBlock);
+            grid.Children.Add(msgBlock);
+            grid.Children.Add(btnPanel);
+            return grid;
         }
 
-        /// <summary>
-        /// 创建切换场景的确认弹窗
-        /// </summary>
-        public static async Task<DirtyConfirmAction> ShowSwitchConfirmAsync(Visual parent)
+        /// <summary>构建删除确认弹窗的 Grid（取消/删除）</summary>
+        private static Grid BuildDeleteGrid(string displayName, IBrush textPrimary,
+            IBrush textSecondary, TaskCompletionSource<bool> tcs, Window window)
         {
-            var L = LocalizationService.Instance;
-            var window = new DirtyConfirmWindow(
-                L.Get("dirty_confirm_title"),
-                L.Get("dirty_switch_message"),
-                L.Get("dirty_save_switch"),
-                L.Get("dirty_confirm_switch"))
+            var grid = new Grid
             {
-                Topmost = true,
+                RowDefinitions = new RowDefinitions("Auto,Auto,Auto"),
+                Margin = new Thickness(24, 20), RowSpacing = 12,
             };
-            await window.ShowDialog(parent as Window ?? GetTopWindow()!);
-            return window._result;
+
+            var title = new TextBlock
+            {
+                Text = LocalizationService.Instance.Get("dirty_delete_title"),
+                FontSize = 16, FontWeight = FontWeight.SemiBold, Foreground = textPrimary,
+            };
+            Grid.SetRow(title, 0);
+
+            var msg = new TextBlock
+            {
+                Text = LocalizationService.Instance.Get("dirty_delete_message", displayName),
+                FontSize = 13, Foreground = textSecondary,
+                TextWrapping = TextWrapping.Wrap, VerticalAlignment = VerticalAlignment.Center,
+            };
+            Grid.SetRow(msg, 1);
+
+            var btnPanel = new StackPanel
+            {
+                Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Spacing = 8,
+            };
+            Grid.SetRow(btnPanel, 2);
+
+            var cancelBtn = new Button
+            {
+                Content = LocalizationService.Instance.Get("cancel"),
+                Padding = new Thickness(14, 6), FontSize = 13, MinWidth = 60,
+            };
+            cancelBtn.Classes.AddRange(new[] { "btn", "secondary" });
+            cancelBtn.Click += (_, _) => { tcs.TrySetResult(false); window.Close(); };
+
+            var deleteBtn = new Button
+            {
+                Content = LocalizationService.Instance.Get("dirty_confirm_delete"),
+                Padding = new Thickness(14, 6), FontSize = 13, MinWidth = 80,
+            };
+            deleteBtn.Classes.AddRange(new[] { "btn", "danger" });
+            deleteBtn.Click += (_, _) => { tcs.TrySetResult(true); window.Close(); };
+
+            btnPanel.Children.Add(cancelBtn);
+            btnPanel.Children.Add(deleteBtn);
+
+            grid.Children.Add(title);
+            grid.Children.Add(msg);
+            grid.Children.Add(btnPanel);
+            return grid;
+        }
+
+        /// <summary>构建提示弹窗的 Grid（仅确定按钮）</summary>
+        private static Grid BuildToastGrid(string title, string message, IBrush textPrimary,
+            IBrush textSecondary, Window window)
+        {
+            var grid = new Grid
+            {
+                RowDefinitions = new RowDefinitions("Auto,Auto,Auto"),
+                Margin = new Thickness(24, 20), RowSpacing = 12,
+            };
+
+            var titleBlock = new TextBlock
+            {
+                Text = title, FontSize = 16, FontWeight = FontWeight.SemiBold, Foreground = textPrimary,
+            };
+            Grid.SetRow(titleBlock, 0);
+
+            var msgBlock = new TextBlock
+            {
+                Text = message, FontSize = 13, Foreground = textSecondary,
+                TextWrapping = TextWrapping.Wrap, VerticalAlignment = VerticalAlignment.Center,
+            };
+            Grid.SetRow(msgBlock, 1);
+
+            var okBtn = new Button
+            {
+                Content = LocalizationService.Instance.Get("confirm"),
+                Padding = new Thickness(20, 6), FontSize = 13, MinWidth = 60,
+                HorizontalAlignment = HorizontalAlignment.Right,
+            };
+            okBtn.Classes.AddRange(new[] { "btn", "primary" });
+            okBtn.Click += (_, _) => { window.Close(); };
+            Grid.SetRow(okBtn, 2);
+
+            grid.Children.Add(titleBlock);
+            grid.Children.Add(msgBlock);
+            grid.Children.Add(okBtn);
+            return grid;
+        }
+
+        /// <summary>构建通用确认弹窗的 Grid（取消/确认）</summary>
+        private static Grid BuildConfirmGrid(string title, string message, IBrush textPrimary,
+            IBrush textSecondary, TaskCompletionSource<bool> tcs, Window window)
+        {
+            var grid = new Grid
+            {
+                RowDefinitions = new RowDefinitions("Auto,Auto,Auto"),
+                Margin = new Thickness(24, 20), RowSpacing = 12,
+            };
+
+            var titleBlock = new TextBlock
+            {
+                Text = title, FontSize = 16, FontWeight = FontWeight.SemiBold, Foreground = textPrimary,
+            };
+            Grid.SetRow(titleBlock, 0);
+
+            var msgBlock = new TextBlock
+            {
+                Text = message, FontSize = 13, Foreground = textSecondary,
+                TextWrapping = TextWrapping.Wrap, VerticalAlignment = VerticalAlignment.Center,
+            };
+            Grid.SetRow(msgBlock, 1);
+
+            var btnPanel = new StackPanel
+            {
+                Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Spacing = 8,
+            };
+            Grid.SetRow(btnPanel, 2);
+
+            var cancelBtn = new Button
+            {
+                Content = LocalizationService.Instance.Get("cancel"),
+                Padding = new Thickness(14, 6), FontSize = 13, MinWidth = 60,
+            };
+            cancelBtn.Classes.AddRange(new[] { "btn", "secondary" });
+            cancelBtn.Click += (_, _) => { tcs.TrySetResult(false); window.Close(); };
+
+            var confirmBtn = new Button
+            {
+                Content = LocalizationService.Instance.Get("dirty_confirm_btn"),
+                Padding = new Thickness(14, 6), FontSize = 13, MinWidth = 60,
+            };
+            confirmBtn.Classes.AddRange(new[] { "btn", "primary" });
+            confirmBtn.Click += (_, _) => { tcs.TrySetResult(true); window.Close(); };
+
+            btnPanel.Children.Add(cancelBtn);
+            btnPanel.Children.Add(confirmBtn);
+
+            grid.Children.Add(titleBlock);
+            grid.Children.Add(msgBlock);
+            grid.Children.Add(btnPanel);
+            return grid;
         }
 
         /// <summary>
@@ -253,100 +369,26 @@ namespace Sounder_APP.Views
 
             var window = new Window
             {
-                Width = 360,
-                Height = 190,
+                SizeToContent = SizeToContent.WidthAndHeight,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 CanResize = false,
                 Topmost = true,
-                Background = Brushes.Transparent,
+                Background = cardBg,
+                TransparencyLevelHint = new[] { WindowTransparencyLevel.Transparent },
             };
             window.WindowDecorations = Avalonia.Controls.WindowDecorations.None;
 
-            // 卡片容器 — 可拖拽
-            var card = new Border
-            {
-                Width = 320,
-                CornerRadius = new CornerRadius(12),
-                Background = cardBg,
-                BoxShadow = DialogShadow,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-            };
-            card.PointerPressed += (_, e) =>
-            {
-                if (e.GetCurrentPoint(window).Properties.IsLeftButtonPressed)
-                    window.BeginMoveDrag(e);
-            };
-
-            var grid = new Grid
-            {
-                RowDefinitions = new RowDefinitions("Auto,Auto,Auto"),
-                Margin = new Thickness(24, 20),
-                RowSpacing = 12,
-            };
-
-            var L = LocalizationService.Instance;
-            var title = new TextBlock
-            {
-                Text = L.Get("dirty_delete_title"),
-                FontSize = 16,
-                FontWeight = FontWeight.SemiBold,
-                Foreground = textPrimary,
-            };
-            Grid.SetRow(title, 0);
-
-            var msg = new TextBlock
-            {
-                Text = L.Get("dirty_delete_message", displayName),
-                FontSize = 13,
-                Foreground = textSecondary,
-                TextWrapping = TextWrapping.Wrap,
-                VerticalAlignment = VerticalAlignment.Center,
-            };
-            Grid.SetRow(msg, 1);
-
-            var btnPanel = new StackPanel
-            {
-                Orientation = Orientation.Horizontal,
-                HorizontalAlignment = HorizontalAlignment.Right,
-                Spacing = 8,
-            };
-            Grid.SetRow(btnPanel, 2);
-
-            var cancelBtn = new Button
-            {
-                Content = LocalizationService.Instance.Get("cancel"),
-                Padding = new Thickness(14, 6),
-                FontSize = 13,
-                MinWidth = 60,
-            };
-            cancelBtn.Classes.AddRange(new[] { "btn", "secondary" });
-            var confirmed = false;
-            cancelBtn.Click += (_, _) => { window.Close(); };
-
-            var deleteBtn = new Button
-            {
-                Content = LocalizationService.Instance.Get("dirty_confirm_delete"),
-                Padding = new Thickness(14, 6),
-                FontSize = 13,
-                MinWidth = 80,
-            };
-            deleteBtn.Classes.AddRange(new[] { "btn", "danger" });
-            deleteBtn.Click += (_, _) => { confirmed = true; window.Close(); };
-
-            btnPanel.Children.Add(cancelBtn);
-            btnPanel.Children.Add(deleteBtn);
-
-            grid.Children.Add(title);
-            grid.Children.Add(msg);
-            grid.Children.Add(btnPanel);
-            card.Child = grid;
+            // 卡片容器
+            var tcs = new TaskCompletionSource<bool>();
+            window.Closed += (_, _) => tcs.TrySetResult(false);
+            var grid = BuildDeleteGrid(displayName, textPrimary, textSecondary, tcs, window);
+            var card = CreateDialogCard(320, cardBg, grid, window);
             SetupEntranceState(card);
             window.Content = card;
             ApplyEntranceAnimation(window, card);
 
             await window.ShowDialog(parentWin);
-            return confirmed;
+            return await tcs.Task;
         }
 
         /// <summary>
@@ -363,72 +405,18 @@ namespace Sounder_APP.Views
 
             var window = new Window
             {
-                Width = 320,
-                Height = 160,
+                SizeToContent = SizeToContent.WidthAndHeight,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 CanResize = false,
                 Topmost = true,
-                Background = Brushes.Transparent,
+                Background = cardBg,
+                TransparencyLevelHint = new[] { WindowTransparencyLevel.Transparent },
             };
             window.WindowDecorations = WindowDecorations.None;
 
-            var card = new Border
-            {
-                Width = 280,
-                CornerRadius = new CornerRadius(12),
-                Background = cardBg,
-                BoxShadow = DialogShadow,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-            };
-            card.PointerPressed += (_, e) =>
-            {
-                if (e.GetCurrentPoint(window).Properties.IsLeftButtonPressed)
-                    window.BeginMoveDrag(e);
-            };
-
-            var grid = new Grid
-            {
-                RowDefinitions = new RowDefinitions("Auto,Auto,Auto"),
-                Margin = new Thickness(24, 20),
-                RowSpacing = 12,
-            };
-
-            var titleBlock = new TextBlock
-            {
-                Text = title,
-                FontSize = 16,
-                FontWeight = FontWeight.SemiBold,
-                Foreground = textPrimary,
-            };
-            Grid.SetRow(titleBlock, 0);
-
-            var msgBlock = new TextBlock
-            {
-                Text = message,
-                FontSize = 13,
-                Foreground = textSecondary,
-                TextWrapping = TextWrapping.Wrap,
-                VerticalAlignment = VerticalAlignment.Center,
-            };
-            Grid.SetRow(msgBlock, 1);
-
-            var okBtn = new Button
-            {
-                Content = LocalizationService.Instance.Get("confirm"),
-                Padding = new Thickness(20, 6),
-                FontSize = 13,
-                MinWidth = 60,
-                HorizontalAlignment = HorizontalAlignment.Right,
-            };
-            okBtn.Classes.AddRange(new[] { "btn", "primary" });
-            okBtn.Click += (_, _) => window.Close();
-            Grid.SetRow(okBtn, 2);
-
-            grid.Children.Add(titleBlock);
-            grid.Children.Add(msgBlock);
-            grid.Children.Add(okBtn);
-            card.Child = grid;
+            // 卡片容器
+            var grid = BuildToastGrid(title, message, textPrimary, textSecondary, window);
+            var card = CreateDialogCard(280, cardBg, grid, window);
             SetupEntranceState(card);
             window.Content = card;
             ApplyEntranceAnimation(window, card);
@@ -438,7 +426,7 @@ namespace Sounder_APP.Views
 
         private static Window? GetTopWindow()
         {
-            if (Application.Current?.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)
+            if (Applicastion.Current?.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)
                 return desktop.MainWindow;
             return null;
         }
@@ -457,99 +445,26 @@ namespace Sounder_APP.Views
 
             var window = new Window
             {
-                Width = 360,
-                Height = 190,
+                SizeToContent = SizeToContent.WidthAndHeight,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 CanResize = false,
                 Topmost = true,
-                Background = Brushes.Transparent,
+                Background = cardBg,
+                TransparencyLevelHint = new[] { WindowTransparencyLevel.Transparent },
             };
             window.WindowDecorations = WindowDecorations.None;
 
-            var card = new Border
-            {
-                Width = 320,
-                CornerRadius = new CornerRadius(12),
-                Background = cardBg,
-                BoxShadow = DialogShadow,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-            };
-            card.PointerPressed += (_, e) =>
-            {
-                if (e.GetCurrentPoint(window).Properties.IsLeftButtonPressed)
-                    window.BeginMoveDrag(e);
-            };
-
-            var grid = new Grid
-            {
-                RowDefinitions = new RowDefinitions("Auto,Auto,Auto"),
-                Margin = new Thickness(24, 20),
-                RowSpacing = 12,
-            };
-
-            var titleBlock = new TextBlock
-            {
-                Text = title,
-                FontSize = 16,
-                FontWeight = FontWeight.SemiBold,
-                Foreground = textPrimary,
-            };
-            Grid.SetRow(titleBlock, 0);
-
-            var msgBlock = new TextBlock
-            {
-                Text = message,
-                FontSize = 13,
-                Foreground = textSecondary,
-                TextWrapping = TextWrapping.Wrap,
-                VerticalAlignment = VerticalAlignment.Center,
-            };
-            Grid.SetRow(msgBlock, 1);
-
-            var btnPanel = new StackPanel
-            {
-                Orientation = Orientation.Horizontal,
-                HorizontalAlignment = HorizontalAlignment.Right,
-                Spacing = 8,
-            };
-            Grid.SetRow(btnPanel, 2);
-
-            var confirmed = false;
-
-            var cancelBtn = new Button
-            {
-                Content = LocalizationService.Instance.Get("cancel"),
-                Padding = new Thickness(14, 6),
-                FontSize = 13,
-                MinWidth = 60,
-            };
-            cancelBtn.Classes.AddRange(new[] { "btn", "secondary" });
-            cancelBtn.Click += (_, _) => { window.Close(); };
-
-            var confirmBtn = new Button
-            {
-                Content = LocalizationService.Instance.Get("dirty_confirm_btn"),
-                Padding = new Thickness(14, 6),
-                FontSize = 13,
-                MinWidth = 60,
-            };
-            confirmBtn.Classes.AddRange(new[] { "btn", "primary" });
-            confirmBtn.Click += (_, _) => { confirmed = true; window.Close(); };
-
-            btnPanel.Children.Add(cancelBtn);
-            btnPanel.Children.Add(confirmBtn);
-
-            grid.Children.Add(titleBlock);
-            grid.Children.Add(msgBlock);
-            grid.Children.Add(btnPanel);
-            card.Child = grid;
+            // 卡片容器
+            var tcs = new TaskCompletionSource<bool>();
+            window.Closed += (_, _) => tcs.TrySetResult(false);
+            var grid = BuildConfirmGrid(title, message, textPrimary, textSecondary, tcs, window);
+            var card = CreateDialogCard(320, cardBg, grid, window);
             SetupEntranceState(card);
             window.Content = card;
             ApplyEntranceAnimation(window, card);
 
             await window.ShowDialog(parentWin);
-            return confirmed;
+            return await tcs.Task;
         }
     }
 }
