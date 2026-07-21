@@ -52,7 +52,7 @@
 提供以下格式：
 - **Windows** — 安装包（.exe）
 - **Linux** — `.deb` 包（Debian/Ubuntu 系）或便携版（tar.gz）
-- **macOS** — 便携版（.tar.gz）
+- **macOS** — 磁盘映像（.dmg）
 
 ### Windows 安装说明
 
@@ -114,16 +114,10 @@ cd sounder-app-*
 
 ### macOS 安装说明
 
-**便携版**：解压 `.tar.gz` 后，终端运行：
+**磁盘映像（推荐）**：双击 `.dmg` 文件打开，将 `Sounder APP.app` 拖入 `Applications` 文件夹即可。
+首次启动时如果系统提示"无法验证开发者"，请在「系统设置 → 隐私与安全性」中点击"仍要打开"。
 
-```bash
-tar -xzf sounder-app-*-osx-x64.tar.gz
-cd sounder-app-*-osx-x64
-chmod +x Sounder-APP
-./Sounder-APP
-```
-
-或双击 `Sounder-APP` 可执行文件运行。
+> 在 macOS 上，应用内的提示弹窗使用直角风格，与其他平台有所区别。
 
 ---
 

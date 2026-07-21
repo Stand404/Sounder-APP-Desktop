@@ -52,7 +52,7 @@ Download the latest installer for your platform from: **https://stand.homes/apps
 Available formats:
 - **Windows** — Installer (.exe)
 - **Linux** — `.deb` package (Debian/Ubuntu-based) or portable version (tar.gz)
-- **macOS** — Portable version (.tar.gz)
+- **macOS** — Disk image (.dmg)
 
 ### Windows Installation
 
@@ -114,16 +114,10 @@ cd sounder-app-*
 
 ### macOS Installation
 
-**Portable version**: Extract `.tar.gz` and run in terminal:
+**Disk image (recommended)**: Double-click the `.dmg` file, then drag `Sounder APP.app` into the `Applications` folder.
+On first launch, if the system shows "cannot verify developer", go to **System Settings → Privacy & Security** and click "Open Anyway".
 
-```bash
-tar -xzf sounder-app-*-osx-x64.tar.gz
-cd sounder-app-*-osx-x64
-chmod +x Sounder-APP
-./Sounder-APP
-```
-
-Or double-click the `Sounder-APP` executable.
+> On macOS, in-app prompt dialogs use a sharp-corner style, differing from other platforms.
 
 ---
 
