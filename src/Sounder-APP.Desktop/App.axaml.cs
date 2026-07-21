@@ -21,7 +21,6 @@ namespace Sounder_APP
     {
         private TrayIcon? _trayIcon;
         private IClassicDesktopStyleApplicationLifetime? _desktop;
-        private bool _isHeadlessMode;
 
         /// <summary>后台播放管理器（全局单例）</summary>
         public static BackgroundPlaybackManager BackgroundPlayback { get; private set; } = null!;
@@ -67,22 +66,6 @@ namespace Sounder_APP
                 var sounderUrl = FindSounderUrl(desktop.Args ?? Array.Empty<string>());
                 if (sounderUrl != null)
                 {
-                    _isHeadlessMode = true;
-
-                    // 所有后台任务完成后自动退出
-                    BackgroundPlayback.AllTasksCompleted += () =>
-                    {
-                        if (!_isHeadlessMode) return;
-                        _isHeadlessMode = false;
-                        Dispatcher.UIThread.Post(() =>
-                        {
-                            _trayIcon?.Dispose();
-                            _trayIcon = null;
-                            SingleInstanceService.Dispose();
-                            _desktop?.Shutdown();
-                        });
-                    };
-
                     EventHandler? openedHandler = null;
                     openedHandler = (_, _) =>
                     {
