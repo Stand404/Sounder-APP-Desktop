@@ -23,6 +23,8 @@
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <TieredCompilation>true</TieredCompilation>
+    <!-- macOS 条件编译符号：在 macOS 上构建时启用，用于隔离 ObjC P/Invoke -->
+    <DefineConstants Condition="$([MSBuild]::IsOSPlatform('OSX'))">$(DefineConstants);MACOS</DefineConstants>
     <TieredCompilationQuickJit>true</TieredCompilationQuickJit>
     <Version>1.0.0.0</Version>
     <FileVersion>1.0.0.0</FileVersion>

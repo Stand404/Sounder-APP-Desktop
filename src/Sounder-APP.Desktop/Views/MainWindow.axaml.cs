@@ -2,6 +2,9 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+#if MACOS
+using Sounder_APP.Services.Mac;
+#endif
 using System.ComponentModel;
 
 namespace Sounder_APP.Views
@@ -15,6 +18,11 @@ namespace Sounder_APP.Views
         {
             InitializeComponent();
             Closing += OnWindowClosing;
+
+#if MACOS
+            // macOS 透明窗口支持（修复圆角被 NSWindow 默认背景遮挡的问题）
+            MacWindowTransparency.Configure(this);
+#endif
         }
 
         private void OnTitleBarPointerPressed(object? sender, PointerPressedEventArgs e)
