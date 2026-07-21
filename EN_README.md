@@ -172,31 +172,67 @@ chmod +x Mac_Build.sh
 
 ```
 Sounder-APP-Desktop/
+├── .gitignore                     # Git ignore rules
 ├── src/
-│   ├── Sounder-APP.Core/          # Core library (models, service interfaces, etc.)
+│   ├── Sounder-APP.Core/          # Core class library (models, services, converters)
+│   │   ├── Converters/            #   Value converters (13)
+│   │   ├── Models/                #   Data models (8)
+│   │   ├── Properties/            #   Localization resource files (5 languages)
+│   │   ├── Services/              #   Core services (7)
+│   │   └── Sounder-APP.Core.csproj
 │   └── Sounder-APP.Desktop/       # Desktop application main project
-│       ├── Assets/                # Icons, images
-│       ├── Services/
-│       │   ├── IAudioBackend.cs   # Platform backend interface (5)
-│       │   ├── BackendFactory.cs  # OS-based backend selection
-│       │   ├── Windows/           # Windows backend implementation
-│       │   ├── Linux/             # Linux backend implementation
-│       │   └── Mac/               # macOS backend implementation
-│       ├── Views/                 # UI views
-│       ├── ViewModels/            # View models
-│       ├── Program.cs
+│       ├── Assets/                #   Icons, images (17 files)
+│       ├── Properties/
+│       ├── Services/              #   Platform-specific services
+│       │   ├── IAudioBackend.cs            #   Audio backend interface
+│       │   ├── IDesktopShortcutBackend.cs  #   Desktop shortcut interface
+│       │   ├── IIconGeneratorBackend.cs    #   Icon generator interface
+│       │   ├── IInstanceLockBackend.cs     #   Single instance lock interface
+│       │   ├── IUrlProtocolBackend.cs      #   Custom protocol interface
+│       │   ├── BackendFactory.cs           #   OS-based backend selection
+│       │   ├── AudioPlaybackService.cs     #   Audio playback service
+│       │   ├── BackgroundPlaybackManager.cs#   Background playback manager
+│       │   ├── DesktopShortcutService.cs   #   Shortcut service
+│       │   ├── IconGeneratorService.cs     #   Icon generation service
+│       │   ├── IconGeneratorUtils.cs       #   Icon generation utilities
+│       │   ├── SingleInstanceService.cs    #   Single instance service
+│       │   ├── UrlProtocolService.cs       #   Protocol registration service
+│       │   ├── Windows/                    #   Windows backend (5)
+│       │   ├── Linux/                      #   Linux backend (6)
+│       │   └── Mac/                        #   macOS backend (7)
+│       ├── Views/                 #   UI views
+│       │   ├── Common/                    #   Shared components (10+)
+│       │   │   └── Templates/             #     Style templates (4)
+│       │   ├── InstallButton/             #   Install button component
+│       │   ├── PersonalResource/          #   Personal resource views (6)
+│       │   ├── Shop/                      #   Shop views (6)
+│       │   ├── Submissions/               #   Submissions views (3)
+│       │   ├── TaskManager/               #   Task manager view
+│       │   ├── MainWindow.axaml(.cs)      #   Main window
+│       │   ├── ResourceDetailLayout.axaml(.cs)  # Resource detail layout
+│       │   ├── SettingsView.axaml(.cs)    #   Settings view
+│       │   └── TranslateExtension.cs      #   Translation markup extension
+│       ├── ViewModels/            #   View models (10)
+│       ├── App.axaml(.cs)         #   Application entry
+│       ├── Program.cs             #   Program entry
+│       ├── ViewLocator.cs         #   View locator
+│       ├── app.manifest           #   Windows manifest
 │       └── Sounder-APP.Desktop.csproj
 ├── build/
-│   └── linux/                     # Linux packaging resources
-│       ├── debian/                #   DEB control files
-│       └── sounder-app.desktop    #   Desktop menu entry
+│   ├── linux/                     # Linux packaging resources
+│   │   ├── debian/                #   DEB control files (4)
+│   │   └── sounder-app.desktop    #   Desktop menu entry
+│   └── macos/                     # macOS packaging resources
+│       ├── Info.plist             #   App info configuration
+│       └── en.lproj/zh-Hans.lproj/#   Localized plist strings
 ├── Windows_Build.bat              # Windows build script
 ├── Windows_Installer.iss          # Windows installer script (Inno Setup)
 ├── Linux_Build.sh                 # Linux build script (supports --deb and --portable)
 ├── Mac_Build.sh                   # macOS build script
 ├── Sounder-APP.slnx               # Solution file
 ├── LICENSE
-└── README.md
+├── README.md
+└── EN_README.md
 ```
 
 ---

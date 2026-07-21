@@ -65,7 +65,8 @@ namespace Sounder_APP.Views
         }
 
         /// <summary>
-        /// 创建弹窗卡片。macOS 上不设圆角（因 NSWindow 不支持透明圆角），
+        /// 创建弹窗卡片。窗口背景已设为透明，卡片的圆角可以透出。
+        /// macOS 上不设圆角（因 NSWindow 不支持透明圆角），
         /// 其他平台保持 12px 圆角。
         /// </summary>
         private static Border CreateDialogCard(int width, IBrush cardBg, Grid content, Window dragWindow)
@@ -274,7 +275,7 @@ namespace Sounder_APP.Views
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 CanResize = false,
                 Topmost = true,
-                Background = cardBg,
+                Background = Brushes.Transparent,
                 TransparencyLevelHint = new[] { WindowTransparencyLevel.Transparent },
             };
             window.WindowDecorations = Avalonia.Controls.WindowDecorations.None;
@@ -310,7 +311,7 @@ namespace Sounder_APP.Views
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 CanResize = false,
                 Topmost = true,
-                Background = cardBg,
+                Background = Brushes.Transparent,
                 TransparencyLevelHint = new[] { WindowTransparencyLevel.Transparent },
             };
             window.WindowDecorations = WindowDecorations.None;
@@ -350,7 +351,7 @@ namespace Sounder_APP.Views
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 CanResize = false,
                 Topmost = true,
-                Background = cardBg,
+                Background = Brushes.Transparent,
                 TransparencyLevelHint = new[] { WindowTransparencyLevel.Transparent },
             };
             window.WindowDecorations = WindowDecorations.None;
