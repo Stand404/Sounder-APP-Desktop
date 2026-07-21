@@ -61,10 +61,11 @@ namespace Sounder_APP.Services.Mac
                 File.WriteAllText(launcherPath, launcherContent);
 
                 // 设为可执行
-                File.SetUnixFileMode(launcherPath,
-                    UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute |
-                    UnixFileMode.GroupRead | UnixFileMode.GroupExecute |
-                    UnixFileMode.OtherRead | UnixFileMode.OtherExecute);
+                if (OperatingSystem.IsMacOS())
+                    File.SetUnixFileMode(launcherPath,
+                        UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute |
+                        UnixFileMode.GroupRead | UnixFileMode.GroupExecute |
+                        UnixFileMode.OtherRead | UnixFileMode.OtherExecute);
 
                 // 注入自定义图标
                 if (!string.IsNullOrEmpty(iconPath) && File.Exists(iconPath))

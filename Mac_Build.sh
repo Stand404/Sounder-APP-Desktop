@@ -2,15 +2,16 @@
 # ============================================================
 #  Sounder-APP macOS 发布构建脚本
 #  用法: chmod +x Mac_Build.sh && ./Mac_Build.sh [Runtime]
-#  示例: ./Mac_Build.sh
-#        ./Mac_Build.sh osx-arm64
+#  示例: ./Mac_Build.sh              ← 默认 osx-x64
+#        ./Mac_Build.sh osx-arm64    ← 指定架构
 # ============================================================
 set -euo pipefail
 
-RUNTIME="${1:-osx-x64}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_FILE="$SCRIPT_DIR/src/Sounder-APP.Desktop/Sounder-APP.Desktop.csproj"
 OUTPUT_DIR="$SCRIPT_DIR/publish"
+
+RUNTIME="${1:-osx-x64}"
 
 echo "[INFO]  目标运行时: $RUNTIME"
 echo "[INFO]  输出目录:   $OUTPUT_DIR"
@@ -24,6 +25,10 @@ fi
 # step 2 - 恢复 NuGet 包
 echo "[INFO]  还原 NuGet 包..."
 dotnet restore "$PROJECT_FILE" -p:RestorePackagesWithLock=false
+
+# 从 csproj 提取版本号
+VERSION=$(grep -m1 '<Version>' "$PROJECT_FILE" | sed 's/.*<Version>\(.*\)<\/Version>.*/\1/')
+echo "[INFO]  版本: $VERSION"
 
 # step 3 - 发布 Release 单文件
 echo "[INFO]  发布 Release ($RUNTIME) ..."
@@ -91,23 +96,29 @@ cp -R "$SCRIPT_DIR/build/macos/en.lproj" "$APP_RESOURCES/"
 cp -R "$SCRIPT_DIR/build/macos/zh-Hans.lproj" "$APP_RESOURCES/"
 echo "[OK]    本地化资源已放入 .app"
 
-# step 5 - 生成 .pkg 安装包
-# 从 csproj 提取版本号
-VERSION=$(grep -m1 '<Version>' "$PROJECT_FILE" | sed 's/.*<Version>\(.*\)<\/Version>.*/\1/')
-PKG_FILE="$OUTPUT_DIR/Sounder-APP-$RUNTIME.pkg"
+# step 5 - 生成 .dmg 磁盘映像
+DMG_FILE="$OUTPUT_DIR/Sounder-APP-$RUNTIME.dmg"
+DMG_TEMP_DIR="$OUTPUT_DIR/.dmg-temp"
 
-echo "[INFO]  生成 .pkg 安装包 (v$VERSION)..."
+echo "[INFO]  生成 .dmg 磁盘映像 (v$VERSION)..."
 
-if ! command -v pkgbuild &> /dev/null; then
-    echo "[WARN]  未找到 pkgbuild 命令，跳过 .pkg 生成"
+if ! command -v hdiutil &> /dev/null; then
+    echo "[WARN]  未找到 hdiutil 命令，跳过 .dmg 生成"
 else
-    pkgbuild \
-        --root "$APP_BUNDLE" \
-        --identifier "com.sounderapp.desktop" \
-        --version "$VERSION" \
-        --install-location "/Applications/Sounder APP.app" \
-        "$PKG_FILE" 2>&1
-    echo "[OK]    安装包: $PKG_FILE"
+    # 准备 DMG 内容：.app + Applications 快捷方式
+    mkdir -p "$DMG_TEMP_DIR"
+    cp -R "$APP_BUNDLE" "$DMG_TEMP_DIR/"
+    ln -s /Applications "$DMG_TEMP_DIR/Applications"
+
+    # 创建 DMG
+    hdiutil create -ov \
+        -volname "Sounder APP" \
+        -srcfolder "$DMG_TEMP_DIR" \
+        -format UDZO \
+        "$DMG_FILE" 2>&1
+
+    rm -rf "$DMG_TEMP_DIR"
+    echo "[OK]    磁盘映像: $DMG_FILE"
 fi
 
 # step 6 - 清理中间编译产物
@@ -125,11 +136,11 @@ echo "[OK]    发布完成！输出目录: $OUTPUT_DIR"
 EXEC_SIZE=$(du -h "$EXECUTABLE" | cut -f1)
 echo "[OK]    可执行文件: $(basename "$EXECUTABLE") ($EXEC_SIZE)"
 echo "[OK]    应用包:     Sounder APP.app"
-if [ -f "$PKG_FILE" ]; then
-    PKG_SIZE=$(du -h "$PKG_FILE" | cut -f1)
-    echo "[OK]    安装包:     $(basename "$PKG_FILE") ($PKG_SIZE)"
+if [ -f "$DMG_FILE" ]; then
+    DMG_SIZE=$(du -h "$DMG_FILE" | cut -f1)
+    echo "[OK]    磁盘映像:   $(basename "$DMG_FILE") ($DMG_SIZE)"
 fi
 echo ""
 echo "[INFO]  下一步:"
-echo "[INFO]    安装: 双击 $PKG_FILE 或拖拽 Sounder-APP.app 到 Applications"
+echo "[INFO]    安装: 双击 .dmg 打开，将 Sounder APP.app 拖入 Applications 文件夹"
 echo ""
