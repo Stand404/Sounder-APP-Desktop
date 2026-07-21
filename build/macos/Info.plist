@@ -18,11 +18,24 @@
 	<string>1.0.0</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.15</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
 	<key>CFBundleIconFile</key>
 	<string>Sounder-APP</string>
 	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2026 Stand404. All rights reserved.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.sounderapp.desktop</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>sounder</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

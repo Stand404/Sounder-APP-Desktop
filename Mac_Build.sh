@@ -48,7 +48,7 @@ if [ ! -f "$EXECUTABLE" ]; then
 fi
 
 echo "[INFO]  构建 .app 应用包..."
-APP_BUNDLE="$OUTPUT_DIR/Sounder-APP.app"
+APP_BUNDLE="$OUTPUT_DIR/Sounder APP.app"
 APP_CONTENTS="$APP_BUNDLE/Contents"
 APP_MACOS="$APP_CONTENTS/MacOS"
 APP_RESOURCES="$APP_CONTENTS/Resources"
@@ -88,7 +88,7 @@ fi
 
 # 语言本地化目录
 cp -R "$SCRIPT_DIR/build/macos/en.lproj" "$APP_RESOURCES/"
-cp -R "$SCRIPT_DIR/build/macos/zh_CN.lproj" "$APP_RESOURCES/"
+cp -R "$SCRIPT_DIR/build/macos/zh-Hans.lproj" "$APP_RESOURCES/"
 echo "[OK]    本地化资源已放入 .app"
 
 # step 5 - 生成 .pkg 安装包
@@ -105,7 +105,7 @@ else
         --root "$APP_BUNDLE" \
         --identifier "com.sounderapp.desktop" \
         --version "$VERSION" \
-        --install-location "/Applications/Sounder-APP.app" \
+        --install-location "/Applications/Sounder APP.app" \
         "$PKG_FILE" 2>&1
     echo "[OK]    安装包: $PKG_FILE"
 fi
@@ -124,7 +124,7 @@ echo ""
 echo "[OK]    发布完成！输出目录: $OUTPUT_DIR"
 EXEC_SIZE=$(du -h "$EXECUTABLE" | cut -f1)
 echo "[OK]    可执行文件: $(basename "$EXECUTABLE") ($EXEC_SIZE)"
-echo "[OK]    应用包:     Sounder-APP.app"
+echo "[OK]    应用包:     Sounder APP.app"
 if [ -f "$PKG_FILE" ]; then
     PKG_SIZE=$(du -h "$PKG_FILE" | cut -f1)
     echo "[OK]    安装包:     $(basename "$PKG_FILE") ($PKG_SIZE)"

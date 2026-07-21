@@ -10,7 +10,7 @@ namespace Sounder_APP.Services
     internal static class IconGeneratorUtils
     {
         /// <summary>加载源图 → 裁切正方形 → 缩放 → 圆角</summary>
-        public static SKBitmap? ProcessIcon(SKBitmap source, int targetSize)
+        public static SKBitmap? ProcessIcon(SKBitmap source, int targetSize, int cornerRadius = 12)
         {
             var size = Math.Min(source.Width, source.Height);
             var srcRect = new SKRectI(
@@ -23,7 +23,7 @@ namespace Sounder_APP.Services
                 new SKSamplingOptions(SKFilterMode.Linear));
             if (resized == null) return null;
 
-            return ApplyRoundedCorners(resized, 12);
+            return ApplyRoundedCorners(resized, cornerRadius);
         }
 
         private static SKBitmap ApplyRoundedCorners(SKBitmap source, int radius)
