@@ -172,64 +172,35 @@ chmod +x Mac_Build.sh
 
 ```
 Sounder-APP-Desktop/
-├── .gitignore                     # Git 忽略规则
 ├── src/
-│   ├── Sounder-APP.Core/          # 核心类库（模型、服务、转换器等）
-│   │   ├── Converters/            #   值转换器（13 个）
-│   │   ├── Models/                #   数据模型（8 个）
-│   │   ├── Properties/            #   多语言资源文件（5 种语言）
-│   │   ├── Services/              #   核心服务（7 个）
-│   │   └── Sounder-APP.Core.csproj
-│   └── Sounder-APP.Desktop/       # 桌面应用主项目
-│       ├── Assets/                #   图标、图片资源（17 个文件）
-│       ├── Properties/
-│       ├── Services/              #   平台相关服务
-│       │   ├── IAudioBackend.cs            #   音频后端接口
-│       │   ├── IDesktopShortcutBackend.cs  #   桌面快捷方式接口
-│       │   ├── IIconGeneratorBackend.cs    #   图标生成接口
-│       │   ├── IInstanceLockBackend.cs     #   单实例锁接口
-│       │   ├── IUrlProtocolBackend.cs      #   自定义协议接口
-│       │   ├── BackendFactory.cs           #   根据 OS 选择后端
-│       │   ├── AudioPlaybackService.cs     #   音频播放服务
-│       │   ├── BackgroundPlaybackManager.cs#   后台播放管理
-│       │   ├── DesktopShortcutService.cs   #   快捷方式服务
-│       │   ├── IconGeneratorService.cs     #   图标生成服务
-│       │   ├── IconGeneratorUtils.cs       #   图标生成工具
-│       │   ├── SingleInstanceService.cs    #   单实例服务
-│       │   ├── UrlProtocolService.cs       #   协议注册服务
-│       │   ├── Windows/                    #   Windows 后端实现（5 个）
-│       │   ├── Linux/                      #   Linux 后端实现（6 个）
-│       │   └── Mac/                        #   macOS 后端实现（7 个）
-│       ├── Views/                 #   UI 视图
-│       │   ├── Common/                    #   通用组件（10+ 个）
-│       │   │   └── Templates/             #     样式模板（4 个）
-│       │   ├── InstallButton/             #   安装按钮组件
-│       │   ├── PersonalResource/          #   个人资源视图（6 个）
-│       │   ├── Shop/                      #   商店视图（6 个）
-│       │   ├── Submissions/               #   投稿视图（3 个）
-│       │   ├── TaskManager/               #   任务管理视图
-│       │   ├── MainWindow.axaml(.cs)      #   主窗口
-│       │   ├── ResourceDetailLayout.axaml(.cs)  # 资源详情布局
-│       │   ├── SettingsView.axaml(.cs)    #   设置视图
-│       │   └── TranslateExtension.cs      #   翻译标记扩展
-│       ├── ViewModels/            #   视图模型（10 个）
-│       ├── App.axaml(.cs)         #   应用入口
-│       ├── Program.cs             #   程序入口
-│       ├── ViewLocator.cs         #   视图定位器
-│       ├── app.manifest           #   Windows 清单
-│       └── Sounder-APP.Desktop.csproj
-├── build/
-│   ├── linux/                     # Linux 打包资源
-│   │   ├── debian/                #   DEB 控制文件（4 个）
-│   │   └── sounder-app.desktop    #   桌面菜单入口
-│   └── macos/                     # macOS 打包资源
-│       ├── Info.plist             #   应用 info 配置
-│       └── en.lproj/zh-Hans.lproj/#   多语言 plist 字符串
-├── Windows_Build.bat              # Windows 发布脚本
-├── Windows_Installer.iss          # Windows 安装包脚本 (Inno Setup)
-├── Linux_Build.sh                 # Linux 发布脚本 (支持 --deb 和 --portable)
-├── Mac_Build.sh                   # macOS 发布脚本
-├── Sounder-APP.slnx               # 解决方案文件
+│   ├── Sounder-APP.Core/            # 核心类库（模型、服务、转换器）
+│   │   ├── Converters/              #   值转换器
+│   │   ├── Models/                  #   数据模型
+│   │   ├── Properties/              #   多语言资源文件（5 种语言）
+│   │   └── Services/                #   核心服务
+│   └── Sounder-APP.Desktop/         # 桌面应用主项目
+│       ├── Assets/                  #   图标、图片资源
+│       ├── Services/                #   平台服务 + 音频/快捷方式/单例等
+│       │   ├── Windows/             #   Windows 后端实现
+│       │   ├── Linux/               #   Linux 后端实现
+│       │   └── Mac/                 #   macOS 后端实现
+│       ├── Views/                   #   UI 视图
+│       │   ├── Common/              #     通用组件
+│       │   ├── PersonalResource/    #     个人资源视图
+│       │   ├── Shop/                #     商店视图
+│       │   └── Submissions/         #     投稿视图
+│       ├── ViewModels/              #   视图模型
+│       ├── App.axaml(.cs)           #   应用入口
+│       ├── Program.cs               #   程序入口
+│       └── ViewLocator.cs           #   视图定位器
+├── build/                           # 打包资源
+│   ├── linux/                       #   Linux DEB 控制文件 + 桌面菜单
+│   └── macos/                       #   macOS Info.plist + 多语言字符串
+├── Windows_Build.bat                # Windows 发布脚本
+├── Windows_Installer.iss            # Inno Setup 安装包脚本
+├── Linux_Build.sh                   # Linux 发布脚本 (支持 --deb / --portable)
+├── Mac_Build.sh                     # macOS 发布脚本
+├── Sounder-APP.slnx                 # 解决方案文件
 ├── LICENSE
 ├── README.md
 └── EN_README.md

@@ -2,10 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -17,7 +14,6 @@ using Avalonia.Platform;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using NAudio.Wave;
 using Sounder_APP.Models;
 using Sounder_APP.Services;
 using Sounder_APP.Views;
@@ -221,36 +217,20 @@ namespace Sounder_APP.ViewModels
             if (result.Count == 0) return;
 
             var zipPath = result[0].Path.LocalPath;
-            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-            var tempDir = Path.Combine(Path.GetTempPath(), $"sounder_import_{timestamp}");
 
             try
             {
-                // 1. 解压到临时目录
-                ZipFile.ExtractToDirectory(zipPath, tempDir);
-                Debug.WriteLine($"[Import] 已解压到临时目录: {tempDir}");
+                // 1. 解压并解析 manifest
+                var importResult = await ResourcePackageHelper.ImportResourcePackageAsync(zipPath);
+                var manifest = importResult.Manifest;
+                var contentRoot = importResult.ContentRoot;
 
-                // 2. 定位 manifest.json（处理嵌套目录的情况）
-                var contentRoot = FindContentRoot(tempDir);
-
-                // 3. 读取 manifest.json
-                var manifestPath = Path.Combine(contentRoot, "manifest.json");
-                if (!File.Exists(manifestPath))
-                    throw new InvalidOperationException(LocalizationService.Instance.Get("invalid_package_no_manifest"));
-
-                var manifestJson = await File.ReadAllTextAsync(manifestPath);
-                var manifest = JsonSerializer.Deserialize(manifestJson, SettingsJsonContext.Default.ExportManifest);
-                if (manifest == null || manifest.Version < 1 || manifest.Resource == null)
-                    throw new InvalidOperationException(LocalizationService.Instance.Get("invalid_package_incomplete_manifest"));
-
-                Debug.WriteLine($"[Import] manifest 读取成功: {manifest.Resource.DisplayName}");
-
-                // 4. 创建新资源
+                // 2. 创建新资源
                 var newId = $"local_{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}_{Guid.NewGuid():N}";
                 var newResource = new Resource
                 {
                     Id = newId,
-                    Name = manifest.Resource.DisplayName,
+                    Name = manifest.Resource!.DisplayName,
                     DisplayName = manifest.Resource.DisplayName,
                     Description = manifest.Resource.Description ?? string.Empty,
                     Icon = string.Empty,
@@ -263,12 +243,12 @@ namespace Sounder_APP.ViewModels
                 var dstDir = ResourceService.GetResourceInstallDir(newId);
                 Directory.CreateDirectory(dstDir);
 
-                // 5. 导入图标
+                // 3. 导入图标
                 long iconSize = 0;
                 if (manifest.Files != null && !string.IsNullOrEmpty(manifest.Files.Icon))
                 {
                     var iconSrc = Path.Combine(contentRoot, manifest.Files.Icon);
-                    var ext = GetFileExtension(manifest.Files.Icon, "jpg");
+                    var ext = ResourcePackageHelper.GetFileExtension(manifest.Files.Icon, "jpg");
                     var iconDest = Path.Combine(dstDir, $"icon.{ext}");
                     try
                     {
@@ -290,7 +270,7 @@ namespace Sounder_APP.ViewModels
                     }
                 }
 
-                // 6. 导入音频
+                // 4. 导入音频
                 var audioMetas = manifest.Resource.AudioItems ?? new List<ExportManifest.ExportAudioMeta>();
                 var audioFiles = manifest.Files?.Audios ?? new List<string?>();
                 for (int i = 0; i < audioMetas.Count; i++)
@@ -310,30 +290,16 @@ namespace Sounder_APP.ViewModels
 
                     if (!string.IsNullOrEmpty(filePath))
                     {
-                        var audioSrc = Path.Combine(contentRoot, filePath);
-                        var ext = GetFileExtension(filePath, "mp3");
+                        var audioSrc = ResourcePackageHelper.FindFileInContentRoot(contentRoot, filePath);
+                        var ext = ResourcePackageHelper.GetFileExtension(filePath, "mp3");
                         var audioDest = Path.Combine(dstDir, $"audio_{i}.{ext}");
                         try
                         {
-                            if (File.Exists(audioSrc))
+                            if (audioSrc != null && File.Exists(audioSrc))
                             {
                                 File.Copy(audioSrc, audioDest, overwrite: true);
                                 newAudio.Src = audioDest;
                                 newAudio.Size = new FileInfo(audioDest).Length;
-
-                                // 如果 manifest 中没有时长（或为 0），从音频文件读取
-                                if (newAudio.DurationMs <= 0)
-                                {
-                                    try
-                                    {
-                                        using var reader = new AudioFileReader(audioDest);
-                                        newAudio.DurationMs = (long)reader.TotalTime.TotalMilliseconds;
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        Debug.WriteLine($"[Import] 读取音频时长失败: {ex.Message}");
-                                    }
-                                }
 
                                 Debug.WriteLine($"[Import] 音频[{i}]已导入: audio_{i}.{ext} ({newAudio.SizeFormatted}, {newAudio.DurationFormatted})");
                             }
@@ -351,13 +317,13 @@ namespace Sounder_APP.ViewModels
                 var totalBytes = iconSize + newResource.AudioItems.Sum(a => a.Size);
                 newResource.Size = totalBytes.ToString();
 
-                // 7. 保存 resource.json
+                // 5. 保存 resource.json
                 ResourceService.SaveResourceJson(newResource);
 
-                // 8. 清理临时目录
-                CleanupTempDir(tempDir);
+                // 6. 清理临时目录
+                ResourcePackageHelper.CleanupTempDir(importResult.TempDir);
 
-                // 9. 刷新列表
+                // 7. 刷新列表
                 _allResources.Add(newResource);
                 Resources.Add(newResource);
                 SelectedResource = newResource;
@@ -368,7 +334,6 @@ namespace Sounder_APP.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine($"[Import] 导入失败: {ex.Message}");
-                CleanupTempDir(tempDir);
             }
         }
 
@@ -502,7 +467,7 @@ namespace Sounder_APP.ViewModels
 
             // 让用户选择 zip 文件保存位置
             var storageProvider = parent.StorageProvider;
-            var safeName = SanitizeFileName(resource.DisplayName);
+            var safeName = ResourcePackageHelper.SanitizeFileName(resource.DisplayName);
             var zipFile = await storageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
             {
                 Title = LocalizationService.Instance.Get("export_title"),
@@ -516,107 +481,16 @@ namespace Sounder_APP.ViewModels
 
             if (zipFile == null) return;
 
-            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-            var tempDir = Path.Combine(Path.GetTempPath(), $"sounder_export_{timestamp}");
-            var srcDir = ResourceService.GetResourceInstallDir(resource.Id);
-
             try
             {
-                Directory.CreateDirectory(tempDir);
-
-                // 1. 导出图标
-                string? iconFileName = null;
-                if (!string.IsNullOrEmpty(resource.Icon) && !resource.Icon.StartsWith("http", StringComparison.OrdinalIgnoreCase))
-                {
-                    var ext = GetFileExtension(resource.Icon, "jpg");
-                    iconFileName = $"icon.{ext}";
-                    var iconDest = Path.Combine(tempDir, iconFileName);
-                    try
-                    {
-                        File.Copy(resource.Icon, iconDest, overwrite: true);
-                        Debug.WriteLine($"[Export] 图标已复制: {iconFileName}");
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine($"[Export] 导出图标失败，跳过: {ex.Message}");
-                        iconFileName = null;
-                    }
-                }
-
-                // 2. 导出音频文件
-                var audiosDir = Path.Combine(tempDir, "audios");
-                Directory.CreateDirectory(audiosDir);
-                var audioFileNames = new List<string?>();
-                var audioMetas = new List<ExportManifest.ExportAudioMeta>();
-
-                for (int i = 0; i < resource.AudioItems.Count; i++)
-                {
-                    var audio = resource.AudioItems[i];
-                    audioMetas.Add(new ExportManifest.ExportAudioMeta
-                    {
-                        Name = audio.Name,
-                        DurationMs = audio.DurationMs
-                    });
-
-                    if (!string.IsNullOrEmpty(audio.Src) && !audio.Src.StartsWith("http", StringComparison.OrdinalIgnoreCase))
-                    {
-                        var ext = GetFileExtension(audio.Src, "mp3");
-                        var fileName = $"audio_{i}.{ext}";
-                        var audioDest = Path.Combine(audiosDir, fileName);
-                        try
-                        {
-                            File.Copy(audio.Src, audioDest, overwrite: true);
-                            audioFileNames.Add($"audios/{fileName}");
-                            Debug.WriteLine($"[Export] 音频[{i}]已复制: {fileName}");
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.WriteLine($"[Export] 导出音频[{i}]失败，跳过: {ex.Message}");
-                            audioFileNames.Add(null);
-                        }
-                    }
-                    else
-                    {
-                        audioFileNames.Add(null);
-                    }
-                }
-
-                // 3. 写入 manifest.json
-                var manifest = new ExportManifest
-                {
-                    Version = 1,
-                    ExportDate = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"),
-                    Resource = new ExportManifest.ExportResourceMeta
-                    {
-                        DisplayName = resource.DisplayName,
-                        Description = resource.Description,
-                        AudioItems = audioMetas
-                    },
-                    Files = new ExportManifest.ExportFiles
-                    {
-                        Icon = iconFileName,
-                        Audios = audioFileNames
-                    }
-                };
-
-                var manifestJson = JsonSerializer.Serialize(manifest, SettingsJsonContext.Default.ExportManifest);
-                var manifestPath = Path.Combine(tempDir, "manifest.json");
-                await File.WriteAllTextAsync(manifestPath, manifestJson);
-                Debug.WriteLine("[Export] manifest.json 已写入");
-
-                // 4. 打包为 zip
                 var destPath = zipFile.Path.LocalPath;
-                if (File.Exists(destPath)) File.Delete(destPath);
-                ZipFile.CreateFromDirectory(tempDir, destPath);
-                Debug.WriteLine($"[Export] ZIP 已保存到: {destPath}");
-
-                // 5. 清理临时目录
-                CleanupTempDir(tempDir);
+                await ResourcePackageHelper.ExportResourcePackageAsync(resource, destPath);
+                StatusText = LocalizationService.Instance.Get("export_complete");
+                Debug.WriteLine($"[Export] 导出完成: {destPath}");
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"[Export] 导出失败: {ex.Message}");
-                CleanupTempDir(tempDir);
             }
         }
 
@@ -639,95 +513,6 @@ namespace Sounder_APP.ViewModels
             {
                 Debug.WriteLine($"[OpenFolder] 打开目录失败: {ex.Message}");
             }
-        }
-
-        /// <summary>递归拷贝目录</summary>
-        private static void CopyDirectoryRecursive(string sourceDir, string destDir)
-        {
-            Directory.CreateDirectory(destDir);
-            foreach (var file in Directory.GetFiles(sourceDir))
-            {
-                var destFile = Path.Combine(destDir, Path.GetFileName(file));
-                File.Copy(file, destFile, overwrite: true);
-            }
-            foreach (var subDir in Directory.GetDirectories(sourceDir))
-            {
-                var destSubDir = Path.Combine(destDir, Path.GetFileName(subDir));
-                CopyDirectoryRecursive(subDir, destSubDir);
-            }
-        }
-
-        // ===== 导出/导入辅助方法 =====
-
-        /// <summary>清理临时目录（忽略错误）</summary>
-        private static void CleanupTempDir(string dir)
-        {
-            try
-            {
-                if (Directory.Exists(dir))
-                    Directory.Delete(dir, recursive: true);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"[CleanupTemp] 清理失败: {ex.Message}");
-            }
-        }
-
-        /// <summary>获取文件扩展名（不含点），默认返回 defaultExt</summary>
-        private static string GetFileExtension(string filePath, string defaultExt)
-        {
-            try
-            {
-                var ext = Path.GetExtension(filePath)?.TrimStart('.');
-                return string.IsNullOrEmpty(ext) ? defaultExt : ext.ToLower();
-            }
-            catch
-            {
-                return defaultExt;
-            }
-        }
-
-        /// <summary>过滤文件名中的非法字符</summary>
-        private static string SanitizeFileName(string name)
-        {
-            var invalid = Path.GetInvalidFileNameChars();
-            var sanitized = new string(name.Select(c => invalid.Contains(c) ? '_' : c).ToArray());
-            return string.IsNullOrWhiteSpace(sanitized) ? "resource" : sanitized;
-        }
-
-        /// <summary>在解压目录中定位 manifest.json 所在的内容根目录</summary>
-        private static string FindContentRoot(string tempDir)
-        {
-            // 首先尝试根目录
-            if (File.Exists(Path.Combine(tempDir, "manifest.json")))
-                return tempDir;
-
-            // 查找子目录
-            try
-            {
-                var subDirs = Directory.GetDirectories(tempDir);
-                if (subDirs.Length == 1)
-                {
-                    Debug.WriteLine($"[Import] 使用子目录作为内容根: {subDirs[0]}");
-                    return subDirs[0];
-                }
-
-                foreach (var sub in subDirs)
-                {
-                    if (File.Exists(Path.Combine(sub, "manifest.json")))
-                    {
-                        Debug.WriteLine($"[Import] 在子目录找到 manifest: {sub}");
-                        return sub;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"[Import] 查找内容根目录失败: {ex.Message}");
-            }
-
-            // 降级返回 tempDir
-            return tempDir;
         }
 
         // ===== 选中资源变更拦截（ListBox TwoWay 绑定触发） =====
